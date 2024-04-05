@@ -21,13 +21,13 @@ jobs:
           relative_project_path: ./
           archive_output: true
           use_godot_3: true
+          relative_export_path: build/web
 
       - name: List folder
         run: ls -la
 
-      - name: Install rsync 📚
-        run: |
-          apt-get update && apt-get install -y rsync
+      - uses: GuillaumeFalourd/setup-rsync@v1.2
+      - run: rsync --version
 
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v4
