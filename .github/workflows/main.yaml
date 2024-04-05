@@ -24,3 +24,29 @@ jobs:
 
       - name: List folder
         run: ls -la
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: web-export
+          path: build/web
+
+        # Deploy job
+  deploy:
+    needs: export-web
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        artifact_name: web-export
