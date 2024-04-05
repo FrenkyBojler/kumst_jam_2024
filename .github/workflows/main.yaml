@@ -25,10 +25,9 @@ jobs:
       - name: List folder
         run: ls -la
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: web-export
           path: build/web
 
         # Deploy job
@@ -49,4 +48,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        artifact_name: web-export
