@@ -24,12 +24,3 @@ jobs:
 
       - name: List folder
         run: ls -la
-
-      - uses: GuillaumeFalourd/setup-rsync@v1.2
-      - run: rsync --version
-
-      - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v4
-        with:
-          branch: master
-          folder: build/web
