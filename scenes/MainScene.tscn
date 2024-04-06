@@ -196,7 +196,8 @@ script = ExtResource( 9 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="SwipeJoystick" parent="CanvasLayer" instance=ExtResource( 10 )]
-position = Vector2( 16, 339 )
+position = Vector2( -171, 12 )
+scale = Vector2( 3, 3 )
 
 [connection signal="map_size_increased" from="RealTileMap" to="RailTileMap" method="_on_RealTileMap_map_size_increased"]
 [connection signal="swipe_down" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_down"]

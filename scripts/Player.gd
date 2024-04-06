@@ -212,16 +212,24 @@ func _play_run_anim() -> void:
 		animation_player.play("IdleUp")
 
 func _on_SwipeJoystick_swipe_down(speed) -> void:
-	current_velocity = Vector2.UP
+	print("TADY UP")
+	if speed != Vector2.ZERO:
+		current_velocity = Vector2.UP
 
 func _on_SwipeJoystick_swipe_left(speed) -> void:
-	current_velocity = Vector2.LEFT
+	print("TADY LEFT")
+	if speed != Vector2.ZERO:
+		current_velocity = Vector2.LEFT
 
 func _on_SwipeJoystick_swipe_right(speed) -> void:
-	current_velocity = Vector2.RIGHT
+	print("TADY RIGHT")
+	if speed != Vector2.ZERO:
+		current_velocity = Vector2.RIGHT
 
 func _on_SwipeJoystick_swipe_top(speed) -> void:
-	current_velocity = Vector2.DOWN
+	print("TADY DOWN")
+	if speed != Vector2.ZERO:
+		current_velocity = Vector2.DOWN
 
 func _on_SwipeJoystick_touched() -> void:
 	pass
