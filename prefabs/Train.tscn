@@ -14,6 +14,7 @@ script = ExtResource( 1 )
 script = ExtResource( 3 )
 
 [node name="SpriteVertical" type="Sprite" parent="FirstCabin"]
+visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 128, 96, 32, 32 )
@@ -37,7 +38,21 @@ texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 192, 96, 32, 32 )
 
+[node name="SpriteCornerBottomLeft" type="Sprite" parent="FirstCabin"]
+visible = false
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 160, 96, 32, 32 )
+
+[node name="SpriteCornerBottomRight" type="Sprite" parent="FirstCabin"]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 160, 96, 32, 32 )
+
 [node name="SecondCabin" type="Node2D" parent="."]
+visible = false
 script = ExtResource( 3 )
 
 [node name="SpriteVertical" type="Sprite" parent="SecondCabin"]
@@ -59,7 +74,20 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2( 192, 128, 32, 32 )
 
+[node name="SpriteCornerBottomLeft" type="Sprite" parent="SecondCabin"]
+visible = false
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 192, 128, 32, 32 )
+
 [node name="SpriteCornerTopRight" type="Sprite" parent="SecondCabin"]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 192, 128, 32, 32 )
+
+[node name="SpriteCornerBottomRight" type="Sprite" parent="SecondCabin"]
 visible = false
 texture = ExtResource( 2 )
 region_enabled = true

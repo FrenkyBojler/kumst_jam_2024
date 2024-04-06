@@ -44,7 +44,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Rect2( 0, 32, 32, 32 ) ]
+"values": [ Rect2( 96, 32, 32, 32 ) ]
 }
 
 [sub_resource type="Animation" id=6]
