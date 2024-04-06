@@ -17,10 +17,10 @@ var random_tile_id_generator = RandomNumberGenerator.new()
 
 var path_of_walls: PoolVector2Array
 
-
 export(bool) var generate_only_ground = false
-
 const tiles_row = [generator_left_barrier_id, generator_wall_id, generator_rock_id, generator_rock_id, generator_wall_id, generator_right_barrier_id]
+
+signal map_size_increased(max_row)
 
 func _ready() -> void:
 	player_last_y_pos = world_to_map(player.global_position).y
@@ -37,6 +37,7 @@ func _process(_delta: float) -> void:
 			max_y_pos -= 1
 
 func _place_new_tile_at_row(row: int) -> void:
+	emit_signal("map_size_increased", row)
 	var start_index_x := -4
 	var index = 0
 	var generated_tiles = _generate_line(tiles_row.size() - 2)

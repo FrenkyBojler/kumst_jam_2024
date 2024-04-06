@@ -4,6 +4,8 @@ class_name Tiles
 
 onready var player = $"../Player"
 
+export(bool) var is_rail = false
+
 export var rail_tile = 4
 const ground_tile = -1
 const wall_tile = 2
@@ -21,3 +23,12 @@ func place_ground(coords: Vector2) -> void:
 
 func update_autotile_for_cel(coords: Vector2) -> void:
 	update_bitmask_area(coords)
+
+func _place_finish_tile_at_row(row: int) -> void:
+	var finish_row = get_used_cells_by_id(3)[0]
+	set_cellv(finish_row, -1)
+	set_cell(finish_row.x, row, 3)
+
+func _on_RealTileMap_map_size_increased(max_row) -> void:
+	if is_rail:
+		_place_finish_tile_at_row(max_row)

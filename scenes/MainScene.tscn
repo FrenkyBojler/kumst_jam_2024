@@ -142,8 +142,9 @@ tile_set = SubResource( 6 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
 format = 1
-tile_data = PoolIntArray( -393215, 0, 0, -393214, 0, 131073, -393213, 3, 0, -262146, 0, 0, -262145, 0, 1, -327680, 0, 1, -327679, 0, 131074, -196610, 0, 65538, -131074, 0, 131072, -131073, 0, 1, -196608, 0, 131073, -196607, 0, 2, -131071, 0, 65538, -2, 0, 0, -1, 0, 1, -65536, 0, 131073, -65535, 0, 131074, 65534, 0, 65538, 131070, 0, 131072, 131071, 0, 1, 65536, 0, 131073, 65537, 0, 2, 131073, 0, 65536, 262143, 0, 0, 196608, 0, 131073, 196609, 0, 131074, 327679, 0, 65536, 393215, 0, 65538, 458751, 0, 131074, 720895, 2, 0 )
+tile_data = PoolIntArray( -393213, 3, 0, -262146, 0, 2, -196610, 0, 65536, -131074, 0, 131072, -131073, 0, 1, -196608, 0, 131073, -196607, 0, 2, -131071, 0, 65538, -2, 0, 0, -1, 0, 1, -65536, 0, 131073, -65535, 0, 131074, 65534, 0, 65538, 131070, 0, 131072, 131071, 0, 1, 65536, 0, 131073, 65537, 0, 2, 131073, 0, 65536, 262143, 0, 0, 196608, 0, 131073, 196609, 0, 131074, 327679, 0, 65536, 393215, 0, 65538, 458751, 0, 131074, 720895, 2, 0 )
 script = ExtResource( 2 )
+is_rail = true
 rail_tile = 0
 
 [node name="ShadowTileMap" type="TileMap" parent="."]
@@ -190,6 +191,8 @@ rail_tile_map_path = NodePath("../../RailTileMap")
 [node name="Line2D" type="Line2D" parent="."]
 visible = false
 script = ExtResource( 9 )
+
+[connection signal="map_size_increased" from="RealTileMap" to="RailTileMap" method="_on_RealTileMap_map_size_increased"]
 
 [editable path="LongTrain"]
 [editable path="LongTrain/Train"]
