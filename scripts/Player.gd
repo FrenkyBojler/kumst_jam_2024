@@ -101,7 +101,7 @@ func _check_wall_collision(collision: KinematicCollision2D) -> void:
 			_start_drill()
 
 func _start_drill() -> void:
-	print_debug("start drilling " + str(currently_drilled_cell_pos))
+	#print_debug("start drilling " + str(currently_drilled_cell_pos))
 	animation_player.play("Drill")
 	_reset_drill_timer()
 	drill_timer.start()
@@ -113,7 +113,7 @@ func _check_stop_drill(pos) -> void:
 		_stop_drill()
 
 func _stop_drill() -> void:
-	print_debug("stop drilling")
+	#print_debug("stop drilling")
 	_reset_drill_timer()
 	_play_idle_anim()
 	currently_drilled_cell_pos = null
