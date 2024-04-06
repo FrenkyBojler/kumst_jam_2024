@@ -57,7 +57,7 @@ const max_rotation_bottom = 180
 var is_drilling := false
 
 func _process(delta: float) -> void:
-	_movement_input()
+	#_movement_input()
 	_check_actions_released()
 	_place_rail_input()
 	_move_by_current_velocity(delta)
@@ -77,8 +77,6 @@ func _movement_input() -> void:
 	elif Input.is_action_pressed("ui_up"):
 		is_up_pressed = true
 		current_velocity = Vector2.UP
-	else:
-		current_velocity = Vector2.ZERO
 		
 	if not is_drilling:
 		_play_run_anim()
@@ -212,3 +210,21 @@ func _play_run_anim() -> void:
 		animation_player.play("IdleDown")
 	if current_velocity == Vector2.UP:
 		animation_player.play("IdleUp")
+
+func _on_SwipeJoystick_swipe_down(speed) -> void:
+	current_velocity = Vector2.UP
+
+func _on_SwipeJoystick_swipe_left(speed) -> void:
+	current_velocity = Vector2.LEFT
+
+func _on_SwipeJoystick_swipe_right(speed) -> void:
+	current_velocity = Vector2.RIGHT
+
+func _on_SwipeJoystick_swipe_top(speed) -> void:
+	current_velocity = Vector2.DOWN
+
+func _on_SwipeJoystick_touched() -> void:
+	pass
+
+func _on_SwipeJoystick_touch_released() -> void:
+	current_velocity = Vector2.ZERO

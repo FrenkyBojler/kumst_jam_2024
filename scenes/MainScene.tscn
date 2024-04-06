@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/tiles.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scripts/PlayerCam.gd" type="Script" id=7]
 [ext_resource path="res://scripts/TileMapGenerator.gd" type="Script" id=8]
 [ext_resource path="res://scripts/RailLine2D.gd" type="Script" id=9]
+[ext_resource path="res://prefabs/SwipeJoystick.tscn" type="PackedScene" id=10]
 
 [sub_resource type="TileSet" id=4]
 0/name = "rail"
@@ -192,7 +193,18 @@ rail_tile_map_path = NodePath("../../RailTileMap")
 visible = false
 script = ExtResource( 9 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SwipeJoystick" parent="CanvasLayer" instance=ExtResource( 10 )]
+position = Vector2( 16, 339 )
+
 [connection signal="map_size_increased" from="RealTileMap" to="RailTileMap" method="_on_RealTileMap_map_size_increased"]
+[connection signal="swipe_down" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_down"]
+[connection signal="swipe_left" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_left"]
+[connection signal="swipe_right" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_right"]
+[connection signal="swipe_top" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_top"]
+[connection signal="touch_released" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_touch_released"]
+[connection signal="touched" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_touched"]
 
 [editable path="LongTrain"]
 [editable path="LongTrain/Train"]
