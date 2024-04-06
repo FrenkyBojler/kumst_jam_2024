@@ -15,6 +15,8 @@ const generator_right_barrier_id = 3
 const max_generated_value = 20
 var random_tile_id_generator = RandomNumberGenerator.new()
 
+var path_of_walls: PoolVector2Array
+
 
 export(bool) var generate_only_ground = false
 
@@ -23,12 +25,7 @@ const tiles_row = [generator_left_barrier_id, generator_wall_id, generator_rock_
 func _ready() -> void:
 	player_last_y_pos = world_to_map(player.global_position).y
 	player_max_y_pos = player_last_y_pos
-	var line2D = Line2D.new()
-	#get_parent().call_deferred("add_child", line2D)
-	var index = 0
-	for point in _generate_path(0, -2, -1, 10):
-		line2D.add_point(map_to_world(point), index)
-		index += 1
+	path_of_walls = _generate_path(max_y_pos, -2, -1, 100)
 
 func _process(_delta: float) -> void:
 	var player_current_y_pos = world_to_map(player.global_position).y
@@ -53,10 +50,10 @@ func _place_new_tile_at_row(row: int) -> void:
 	var wall_from_prev_x_index = null
 	
 	if not generate_only_ground:
-		var walls_x_indexes_from_prev_row = _get_passable_wall_positions(max_y_pos)
-		var random_wall_index = RandomNumberGenerator.new().randi_range(0, walls_x_indexes_from_prev_row.size() - 1)
-		wall_from_prev_x_index = walls_x_indexes_from_prev_row[random_wall_index]
-	
+		var path_row = _get_path_at_row(row)
+		if path_row.size() != 0:
+			generated_tiles = _fix_row_by_path(generated_tiles, path_row)
+
 	for tile in generated_tiles:
 		if generate_only_ground:
 			set_cell(start_index_x, row, generator_ground_id)
@@ -68,11 +65,27 @@ func _place_new_tile_at_row(row: int) -> void:
 		start_index_x += 1
 		index += 1
 
+func _fix_row_by_path(row: PoolIntArray, row_path: PoolVector2Array) -> PoolIntArray:
+	var result = row
+	for r in row_path:
+		var path_index = abs(-4) + r.x
+		result[path_index] = generator_wall_id
+	return result
+
+func _get_path_at_row(row_index: int) -> PoolVector2Array:
+	var result = PoolVector2Array()
+	for row in path_of_walls:
+		if row.y == row_index:
+			result.push_back(row)
+	return result
+
 func _generate_line(size: int) -> Array:
 	var result = Array()
 	var current_generated_value = 0
 
 	for i in size:
+		result.push_back(generator_rock_id)
+		continue
 		var currently_generated_value: int = 0
 		random_tile_id_generator.randomize()
 		var random = random_tile_id_generator.randi_range(0, 1)
@@ -120,18 +133,24 @@ func _generate_path(start_row: int, first_column: int, last_column: int, rows: i
 	var prev_dir := 0
 	
 	for i in rows:
-		print_debug(i)
 		if result.size() != 0:
-			var last_wall_x_index = _get_last_wall_index(result, start_row + (i - 1), prev_dir)
+			var last_wall_x_index = _get_last_wall_index(result, start_row - (i - 1), prev_dir)
+			#print("last wall index: ", last_wall_x_index)
 			var random_dir = _get_random_dir()
 			var random_walls_on_same_row = _get_random_walls_on_same_row(first_column, last_column, last_wall_x_index, random_dir)
+			#print("how many walls: ", random_walls_on_same_row)
 			var index = last_wall_x_index
-			for col in random_walls_on_same_row:
-				result.push_back(Vector2(index, i + start_row))
+			for col in random_walls_on_same_row + 1:
+				if random_dir == -1:
+					result.push_back(Vector2(max(-2, index),  (start_row - i)))
+				elif random_dir == 1:
+					result.push_back(Vector2(min(1, index),  (start_row - i)))
+				else:
+					result.push_back(Vector2(index,   (start_row - i)))
 				index += random_dir
 			prev_dir = random_dir
 		else:
-			result.push_back(Vector2(first_column + 1, start_row))
+			result.push_back(Vector2(first_column, start_row))
 	return result
 
 func _get_random_walls_on_same_row(first_column: int, last_column: int, start_index: int, dir: int) -> int:
@@ -159,6 +178,8 @@ func _get_last_wall_index(walls: PoolVector2Array, index: int, last_dir: int) ->
 	for wall in walls:
 		if wall.y == index:
 			walls_on_index.push_back(wall)
+			
+	#print_debug("walls on row: ", walls_on_index, " | last dir: ", last_dir)
 	
 	var last_wall = walls_on_index[0]
 	for wall in walls_on_index:

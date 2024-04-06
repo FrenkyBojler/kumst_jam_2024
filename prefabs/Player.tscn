@@ -95,8 +95,8 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 11, 11 )
+[sub_resource type="CircleShape2D" id=9]
+radius = 13.0
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1.5, 1.5 )
@@ -119,32 +119,32 @@ region_enabled = true
 region_rect = Rect2( 0, 32, 32, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 4 )
-shape = SubResource( 1 )
+position = Vector2( 0, 5 )
+shape = SubResource( 9 )
 
 [node name="LeftCollision" type="Area2D" parent="."]
-position = Vector2( -13, 5 )
+position = Vector2( -16, 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftCollision"]
 modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
 shape = SubResource( 2 )
 
 [node name="RightCollision" type="Area2D" parent="."]
-position = Vector2( 13, 4 )
+position = Vector2( 17, 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightCollision"]
 modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
 shape = SubResource( 2 )
 
 [node name="TopCollision" type="Area2D" parent="."]
-position = Vector2( 0, -9 )
+position = Vector2( 0, -12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopCollision"]
 modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
 shape = SubResource( 2 )
 
 [node name="BottomCollision" type="Area2D" parent="."]
-position = Vector2( 0, 18 )
+position = Vector2( 0, 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomCollision"]
 modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
