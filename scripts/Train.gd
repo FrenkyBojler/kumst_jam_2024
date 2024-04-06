@@ -93,4 +93,5 @@ func _find_connected_rail_pos(current_rail_pos: Vector2):
 			return rail_pos
 	return null
 
-
+func _on_Timer_timeout() -> void:
+	_start_train()

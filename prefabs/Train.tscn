@@ -70,5 +70,10 @@ position = Vector2( 0, -0.5 )
 shape = SubResource( 1 )
 disabled = true
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
 [connection signal="tile_changed" from="." to="FirstCabin" method="_on_Train_tile_changed"]
 [connection signal="tile_changed" from="." to="SecondCabin" method="_on_Train_tile_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
