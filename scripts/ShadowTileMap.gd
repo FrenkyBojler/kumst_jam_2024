@@ -10,9 +10,6 @@ onready var _last_player_map_pos = Vector2.ZERO
 
 onready var _cells_used_by_rail = rail_tile_map.get_used_cells_by_id(4)
 
-func _ready() -> void:
-	print_debug(rail_tile_map.get_used_cells_by_id(4))
-
 func _process(_delta: float) -> void:
 	if _last_player_map_pos == _get_player_map_pos():
 		return
