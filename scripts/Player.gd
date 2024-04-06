@@ -6,6 +6,9 @@ onready var tile_map = get_node(tile_map_path) as Tiles
 export(NodePath) var tile_map_interaction_path
 onready var tile_map_interaction = get_node(tile_map_interaction_path) as Tiles
 
+export(NodePath) var tile_map_rails_path
+onready var tile_map_rails = get_node(tile_map_rails_path) as Tiles
+
 onready var left_collision: Area2D = $LeftCollision
 onready var right_collision: Area2D = $RightCollision
 onready var top_collision: Area2D = $TopCollision
@@ -171,10 +174,10 @@ func _place_rail_input() -> void:
 
 func _place_rail() -> void:
 	var last_placed_rail_pos_backup = last_placed_rail_pos
-	last_placed_rail_pos = tile_map.world_to_map(global_position)
-	tile_map.place_rails(last_placed_rail_pos)
+	last_placed_rail_pos = tile_map_rails.world_to_map(global_position)
+	tile_map_rails.place_rails(last_placed_rail_pos)
 	if last_placed_rail_pos_backup != null:
-		tile_map.update_autotile_for_cel(last_placed_rail_pos_backup)
+		tile_map_rails.update_autotile_for_cel(last_placed_rail_pos_backup)
 	
 func _place_ghost_rail() -> void:
 	if last_interaction_pos != null:

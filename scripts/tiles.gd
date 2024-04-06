@@ -2,7 +2,7 @@ extends TileMap
 
 class_name Tiles
 
-export var rail_tile = 0
+export var rail_tile = 4
 const ground_tile = -1
 const wall_tile = 2
 

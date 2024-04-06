@@ -1,146 +1,10 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/tiles.gd" type="Script" id=2]
 [ext_resource path="res://prefabs/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://prefabs/Train.tscn" type="PackedScene" id=4]
-
-[sub_resource type="ConvexPolygonShape2D" id=5]
-points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-
-[sub_resource type="ConvexPolygonShape2D" id=6]
-points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-
-[sub_resource type="ConvexPolygonShape2D" id=7]
-points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-
-[sub_resource type="NavigationPolygon" id=8]
-vertices = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 ) ]
-
-[sub_resource type="NavigationPolygon" id=9]
-vertices = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 ) ]
-
-[sub_resource type="NavigationPolygon" id=10]
-vertices = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 ) ]
-
-[sub_resource type="NavigationPolygon" id=11]
-vertices = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 ) ]
-
-[sub_resource type="NavigationPolygon" id=12]
-vertices = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 ) ]
-
-[sub_resource type="NavigationPolygon" id=13]
-vertices = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 ) ]
-
-[sub_resource type="NavigationPolygon" id=14]
-vertices = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 ) ]
-
-[sub_resource type="NavigationPolygon" id=15]
-vertices = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 ) ]
-
-[sub_resource type="TileSet" id=1]
-1/name = "wall_left"
-1/texture = ExtResource( 1 )
-1/tex_offset = Vector2( 0, 0 )
-1/modulate = Color( 1, 1, 1, 1 )
-1/region = Rect2( 0, 0, 32, 32 )
-1/tile_mode = 0
-1/occluder_offset = Vector2( 0, 0 )
-1/navigation_offset = Vector2( 0, 0 )
-1/shape_offset = Vector2( 0, 0 )
-1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-1/shape = SubResource( 5 )
-1/shape_one_way = false
-1/shape_one_way_margin = 1.0
-1/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 5 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-1/z_index = 0
-2/name = "obstacle"
-2/texture = ExtResource( 1 )
-2/tex_offset = Vector2( 0, 0 )
-2/modulate = Color( 1, 1, 1, 1 )
-2/region = Rect2( 64, 0, 32, 32 )
-2/tile_mode = 0
-2/occluder_offset = Vector2( 0, 0 )
-2/navigation_offset = Vector2( 0, 0 )
-2/shape_offset = Vector2( 0, 0 )
-2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-2/shape = SubResource( 6 )
-2/shape_one_way = false
-2/shape_one_way_margin = 1.0
-2/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 6 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-2/z_index = 0
-3/name = "wall_right"
-3/texture = ExtResource( 1 )
-3/tex_offset = Vector2( 0, 0 )
-3/modulate = Color( 1, 1, 1, 1 )
-3/region = Rect2( 32, 0, 32, 32 )
-3/tile_mode = 0
-3/occluder_offset = Vector2( 0, 0 )
-3/navigation_offset = Vector2( 0, 0 )
-3/shape_offset = Vector2( 0, 0 )
-3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-3/shape = SubResource( 7 )
-3/shape_one_way = false
-3/shape_one_way_margin = 1.0
-3/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 7 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-3/z_index = 0
-4/name = "rail"
-4/texture = ExtResource( 1 )
-4/tex_offset = Vector2( 0, 0 )
-4/modulate = Color( 1, 1, 1, 1 )
-4/region = Rect2( 0, 64, 96, 96 )
-4/tile_mode = 1
-4/autotile/bitmask_mode = 1
-4/autotile/bitmask_flags = [ Vector2( 0, 0 ), 10485776, Vector2( 0, 1 ), 146, Vector2( 0, 2 ), 2228240, Vector2( 1, 0 ), 56, Vector2( 1, 2 ), 56, Vector2( 2, 0 ), 8912912, Vector2( 2, 1 ), 146, Vector2( 2, 2 ), 655376 ]
-4/autotile/icon_coordinate = Vector2( 2, 1 )
-4/autotile/tile_size = Vector2( 32, 32 )
-4/autotile/spacing = 0
-4/autotile/occluder_map = [  ]
-4/autotile/navpoly_map = [ Vector2( 0, 0 ), SubResource( 8 ), Vector2( 0, 1 ), SubResource( 9 ), Vector2( 0, 2 ), SubResource( 10 ), Vector2( 1, 0 ), SubResource( 11 ), Vector2( 1, 2 ), SubResource( 12 ), Vector2( 2, 0 ), SubResource( 13 ), Vector2( 2, 1 ), SubResource( 14 ), Vector2( 2, 2 ), SubResource( 15 ) ]
-4/autotile/priority_map = [  ]
-4/autotile/z_index_map = [  ]
-4/occluder_offset = Vector2( 0, 0 )
-4/navigation_offset = Vector2( 0, 0 )
-4/shape_offset = Vector2( 0, 0 )
-4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-4/shape_one_way = false
-4/shape_one_way_margin = 0.0
-4/shapes = [  ]
-4/z_index = 0
+[ext_resource path="res://tilemap.tres" type="TileSet" id=5]
 
 [sub_resource type="TileSet" id=4]
 0/name = "rail"
@@ -165,15 +29,21 @@ rotation = -0.00377699
 current = true
 zoom = Vector2( 0.3, 0.3 )
 
+[node name="GroundTileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 32, 32 )
+cell_quadrant_size = 32
+format = 1
+tile_data = PoolIntArray( -262146, 5, 0, -262145, 5, 0, -327680, 5, 0, -327679, 5, 0, -196610, 5, 0, -196609, 5, 0, -262144, 5, 0, -262143, 5, 0, -262142, 5, 0, -131074, 5, 0, -131073, 5, 0, -196608, 5, 0, -196607, 5, 0, -65538, 5, 0, -65537, 5, 0, -131072, 5, 0, -131071, 5, 0, -131070, 5, 0, -3, 5, 0, -2, 5, 0, -1, 5, 0, -65536, 5, 0, -65535, 5, 0, 65533, 5, 0, 65534, 5, 0, 65535, 5, 0, 0, 5, 0, 1, 5, 0, 2, 5, 0, 131070, 5, 0, 131071, 5, 0, 65536, 5, 0, 65537, 5, 0, 65538, 5, 0, 196606, 5, 0, 196607, 5, 0, 131072, 5, 0, 131073, 5, 0, 131074, 5, 0, 262141, 5, 0, 262142, 5, 0, 262143, 5, 0, 196608, 5, 0, 196609, 5, 0, 196610, 5, 0 )
+
 [node name="RealTileMap" type="TileMap" parent="."]
-tile_set = SubResource( 1 )
+tile_set = ExtResource( 5 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
 bake_navigation = true
 format = 1
-tile_data = PoolIntArray( -524289, 4, 0, -458753, 4, 65536, -393217, 4, 65536, -327681, 4, 65538, -262147, 1, 0, -262145, 4, 65538, -327678, 3, 0, -196611, 1, 0, -196609, 4, 65536, -262142, 3, 0, -131075, 1, 0, -131073, 4, 65538, -196606, 3, 0, -65539, 1, 0, -65537, 4, 65538, -131070, 3, 0, -3, 1, 0, -1, 4, 65536, -65534, 3, 0, 65533, 1, 0, 65535, 4, 65536, 2, 3, 0, 131069, 1, 0, 131071, 4, 65538, 65538, 3, 0, 196605, 1, 0, 196607, 4, 65536, 131074, 3, 0, 262141, 1, 0, 262143, 4, 65536, 196610, 3, 0, 327679, 4, 65536, 393215, 4, 65536, 458751, 4, 65538, 524287, 4, 131074 )
+tile_data = PoolIntArray( -262147, 1, 0, -262146, 2, 0, -262145, 2, 0, -327680, 2, 0, -327679, 2, 0, -327678, 2, 0, -196611, 1, 0, -196610, 2, 0, -196609, 2, 0, -262144, 6, 0, -262143, 6, 0, -262142, 3, 0, -131075, 1, 0, -131074, 6, 0, -131073, 2, 0, -196608, 2, 0, -196607, 2, 0, -196606, 3, 0, -65539, 1, 0, -65538, 6, 0, -65537, 2, 0, -131072, 2, 0, -131071, 2, 0, -131070, 3, 0, -3, 1, 0, -2, 2, 0, -1, 6, 0, -65536, 2, 0, -65535, 2, 0, -65534, 3, 0, 65533, 1, 0, 65534, 2, 0, 65535, 2, 0, 0, 2, 0, 1, 6, 0, 2, 3, 0, 131069, 1, 0, 131070, 2, 0, 131071, 2, 0, 65536, 6, 0, 65537, 2, 0, 65538, 3, 0, 196605, 1, 0, 196606, 2, 0, 131072, 6, 0, 131073, 2, 0, 131074, 3, 0, 262141, 1, 0, 262142, 2, 0, 196608, 2, 0, 196609, 2, 0, 196610, 3, 0 )
 script = ExtResource( 2 )
-rail_tile = 4
 
 [node name="TileMapInteraction" type="TileMap" parent="."]
 tile_set = SubResource( 4 )
@@ -181,14 +51,25 @@ cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
 format = 1
 script = ExtResource( 2 )
+rail_tile = 0
+
+[node name="RailTileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 32, 32 )
+cell_quadrant_size = 32
+format = 1
+tile_data = PoolIntArray( -327681, 4, 0, 196607, 4, 2, 262143, 4, 65538, 327679, 4, 65538, 393214, 4, 0, 393215, 4, 131074 )
+script = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, 85 )
+position = Vector2( -15, 110 )
 tile_map_path = NodePath("../RealTileMap")
 tile_map_interaction_path = NodePath("../TileMapInteraction")
+tile_map_rails_path = NodePath("../RailTileMap")
 
 [node name="Train" parent="." instance=ExtResource( 4 )]
-position = Vector2( -14, 42 )
+visible = false
+position = Vector2( 16, -78 )
 target_pos_node_path = NodePath("../TrainTargetPos")
 
 [node name="TrainTargetPos" type="Position2D" parent="."]
