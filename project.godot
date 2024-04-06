@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Player.gd"
 }, {
+"base": "Tiles",
+"class": "TileMapGenerator",
+"language": "GDScript",
+"path": "res://scripts/TileMapGenerator.gd"
+}, {
 "base": "TileMap",
 "class": "Tiles",
 "language": "GDScript",
@@ -21,6 +26,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Player": "",
+"TileMapGenerator": "",
 "Tiles": ""
 }
 
@@ -32,8 +38,8 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=192
-window/size/height=256
+window/size/width=576
+window/size/height=768
 window/size/resizable=false
 window/size/test_width=576
 window/size/test_height=768

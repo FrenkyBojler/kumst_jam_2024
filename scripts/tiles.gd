@@ -2,9 +2,12 @@ extends TileMap
 
 class_name Tiles
 
+onready var player = $"../Player"
+
 export var rail_tile = 4
 const ground_tile = -1
 const wall_tile = 2
+const rock_tile = 3
 
 func is_wall_tile(coords: Vector2) -> bool:
 	return get_cellv(coords) == wall_tile

@@ -3,7 +3,7 @@ extends KinematicBody2D
 class_name Player
 
 export(NodePath) var tile_map_path
-onready var tile_map = get_node(tile_map_path) as Tiles
+onready var tile_map = get_node(tile_map_path) as TileMapGenerator
 
 export(NodePath) var tile_map_interaction_path
 onready var tile_map_interaction = get_node(tile_map_interaction_path) as Tiles
