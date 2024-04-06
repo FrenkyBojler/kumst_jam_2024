@@ -1,10 +1,102 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 
+[sub_resource type="Animation" id=3]
+resource_name = "Drill"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "IdleDown"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 180.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "IdleLeft"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 270.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "IdleRight"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 90.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "IdleUp"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 5, 7.5 )
+extents = Vector2( 11, 11 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1.5, 1.5 )
@@ -12,29 +104,36 @@ extents = Vector2( 1.5, 1.5 )
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Drill = SubResource( 3 )
+anims/IdleDown = SubResource( 8 )
+anims/IdleLeft = SubResource( 6 )
+anims/IdleRight = SubResource( 7 )
+anims/IdleUp = SubResource( 5 )
+anims/RESET = SubResource( 4 )
+
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 2 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 0, 136, 16, 16 )
+region_rect = Rect2( 0, 32, 32, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 0.5 )
+position = Vector2( 0, 4 )
 shape = SubResource( 1 )
 
 [node name="LeftCollision" type="Area2D" parent="."]
-position = Vector2( -10, 0 )
+position = Vector2( -13, 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftCollision"]
 modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
-position = Vector2( 2, 0 )
 shape = SubResource( 2 )
 
 [node name="RightCollision" type="Area2D" parent="."]
-position = Vector2( 10, 0 )
+position = Vector2( 13, 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightCollision"]
 modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
-position = Vector2( -2, 0 )
 shape = SubResource( 2 )
 
 [node name="TopCollision" type="Area2D" parent="."]
@@ -45,7 +144,7 @@ modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
 shape = SubResource( 2 )
 
 [node name="BottomCollision" type="Area2D" parent="."]
-position = Vector2( 0, 10 )
+position = Vector2( -1, 15 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomCollision"]
 modulate = Color( 0.427451, 0.184314, 0.184314, 1 )

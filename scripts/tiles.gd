@@ -3,8 +3,8 @@ extends TileMap
 class_name Tiles
 
 const rail_tile = 0
-const ground_tile = 3
-const wall_tile = 4
+const ground_tile = -1
+const wall_tile = 2
 
 func is_wall_tile(coords: Vector2) -> bool:
 	return get_cellv(coords) == wall_tile

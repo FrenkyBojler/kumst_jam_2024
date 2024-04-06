@@ -13,8 +13,13 @@ onready var bottom_collision: Area2D = $BottomCollision
 
 onready var drill_timer: Timer = $DrillTimer
 
+onready var sprite: Sprite = $Sprite
+onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 var current_velocity := Vector2.ZERO
+var rotation_dir = 0
 var speed := 100.0
+var rotation_speed := 5.0
 
 var interaction_mode = false
 
@@ -39,6 +44,13 @@ var is_right_pressed: bool
 var is_up_pressed: bool
 var is_down_pressed: bool
 
+const max_rotation_left= 270
+const max_rotation_right = 90
+const max_rotation_top = 0
+const max_rotation_bottom = 180
+
+var is_drilling := false
+
 func _process(delta: float) -> void:
 	_movement_input()
 	_check_actions_released()
@@ -47,6 +59,7 @@ func _process(delta: float) -> void:
 	_check_stop_drill_by_action_released()
 
 func _movement_input() -> void:
+	rotation_dir = 0
 	if Input.is_action_pressed("ui_left"):
 		is_left_pressed = true
 		current_velocity = Vector2.LEFT
@@ -62,6 +75,9 @@ func _movement_input() -> void:
 	else:
 		current_velocity = Vector2.ZERO
 		
+	if not is_drilling:
+		_play_run_anim()
+
 func _check_actions_released() -> void:
 	if Input.is_action_just_released("ui_left"):
 		is_left_pressed = false
@@ -85,9 +101,11 @@ func _check_wall_collision(collision: KinematicCollision2D) -> void:
 			_start_drill()
 
 func _start_drill() -> void:
+	print_debug("start drilling " + str(currently_drilled_cell_pos))
+	animation_player.play("Drill")
 	_reset_drill_timer()
 	drill_timer.start()
-	print_debug("start drilling " + str(currently_drilled_cell_pos))
+	is_drilling = true
 
 # Vector2 or null
 func _check_stop_drill(pos) -> void:
@@ -97,9 +115,11 @@ func _check_stop_drill(pos) -> void:
 func _stop_drill() -> void:
 	print_debug("stop drilling")
 	_reset_drill_timer()
+	_play_idle_anim()
 	currently_drilled_cell_pos = null
 	currently_drilling_pos = null
-	
+	is_drilling = false
+
 func _reset_drill_timer() -> void:
 	drill_timer.stop()
 	current_drill_time = 0.0
@@ -141,7 +161,7 @@ func _get_interaction_cell_by_direction(direction: Vector2):
 func _place_rail_input() -> void:
 	if interaction_mode:
 		_place_ghost_rail()
-		
+
 	if Input.is_action_just_pressed("interact"):
 		if not interaction_mode:
 			interaction_mode = true
@@ -165,3 +185,25 @@ func _place_ghost_rail() -> void:
 
 func _on_DrillTimer_timeout() -> void:
 	_drill_progress()
+
+func _play_idle_anim() -> void:
+	if current_velocity == Vector2.LEFT:
+		animation_player.play("IdleLeft")
+	if current_velocity == Vector2.RIGHT:
+		animation_player.play("IdleRight")
+	if current_velocity == Vector2.DOWN:
+		animation_player.play("IdleDown")
+	if current_velocity == Vector2.UP:
+		animation_player.play("IdleUp")
+	if current_velocity == Vector2.ZERO:
+		animation_player.play("IdleUp")
+		
+func _play_run_anim() -> void:
+	if current_velocity == Vector2.LEFT:
+		animation_player.play("IdleLeft")
+	if current_velocity == Vector2.RIGHT:
+		animation_player.play("IdleRight")
+	if current_velocity == Vector2.DOWN:
+		animation_player.play("IdleDown")
+	if current_velocity == Vector2.UP:
+		animation_player.play("IdleUp")
