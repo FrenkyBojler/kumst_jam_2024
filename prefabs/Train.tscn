@@ -73,7 +73,6 @@ disabled = true
 [node name="Timer" type="Timer" parent="."]
 wait_time = 15.0
 one_shot = true
-autostart = true
 
 [connection signal="tile_changed" from="." to="FirstCabin" method="_on_Train_tile_changed"]
 [connection signal="tile_changed" from="." to="SecondCabin" method="_on_Train_tile_changed"]

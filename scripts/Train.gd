@@ -27,16 +27,29 @@ var path: PoolVector2Array
 
 signal tile_changed(tile)
 
+const top_right_corner := 0
+const horizontal := 1
+const top_left_corner := 2
+const vertical := 3
+const bottom_right_corner := 4
+const bottom_left_corner := 5
+
 func _start_train() -> void:
-	path = _get_path()
+	path = rail_tile_map.path
 	#global_position = path[0]
-	target_pos = path[1]
+	target_pos = _get_correct_world_coord(path[0])
 
 func _get_path() -> PoolVector2Array:
 	var start_coord = _get_lowest_rail_coord()
-	var finish_coord = rail_tile_map.get_used_cells_by_id(3)[0]
-	var rails = rail_tile_map.get_used_cells_by_id(0)
-	rails.remove(rails.find(start_coord))
+	var finish_coord = rail_tile_map.get_used_cells_by_id(7)[0]
+	var rails = rail_tile_map.get_used_cells_by_id(top_right_corner)
+	rails.append_array(rail_tile_map.get_used_cells_by_id(horizontal))
+	rails.append_array(rail_tile_map.get_used_cells_by_id(top_left_corner))
+	rails.append_array(rail_tile_map.get_used_cells_by_id(vertical))
+	rails.append_array(rail_tile_map.get_used_cells_by_id(bottom_right_corner))
+	rails.append_array(rail_tile_map.get_used_cells_by_id(bottom_left_corner))
+	
+	#rails.remove(rails.find(start_coord))
 	var path = PoolVector2Array()
 	path.push_back(start_coord)
 	var used_coords = PoolVector2Array()
@@ -57,6 +70,10 @@ func _get_path() -> PoolVector2Array:
 		result.push_back(Vector2(world_coord.x + 16, world_coord.y + 16))
 		
 	return result
+	
+func _get_correct_world_coord(coord: Vector2) -> Vector2:
+	var world_coord = rail_tile_map.map_to_world(coord)
+	return (Vector2(world_coord.x + 16, world_coord.y + 16))
 	
 func _get_lowest_rail_coord() -> Vector2:
 	var rails = rail_tile_map.get_used_cells_by_id(0)
@@ -81,7 +98,7 @@ func _process(delta: float) -> void:
 			if path.size() == 0:
 				target_pos = null
 			else:
-				target_pos = path[0]
+				target_pos = _get_correct_world_coord(path[0])
 		else:
 			current_velocity = global_position.direction_to(target_pos)
 		move_and_collide(current_velocity * speed * delta)

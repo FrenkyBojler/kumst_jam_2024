@@ -193,6 +193,7 @@ func _place_rail() -> void:
 		tile_map_rails.update_autotile_for_cel(last_placed_rail_pos_backup)
 	
 func _place_ghost_rail() -> void:
+	return
 	if last_interaction_pos != null:
 		tile_map_interaction.place_ground(last_interaction_pos)
 	

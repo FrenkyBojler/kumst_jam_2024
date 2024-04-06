@@ -7,14 +7,12 @@ onready var sprite_horizontal = $SpriteHorizontal
 onready var sprite_corner_top_left = $SpriteCornerTopLeft
 onready var sprite_corner_top_right = $SpriteCornerTopRight
 
-const right_top_corner = Vector2(0, 0)
-const left_top_corner = Vector2(2, 0)
-const left_bottom_corner = Vector2(2, 2)
-const right_bottom_corner = Vector2(0, 2)
-const horizontal_1 = Vector2(1, 0)
-const horizontal_2 = Vector2(1, 2)
-const vertical_1 = Vector2(0, 1)
-const vertical_2 = Vector2(2, 1)
+const top_right_corner := 0
+const horizontal := 1
+const top_left_corner := 2
+const vertical := 3
+const bottom_right_corner := 4
+const bottom_left_corner := 5
 
 func _ready() -> void:
 	_turn_vertical()
@@ -51,21 +49,21 @@ func _turn_corner_bottome_left() -> void:
 	_turn_corner_top_right()
 
 func _on_Train_tile_changed(tile) -> void:
-	var auto_tile_coord = train.rail_tile_map.get_cell_autotile_coord(tile.x, tile.y)
+	var auto_tile_coord = train.rail_tile_map.get_cell(tile.x, tile.y)
 	
 	match(auto_tile_coord):
-		right_top_corner:
+		top_right_corner:
 			_turn_corner_top_right()
-		left_top_corner:
+		top_left_corner:
 			_turn_corner_top_left()
-		right_bottom_corner:
+		bottom_right_corner:
 			_turn_corner_bottom_right()
-		left_bottom_corner:
+		bottom_left_corner:
 			_turn_corner_bottome_left()
-		horizontal_1, horizontal_2:
+		horizontal:
 			if train.current_velocity.x < 0:
 				_turn_horizontal(true)
 			else:
 				_turn_horizontal(false)
-		vertical_1, vertical_2:
+		vertical:
 			_turn_vertical()
