@@ -4,7 +4,8 @@ onready var train := get_parent() as Train
 
 onready var sprite_vertical = $SpriteVertical
 onready var sprite_horizontal = $SpriteHorizontal
-onready var sprite_corner = $SpriteCorner
+onready var sprite_corner_top_left = $SpriteCornerTopLeft
+onready var sprite_corner_top_right = $SpriteCornerTopRight
 
 const right_top_corner = Vector2(0, 0)
 const left_top_corner = Vector2(2, 0)
@@ -21,26 +22,28 @@ func _ready() -> void:
 func _turn_vertical() -> void:
 	sprite_vertical.visible = true
 	sprite_horizontal.visible = false
-	sprite_corner.visible = false
+	sprite_corner_top_left.visible = false
+	sprite_corner_top_right.visible = false
 
 func _turn_horizontal(flip_h: bool) -> void:
 	sprite_vertical.visible = false
 	sprite_horizontal.visible = true
-	sprite_corner.visible = false
+	sprite_corner_top_left.visible = false
+	sprite_corner_top_right.visible = false
 	sprite_horizontal.flip_h = flip_h
 	
 func _turn_corner_top_right() -> void:
 	sprite_vertical.visible = false
 	sprite_horizontal.visible = false
-	sprite_corner.visible = true
-	sprite_corner.flip_h = false
+	sprite_corner_top_left.visible = false
+	sprite_corner_top_right.visible = true
 
 func _turn_corner_top_left() -> void:
 	sprite_vertical.visible = false
 	sprite_horizontal.visible = false
-	sprite_corner.visible = true
-	sprite_corner.flip_h = true
-	
+	sprite_corner_top_left.visible = true
+	sprite_corner_top_right.visible = false
+
 func _turn_corner_bottom_right() -> void:
 	_turn_corner_top_left()
 	

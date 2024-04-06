@@ -175,6 +175,12 @@ position = Vector2( -16, 173 )
 [node name="Train" parent="LongTrain" index="0"]
 rail_tile_map_path = NodePath("../../RailTileMap")
 
+[node name="FirstCabin" parent="LongTrain/Train" index="0"]
+visible = true
+
+[node name="SecondCabin" parent="LongTrain/Train" index="1"]
+visible = false
+
 [node name="Train2" parent="LongTrain" index="1"]
 rail_tile_map_path = NodePath("../../RailTileMap")
 
@@ -189,6 +195,7 @@ visible = false
 script = ExtResource( 9 )
 
 [editable path="LongTrain"]
+[editable path="LongTrain/Train"]
 [editable path="LongTrain/Train2"]
 [editable path="LongTrain/Train3"]
 [editable path="LongTrain/Train4"]

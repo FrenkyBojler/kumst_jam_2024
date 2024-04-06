@@ -11,6 +11,7 @@ extents = Vector2( 10, 13.5 )
 script = ExtResource( 1 )
 
 [node name="FirstCabin" type="Node2D" parent="."]
+visible = false
 script = ExtResource( 3 )
 
 [node name="SpriteVertical" type="Sprite" parent="FirstCabin"]
@@ -24,17 +25,24 @@ texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 96, 96, 32, 32 )
 
-[node name="SpriteCorner" type="Sprite" parent="FirstCabin"]
+[node name="SpriteCornerTopLeft" type="Sprite" parent="FirstCabin"]
+visible = false
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 192, 96, 32, 32 )
+
+[node name="SpriteCornerTopRight" type="Sprite" parent="FirstCabin"]
 visible = false
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 96, 96, 32, 32 )
+region_rect = Rect2( 192, 96, 32, 32 )
 
 [node name="SecondCabin" type="Node2D" parent="."]
-visible = false
 script = ExtResource( 3 )
 
 [node name="SpriteVertical" type="Sprite" parent="SecondCabin"]
+visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 128, 128, 32, 32 )
@@ -45,11 +53,18 @@ texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 96, 128, 32, 32 )
 
-[node name="SpriteCorner" type="Sprite" parent="SecondCabin"]
+[node name="SpriteCornerTopLeft" type="Sprite" parent="SecondCabin"]
+visible = false
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 192, 128, 32, 32 )
+
+[node name="SpriteCornerTopRight" type="Sprite" parent="SecondCabin"]
 visible = false
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 96, 128, 32, 32 )
+region_rect = Rect2( 192, 128, 32, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -0.5 )
