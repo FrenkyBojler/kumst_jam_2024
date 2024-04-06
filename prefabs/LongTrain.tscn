@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://prefabs/Train.tscn" type="PackedScene" id=1]
+
+[node name="LongTrain" type="Node2D"]
+
+[node name="Train" parent="." instance=ExtResource( 1 )]
+
+[node name="Train2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 31 )
+
+[node name="FirstCabin" parent="Train2" index="0"]
+visible = false
+
+[node name="SecondCabin" parent="Train2" index="1"]
+visible = true
+
+[node name="Train3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 61 )
+
+[node name="FirstCabin" parent="Train3" index="0"]
+visible = false
+
+[node name="SecondCabin" parent="Train3" index="1"]
+visible = true
+
+[node name="Train4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 91 )
+
+[node name="FirstCabin" parent="Train4" index="0"]
+visible = false
+
+[node name="SecondCabin" parent="Train4" index="1"]
+visible = true
+
+[editable path="Train2"]
+[editable path="Train3"]
+[editable path="Train4"]

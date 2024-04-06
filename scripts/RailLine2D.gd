@@ -4,9 +4,10 @@ onready var rail_tile_map = $"../RailTileMap"
 
 func _ready() -> void:
 	var index := 0
-	var start_coord = rail_tile_map.get_used_cells_by_id(2)[0]
+	var start_coord = _get_lowest_rail_coord()
 	var finish_coord = rail_tile_map.get_used_cells_by_id(3)[0]
 	var rails = rail_tile_map.get_used_cells_by_id(0)
+	rails.remove(rails.find(start_coord))
 	var path = PoolVector2Array()
 	path.push_back(start_coord)
 	var used_coords = PoolVector2Array()
@@ -24,3 +25,11 @@ func _ready() -> void:
 		var world_coord = rail_tile_map.map_to_world(coord)
 		add_point(Vector2(world_coord.x + 16, world_coord.y + 16), index)
 		index += 1
+		
+func _get_lowest_rail_coord() -> Vector2:
+	var rails = rail_tile_map.get_used_cells_by_id(0)
+	var lowest = rails[0]
+	for rail in rails:
+		if rail.y > lowest.y:
+			lowest = rail
+	return lowest

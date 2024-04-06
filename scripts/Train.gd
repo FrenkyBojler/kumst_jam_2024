@@ -1,17 +1,14 @@
 extends KinematicBody2D
 
+class_name Train
+
 export(NodePath) var rail_tile_map_path
 onready var rail_tile_map = get_node(rail_tile_map_path) as TileMap
 
-onready var sprite_vertical = $SpriteVertical
-onready var sprite_horizontal = $SpriteHorizontal
-onready var sprite_corner = $SpriteCorner
-
-onready var nav_agent = $NavigationAgent2D as NavigationAgent2D
 var nav_path: PoolVector2Array
 
 var current_velocity: Vector2 = Vector2.ZERO
-var speed := 100.0
+var speed := 40.0
 
 var rai_cell_id = 0
 var finish_cell_id = 3
@@ -21,24 +18,25 @@ var start_cell_coord: Vector2
 var finish_cell_coord: Vector2
 var rail_cells_coords: PoolVector2Array
 
+var last_cell_coords: Vector2
+
 #Vector2 or Null
 var target_pos
 
 var path: PoolVector2Array
 
-func _start_train() -> void:
-	_turn_vertical()
-	path = _get_path()
-	global_position = path[0]
-	target_pos = path[0]
+signal tile_changed(tile)
 
-func _ready() -> void:
-	pass
+func _start_train() -> void:
+	path = _get_path()
+	#global_position = path[0]
+	target_pos = path[1]
 
 func _get_path() -> PoolVector2Array:
-	var start_coord = rail_tile_map.get_used_cells_by_id(2)[0]
+	var start_coord = _get_lowest_rail_coord()
 	var finish_coord = rail_tile_map.get_used_cells_by_id(3)[0]
 	var rails = rail_tile_map.get_used_cells_by_id(0)
+	rails.remove(rails.find(start_coord))
 	var path = PoolVector2Array()
 	path.push_back(start_coord)
 	var used_coords = PoolVector2Array()
@@ -59,10 +57,23 @@ func _get_path() -> PoolVector2Array:
 		result.push_back(Vector2(world_coord.x + 16, world_coord.y + 16))
 		
 	return result
+	
+func _get_lowest_rail_coord() -> Vector2:
+	var rails = rail_tile_map.get_used_cells_by_id(0)
+	var lowest = rails[0]
+	for rail in rails:
+		if rail.y > lowest.y:
+			lowest = rail
+	return lowest
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("start_train") and target_pos == null:
 		_start_train()
+
+	var current_cell_coord = rail_tile_map.world_to_map(global_position)
+	if last_cell_coords != current_cell_coord:
+		last_cell_coords = current_cell_coord
+		emit_signal("tile_changed", last_cell_coords)
 
 	if target_pos != null:
 		if global_position.distance_to(target_pos) <= 1:
@@ -82,34 +93,4 @@ func _find_connected_rail_pos(current_rail_pos: Vector2):
 			return rail_pos
 	return null
 
-func _turn_vertical() -> void:
-	sprite_vertical.visible = true
-	sprite_horizontal.visible = false
-	sprite_corner.visible = false
 
-func _turn_horizontal() -> void:
-	sprite_vertical.visible = false
-	sprite_horizontal.visible = true
-	sprite_corner.visible = false
-	
-func _turn_corner_top_right() -> void:
-	sprite_vertical.visible = false
-	sprite_horizontal.visible = false
-	sprite_corner.visible = true
-	sprite_corner.flip_h = true
-
-func _turn_corner_top_left() -> void:
-	sprite_vertical.visible = false
-	sprite_horizontal.visible = false
-	sprite_corner.visible = true
-	sprite_corner.flip_h = false
-	
-func _turn_corner_bottom_right() -> void:
-	_turn_corner_top_left()
-	
-func _turn_corner_bottome_left() -> void:
-	_turn_corner_top_right()
-
-
-func _on_NavigationAgent2D_velocity_computed(safe_velocity: Vector2) -> void:
-	move_and_collide(safe_velocity)

@@ -23,7 +23,7 @@ func _ready() -> void:
 	player_last_y_pos = world_to_map(player.global_position).y
 	player_max_y_pos = player_last_y_pos
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var player_current_y_pos = world_to_map(player.global_position).y
 	if player_current_y_pos != player_last_y_pos:
 		if  player_max_y_pos > player_current_y_pos:

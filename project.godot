@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Tiles",
 "language": "GDScript",
 "path": "res://scripts/tiles.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Train",
+"language": "GDScript",
+"path": "res://scripts/Train.gd"
 } ]
 _global_script_class_icons={
 "Player": "",
 "TileMapGenerator": "",
-"Tiles": ""
+"Tiles": "",
+"Train": ""
 }
 
 [application]
