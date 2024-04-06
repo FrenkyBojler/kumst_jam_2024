@@ -10,8 +10,10 @@ onready var _last_player_map_pos = Vector2.ZERO
 
 onready var _cells_used_by_rail = rail_tile_map.get_used_cells_by_id(4)
 
+func _ready() -> void:
+	print_debug(rail_tile_map.get_used_cells_by_id(4))
+
 func _process(delta: float) -> void:
-	print()
 	if _last_player_map_pos == _get_player_map_pos():
 		return
 	
@@ -31,8 +33,8 @@ func _add_hard_shadow_to_surounding_cells() -> void:
 	var player_pos_x := player_map_pos.x
 	var player_pos_y := player_map_pos.y
 	
-	var rows := 5
-	var columns := 5
+	var rows := 25
+	var columns := 25
 	
 	for i in range(player_pos_x - rows, player_pos_x + rows):
 		for y in range(player_pos_y - columns, player_pos_y + columns):

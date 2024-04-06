@@ -144,7 +144,7 @@ modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
 shape = SubResource( 2 )
 
 [node name="BottomCollision" type="Area2D" parent="."]
-position = Vector2( -1, 15 )
+position = Vector2( 0, 18 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomCollision"]
 modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
