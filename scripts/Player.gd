@@ -56,8 +56,15 @@ const max_rotation_bottom = 180
 
 var is_drilling := false
 
+var is_touching := false
+var is_left_touching := false
+var is_right_touching := false
+var is_down_touching := false
+var is_up_touching := false
+
+
 func _process(delta: float) -> void:
-	#_movement_input()
+	_movement_input()
 	_check_actions_released()
 	_place_rail_input()
 	_move_by_current_velocity(delta)
@@ -65,19 +72,22 @@ func _process(delta: float) -> void:
 
 func _movement_input() -> void:
 	rotation_dir = 0
-	if Input.is_action_pressed("ui_left"):
-		is_left_pressed = true
-		current_velocity = Vector2.LEFT
-	elif Input.is_action_pressed("ui_right"):
-		is_right_pressed = true
-		current_velocity = Vector2.RIGHT
-	elif Input.is_action_pressed("ui_down"):
-		is_down_pressed = true
-		current_velocity = Vector2.DOWN
-	elif Input.is_action_pressed("ui_up"):
-		is_up_pressed = true
-		current_velocity = Vector2.UP
-		
+	if not is_touching:
+		if Input.is_action_pressed("ui_left"):
+			is_left_pressed = true
+			current_velocity = Vector2.LEFT
+		elif Input.is_action_pressed("ui_right"):
+			is_right_pressed = true
+			current_velocity = Vector2.RIGHT
+		elif Input.is_action_pressed("ui_down"):
+			is_down_pressed = true
+			current_velocity = Vector2.DOWN
+		elif Input.is_action_pressed("ui_up"):
+			is_up_pressed = true
+			current_velocity = Vector2.UP
+		else:
+			current_velocity = Vector2.ZERO
+
 	if not is_drilling:
 		_play_run_anim()
 
@@ -135,13 +145,13 @@ func _drill_progress() -> void:
 	#print_debug("drilling " + str(currently_drilled_cell_pos) + " for " + str(current_drill_time) + " seconds")
 	
 func _check_stop_drill_by_action_released() -> void:
-	if currently_drilling_pos == Vector2.LEFT and !is_left_pressed:
+	if currently_drilling_pos == Vector2.LEFT and !is_left_pressed and !is_left_touching:
 		_stop_drill()
-	elif currently_drilling_pos == Vector2.RIGHT and !is_right_pressed:
+	elif currently_drilling_pos == Vector2.RIGHT and !is_right_pressed and !is_right_touching:
 		_stop_drill()
-	elif currently_drilling_pos == Vector2.UP and !is_up_pressed:
+	elif currently_drilling_pos == Vector2.UP and !is_up_pressed and !is_up_touching:
 		_stop_drill()
-	elif currently_drilling_pos == Vector2.DOWN and !is_down_pressed:
+	elif currently_drilling_pos == Vector2.DOWN and !is_down_pressed and !is_down_touching:
 		_stop_drill()
 		
 func _get_collision_position_of_drilling() -> Vector2:
@@ -166,11 +176,14 @@ func _place_rail_input() -> void:
 		_place_ghost_rail()
 
 	if Input.is_action_just_pressed("interact"):
-		if not interaction_mode:
-			interaction_mode = true
-		else:
-			_place_rail()
-			interaction_mode = false
+		_trigger_place_rail()
+
+func _trigger_place_rail() -> void:
+	if not interaction_mode:
+		interaction_mode = true
+	else:
+		_place_rail()
+		interaction_mode = false
 
 func _place_rail() -> void:
 	var last_placed_rail_pos_backup = last_placed_rail_pos
@@ -212,27 +225,43 @@ func _play_run_anim() -> void:
 		animation_player.play("IdleUp")
 
 func _on_SwipeJoystick_swipe_down(speed) -> void:
-	print("TADY UP")
 	if speed != Vector2.ZERO:
+		_turn_off_touching()
+		is_touching = true
+		is_up_touching = true
 		current_velocity = Vector2.UP
 
 func _on_SwipeJoystick_swipe_left(speed) -> void:
-	print("TADY LEFT")
 	if speed != Vector2.ZERO:
+		_turn_off_touching()
+		is_touching = true
+		is_left_touching = true
 		current_velocity = Vector2.LEFT
 
 func _on_SwipeJoystick_swipe_right(speed) -> void:
-	print("TADY RIGHT")
 	if speed != Vector2.ZERO:
+		_turn_off_touching()	
+		is_touching = true
+		is_right_touching = true
 		current_velocity = Vector2.RIGHT
 
 func _on_SwipeJoystick_swipe_top(speed) -> void:
-	print("TADY DOWN")
 	if speed != Vector2.ZERO:
+		_turn_off_touching()
+		is_touching = true
+		is_down_touching = true
 		current_velocity = Vector2.DOWN
+		
+func _turn_off_touching() -> void:
+	is_right_touching = false
+	is_left_touching = false
+	is_up_touching = false
+	is_down_touching = false
 
 func _on_SwipeJoystick_touched() -> void:
-	pass
+	_trigger_place_rail()
 
 func _on_SwipeJoystick_touch_released() -> void:
 	current_velocity = Vector2.ZERO
+	_turn_off_touching()
+	is_touching = false
