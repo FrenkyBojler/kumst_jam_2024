@@ -165,7 +165,7 @@ tile_map_rails_path = NodePath("../RailTileMap")
 rotation = -0.00377699
 current = true
 zoom = Vector2( 0.4, 0.4 )
-limit_bottom = 800
+limit_bottom = 200
 smoothing_enabled = true
 script = ExtResource( 7 )
 
