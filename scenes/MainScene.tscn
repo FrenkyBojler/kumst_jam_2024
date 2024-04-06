@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/tiles.gd" type="Script" id=2]
 [ext_resource path="res://prefabs/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://prefabs/Train.tscn" type="PackedScene" id=4]
 [ext_resource path="res://tilemap.tres" type="TileSet" id=5]
+[ext_resource path="res://scripts/ShadowTileMap.gd" type="Script" id=6]
 
 [sub_resource type="TileSet" id=4]
 0/name = "rail"
@@ -21,6 +22,36 @@
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
+
+[sub_resource type="TileSet" id=5]
+0/name = "tilemap.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 160, 0, 32, 32 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "tilemap.png 1"
+1/texture = ExtResource( 1 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 192, 0, 32, 32 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
 
 [node name="MainScene" type="Node2D"]
 
@@ -42,7 +73,7 @@ cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
 bake_navigation = true
 format = 1
-tile_data = PoolIntArray( -262147, 1, 0, -262146, 2, 0, -262145, 2, 0, -327680, 2, 0, -327679, 2, 0, -327678, 2, 0, -196611, 1, 0, -196610, 2, 0, -196609, 2, 0, -262144, 6, 0, -262143, 6, 0, -262142, 3, 0, -131075, 1, 0, -131074, 6, 0, -131073, 2, 0, -196608, 2, 0, -196607, 2, 0, -196606, 3, 0, -65539, 1, 0, -65538, 6, 0, -65537, 2, 0, -131072, 2, 0, -131071, 2, 0, -131070, 3, 0, -3, 1, 0, -2, 2, 0, -1, 6, 0, -65536, 2, 0, -65535, 2, 0, -65534, 3, 0, 65533, 1, 0, 65534, 2, 0, 65535, 2, 0, 0, 2, 0, 1, 6, 0, 2, 3, 0, 131069, 1, 0, 131070, 2, 0, 131071, 2, 0, 65536, 6, 0, 65537, 2, 0, 65538, 3, 0, 196605, 1, 0, 196606, 2, 0, 131072, 6, 0, 131073, 2, 0, 131074, 3, 0, 262141, 1, 0, 262142, 2, 0, 196608, 2, 0, 196609, 2, 0, 196610, 3, 0 )
+tile_data = PoolIntArray( -327683, 1, 0, -262147, 1, 0, -262146, 2, 0, -262145, 2, 0, -327680, 6, 0, -327679, 2, 0, -327678, 2, 0, -196611, 1, 0, -196610, 2, 0, -196609, 2, 0, -262144, 6, 0, -262143, 2, 0, -262142, 3, 0, -131075, 1, 0, -131074, 2, 0, -131073, 2, 0, -196608, 6, 0, -196607, 6, 0, -196606, 3, 0, -65539, 1, 0, -65538, 6, 0, -65537, 2, 0, -131072, 2, 0, -131071, 2, 0, -131070, 3, 0, -3, 1, 0, -2, 2, 0, -65536, 2, 0, -65535, 2, 0, -65534, 3, 0, 65533, 1, 0, 65534, 2, 0, 65535, 2, 0, 0, 6, 0, 1, 2, 0, 2, 3, 0, 131069, 1, 0, 131070, 6, 0, 131071, 2, 0, 65536, 6, 0, 65537, 2, 0, 65538, 3, 0, 196605, 1, 0, 196606, 2, 0, 131072, 6, 0, 131073, 2, 0, 131074, 3, 0, 262141, 1, 0, 262142, 2, 0, 196608, 6, 0, 196609, 6, 0, 196610, 3, 0 )
 script = ExtResource( 2 )
 
 [node name="TileMapInteraction" type="TileMap" parent="."]
@@ -61,8 +92,16 @@ format = 1
 tile_data = PoolIntArray( -327681, 4, 0, 196607, 4, 2, 262143, 4, 65538, 327679, 4, 65538, 393214, 4, 0, 393215, 4, 131074 )
 script = ExtResource( 2 )
 
+[node name="ShadowTileMap" type="TileMap" parent="."]
+tile_set = SubResource( 5 )
+cell_size = Vector2( 32, 32 )
+format = 1
+script = ExtResource( 6 )
+player_node_path = NodePath("../Player")
+rail_tile_map_path = NodePath("../RailTileMap")
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( -15, 110 )
+position = Vector2( -16, -17 )
 tile_map_path = NodePath("../RealTileMap")
 tile_map_interaction_path = NodePath("../TileMapInteraction")
 tile_map_rails_path = NodePath("../RailTileMap")
