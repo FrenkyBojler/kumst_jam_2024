@@ -1,0 +1,225 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://textures/ui_dialog_window.png" type="Texture" id=1]
+[ext_resource path="res://scripts/SpeechContainer.gd" type="Script" id=2]
+[ext_resource path="res://font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://textures/ui_mayor_photo.png" type="Texture" id=4]
+[ext_resource path="res://textures/ui_miner_photo.png" type="Texture" id=5]
+[ext_resource path="res://textures/ui_dialog_arrow.png" type="Texture" id=6]
+
+[node name="SpeechContainer" type="Sprite"]
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="MayorControl" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -128.0
+margin_top = -32.0
+margin_right = -128.0
+margin_bottom = -32.0
+
+[node name="MayorImage" type="TextureRect" parent="MayorControl"]
+anchor_left = 0.023
+anchor_top = 0.141
+anchor_right = 0.23
+anchor_bottom = 0.937
+margin_left = 0.112
+margin_top = -0.0240002
+margin_right = 0.119999
+margin_bottom = 0.0319977
+texture = ExtResource( 4 )
+
+[node name="MayerLabel" type="Label" parent="MayorControl"]
+margin_left = 71.0
+margin_top = 5.0
+margin_right = 251.0
+margin_bottom = 19.0
+custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "MAYOR OF BRNO"
+
+[node name="MayorText" type="Label" parent="MayorControl"]
+anchor_left = 0.287
+anchor_top = 0.25
+anchor_right = 0.973
+anchor_bottom = 0.875
+margin_left = -2.472
+margin_right = -0.0880127
+margin_bottom = 0.999996
+custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "It's quite simple, really. Shut the fuck up"
+percent_visible = -0.0277778
+
+[node name="MayorTextTimer" type="Timer" parent="MayorControl/MayorText"]
+wait_time = 0.05
+autostart = true
+
+[node name="ArrowNext" type="TextureRect" parent="MayorControl"]
+visible = false
+margin_left = 246.0
+margin_top = 53.0
+margin_right = 252.0
+margin_bottom = 59.0
+texture = ExtResource( 6 )
+
+[node name="MinerControl" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -128.0
+margin_top = -32.0
+margin_right = -128.0
+margin_bottom = -32.0
+
+[node name="MinerImage" type="TextureRect" parent="MinerControl"]
+anchor_left = 0.023
+anchor_top = 0.141
+anchor_right = 0.23
+anchor_bottom = 0.937
+margin_left = -0.888
+margin_top = -5.024
+margin_right = 1.12
+margin_bottom = -3.968
+texture = ExtResource( 5 )
+
+[node name="MinerLabel" type="Label" parent="MinerControl"]
+anchor_left = 0.277
+anchor_top = 0.078
+anchor_right = 0.98
+anchor_bottom = 0.297
+margin_left = 0.0879974
+margin_top = 0.0079999
+margin_right = 0.119995
+margin_bottom = -0.00800133
+custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "YOU"
+
+[node name="MinerText" type="Label" parent="MinerControl"]
+anchor_left = 0.287
+anchor_top = 0.25
+anchor_right = 0.973
+anchor_bottom = 0.875
+margin_left = -2.472
+margin_right = -0.0880127
+margin_bottom = 0.999996
+custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = ". . ."
+
+[node name="HowButton" type="Control" parent="MinerControl"]
+anchor_left = 0.366
+anchor_top = 0.787
+anchor_right = 0.366
+anchor_bottom = 0.787
+margin_left = -36.696
+margin_top = -17.368
+margin_right = 1.30399
+margin_bottom = 22.632
+
+[node name="HowImage" type="TextureRect" parent="MinerControl/HowButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.0
+margin_top = -1.0
+margin_right = 2.30399
+margin_bottom = 4.0
+texture = ExtResource( 6 )
+
+[node name="How" type="Label" parent="MinerControl/HowButton"]
+anchor_left = 0.875
+anchor_top = 0.525
+anchor_right = 0.875
+anchor_bottom = 0.525
+margin_left = -11.0
+margin_top = -5.0
+margin_right = 11.0
+margin_bottom = 5.0
+custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "How?"
+
+[node name="KButton" type="Control" parent="MinerControl"]
+anchor_left = 0.366
+anchor_top = 0.787
+anchor_right = 0.366
+anchor_bottom = 0.787
+margin_left = 32.304
+margin_top = -17.368
+margin_right = 70.304
+margin_bottom = 22.632
+
+[node name="KImage" type="TextureRect" parent="MinerControl/KButton"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.0
+margin_top = -1.0
+margin_right = 2.30399
+margin_bottom = 4.0
+texture = ExtResource( 6 )
+
+[node name="K" type="Label" parent="MinerControl/KButton"]
+anchor_left = 0.875
+anchor_top = 0.525
+anchor_right = 0.875
+anchor_bottom = 0.525
+margin_left = -11.0
+margin_top = -5.0
+margin_right = 11.0
+margin_bottom = 5.0
+custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "K."
+
+[node name="NehButton" type="Control" parent="MinerControl"]
+anchor_left = 0.366
+anchor_top = 0.787
+anchor_right = 0.366
+anchor_bottom = 0.787
+margin_left = 100.304
+margin_top = -18.368
+margin_right = 138.304
+margin_bottom = 21.632
+
+[node name="NehImage" type="TextureRect" parent="MinerControl/NehButton"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.0
+margin_top = -1.0
+margin_right = 2.30399
+margin_bottom = 4.0
+texture = ExtResource( 6 )
+
+[node name="NEh" type="Label" parent="MinerControl/NehButton"]
+anchor_left = 0.875
+anchor_top = 0.525
+anchor_right = 0.875
+anchor_bottom = 0.525
+margin_left = -11.0
+margin_top = -5.0
+margin_right = 11.0
+margin_bottom = 5.0
+custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "Neh."
+
+[node name="ChangeSpeechTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="mayor_intro_text_finished" from="." to="." method="_on_SpeechContainer_mayor_intro_text_finished"]
+[connection signal="mayor_tut_1_finished" from="." to="." method="_on_SpeechContainer_mayor_tut_1_finished"]
+[connection signal="mayor_tut_2_finished" from="." to="." method="_on_SpeechContainer_mayor_tut_2_finished"]
+[connection signal="mayor_tut_3_finished" from="." to="." method="_on_SpeechContainer_mayor_tut_3_finished"]
+[connection signal="mayor_tut_4_finished" from="." to="." method="_on_SpeechContainer_mayor_tut_4_finished"]
+[connection signal="timeout" from="MayorControl/MayorText/MayorTextTimer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="ChangeSpeechTimer" to="." method="_on_ChangeSpeechTimer_timeout"]

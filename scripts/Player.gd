@@ -69,10 +69,15 @@ var is_right_touching := false
 var is_down_touching := false
 var is_up_touching := false
 
+var is_paused := true
+
 func _ready() -> void:
 	_play_idle_anim()
 
 func _process(delta: float) -> void:
+	if is_paused:
+		return
+
 	_movement_input()
 	_check_actions_released()
 	_place_rail_input()
@@ -325,5 +330,15 @@ func _turn_off_all_lights(node: Node2D) -> void:
 func _on_RemoveRailTimer_timeout() -> void:
 	tile_map_rails.remove_rail(tile_map_rails.world_to_map(global_position))
 	
-func _on_Train_train_finished() -> void:
+func _on_Train_train_finished(score) -> void:
+	is_paused = true
 	_turn_off_all_lights(self)
+
+func _on_SpeechContainer_game_started() -> void:
+	is_paused = false
+
+func _on_SpeechContainer_game_paused() -> void:
+	is_paused = true
+
+func _on_SpeechContainer_game_resumed() -> void:
+	is_paused = false

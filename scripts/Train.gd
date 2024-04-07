@@ -29,7 +29,7 @@ var target_pos
 var path: PoolVector2Array
 
 signal tile_changed(tile)
-signal train_finished
+signal train_finished(score)
 
 const top_right_corner := 0
 const horizontal := 1
@@ -44,8 +44,9 @@ export(bool) var is_leading_train = false
 
 var tiles_traveled := 0
 var stop_after_tiles_traveled := 80
+var score := 0
 
-var is_paused := false
+var is_paused := true
 
 func _pause_train() -> void:
 	$RestTrainTimer.start()
@@ -114,6 +115,7 @@ func _process(delta: float) -> void:
 	if last_cell_coords != current_cell_coord:
 		last_cell_coords = current_cell_coord
 		tiles_traveled += 1
+		score += 1
 		
 		if tiles_traveled >= stop_after_tiles_traveled:
 			_pause_train()
@@ -139,7 +141,7 @@ func _process(delta: float) -> void:
 		move_and_collide(current_velocity * speed * delta)
 
 func _train_crashed() -> void:
-	emit_signal("train_finished")
+	emit_signal("train_finished", score)
 	print_debug("train crashed")
 	_turn_off_all_lights(self)
 
@@ -170,3 +172,13 @@ func _on_RestTrainTimer_timeout() -> void:
 	is_paused = false
 	tiles_traveled = 0
 	speed += 5
+
+func _on_SpeechContainer_game_started() -> void:
+	is_paused = false
+	$StartTrainTimer.start()
+
+func _on_SpeechContainer_game_paused() -> void:
+	is_paused = true
+	
+func _on_SpeechContainer_game_resumed() -> void:
+	is_paused = false
