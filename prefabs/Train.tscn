@@ -296,8 +296,9 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 20.0
 one_shot = true
+autostart = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
