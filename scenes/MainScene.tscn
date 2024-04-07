@@ -184,7 +184,7 @@ visible = false
 script = ExtResource( 9 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.0313726, 0.0784314, 0.117647, 1 )
+color = Color( 0.219608, 0.247059, 0.270588, 1 )
 
 [node name="GroundTileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 5 )
