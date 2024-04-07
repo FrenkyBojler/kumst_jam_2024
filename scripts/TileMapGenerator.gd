@@ -6,12 +6,16 @@ onready var player_last_y_pos: int
 onready var player_max_y_pos: int
 onready var max_y_pos = _get_max_y_pos_from_used_cells()
 
+export(NodePath) var ground_tile_map_path
+onready var ground_tile_map = get_node(ground_tile_map_path)
+
 const generator_ground_id = 5
 const generator_wall_id = 2
 const generator_rock_id = 6
 const generator_left_barrier_id = 1
 const generator_right_barrier_id = 3
 const generator_side = 9
+const generator_hole = 13
 
 const max_generated_value = 20
 var random_tile_id_generator = RandomNumberGenerator.new()
@@ -51,20 +55,53 @@ func _place_new_tile_at_row(row: int) -> void:
 	
 	var wall_from_prev_x_index = null
 	
+	var path_row
 	if not generate_only_ground:
-		var path_row = _get_path_at_row(row)
+		path_row = _get_path_at_row(row)
 		if path_row.size() != 0:
 			generated_tiles = _fix_row_by_path(generated_tiles, path_row)
-
+			_place_hole_under_wall(generated_tiles, path_row, row)
 	for tile in generated_tiles:
 		if generate_only_ground:
 			set_cell(start_index_x, row, generator_ground_id)
+			pass
 		else:
 			if start_index_x == wall_from_prev_x_index:
 				set_cell(start_index_x, row, generator_wall_id)
 			else:
 				set_cell(start_index_x, row, generated_tiles[index])
 		start_index_x += 1
+		index += 1
+
+func _place_hole_under_wall(row: PoolIntArray, row_path: PoolVector2Array, row_index: int) -> void:
+	var index = 0
+	var was_hole_set = false
+	var actual_row = PoolIntArray()
+	var i = 0
+	for r in row:
+		if i <= 1:
+			i += 1
+			continue
+		if actual_row.size() == 4:
+			break
+		actual_row.push_back(r)
+		
+		
+		
+	for tile in actual_row:
+		if tile != generator_wall_id:
+			index +=1
+			continue
+		for r in row_path:
+			var path_index = abs(-4) + r.x
+			if path_index == index:
+				continue
+			else:
+				ground_tile_map.set_cellv(Vector2(-4 + index, row_index), generator_hole)
+				was_hole_set = true
+				break
+		if was_hole_set:
+			break
 		index += 1
 
 func _fix_row_by_path(row: PoolIntArray, row_path: PoolVector2Array) -> PoolIntArray:

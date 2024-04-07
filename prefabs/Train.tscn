@@ -296,7 +296,7 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="StartTrainTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 200.0
 one_shot = true
 
 [node name="RestTrainTimer" type="Timer" parent="."]

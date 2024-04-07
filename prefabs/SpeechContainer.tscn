@@ -50,7 +50,6 @@ margin_bottom = 0.999996
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "It's quite simple, really. Shut the fuck up"
-percent_visible = -0.0277778
 
 [node name="MayorTextTimer" type="Timer" parent="MayorControl/MayorText"]
 wait_time = 0.05
