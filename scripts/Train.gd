@@ -135,3 +135,6 @@ func _on_Timer_timeout() -> void:
 
 func _on_RailTileMap_path_updated(tile) -> void:
 	path.push_back(tile)
+
+func _on_RailTileMap_path_remove_last_tile() -> void:
+	path.remove(path.size() - 1)

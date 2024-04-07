@@ -179,10 +179,6 @@
 position = Vector2( -171, 12 )
 scale = Vector2( 3, 3 )
 
-[node name="Line2D" type="Line2D" parent="."]
-visible = false
-script = ExtResource( 9 )
-
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.219608, 0.247059, 0.270588, 1 )
 
@@ -238,6 +234,10 @@ script = ExtResource( 6 )
 player_node_path = NodePath("../Player")
 rail_tile_map_path = NodePath("../RailTileMap")
 
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+script = ExtResource( 9 )
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, 20 )
 tile_map_path = NodePath("../RealTileMap")
@@ -279,6 +279,11 @@ real_tile_map_path = NodePath("../../RealTileMap")
 [connection signal="touch_released" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_touch_released"]
 [connection signal="touched" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_touched"]
 [connection signal="map_size_increased" from="RealTileMap" to="RailTileMap" method="_on_RealTileMap_map_size_increased"]
+[connection signal="path_remove_last_tile" from="RailTileMap" to="Line2D" method="_on_RailTileMap_path_remove_last_tile"]
+[connection signal="path_remove_last_tile" from="RailTileMap" to="LongTrain/Train" method="_on_RailTileMap_path_remove_last_tile"]
+[connection signal="path_remove_last_tile" from="RailTileMap" to="LongTrain/Train2" method="_on_RailTileMap_path_remove_last_tile"]
+[connection signal="path_remove_last_tile" from="RailTileMap" to="LongTrain/Train3" method="_on_RailTileMap_path_remove_last_tile"]
+[connection signal="path_remove_last_tile" from="RailTileMap" to="LongTrain/Train4" method="_on_RailTileMap_path_remove_last_tile"]
 [connection signal="path_updated" from="RailTileMap" to="Line2D" method="_on_RailTileMap_path_updated"]
 [connection signal="path_updated" from="RailTileMap" to="LongTrain/Train" method="_on_RailTileMap_path_updated"]
 [connection signal="path_updated" from="RailTileMap" to="LongTrain/Train2" method="_on_RailTileMap_path_updated"]

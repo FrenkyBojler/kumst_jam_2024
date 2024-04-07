@@ -221,6 +221,10 @@ shape = SubResource( 2 )
 [node name="DrillTimer" type="Timer" parent="."]
 wait_time = 0.3
 
+[node name="RemoveRailTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="LightDown" type="Light2D" parent="."]
 visible = false
 position = Vector2( 0, 58 )
@@ -272,3 +276,4 @@ visible = false
 color = Color( 0, 0, 0, 1 )
 
 [connection signal="timeout" from="DrillTimer" to="." method="_on_DrillTimer_timeout"]
+[connection signal="timeout" from="RemoveRailTimer" to="." method="_on_RemoveRailTimer_timeout"]

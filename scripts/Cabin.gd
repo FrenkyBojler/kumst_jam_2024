@@ -32,7 +32,7 @@ func _turn_off_all() -> void:
 	sprite_corner_top_left.visible = false
 	sprite_corner_top_right.visible = false
 	sprite_corner_bottom_left.visible = false
-	sprite_corner_bottom_left.visible = false
+	sprite_corner_bottom_right.visible = false
 
 func _turn_vertical_top() -> void:
 	_turn_off_all()

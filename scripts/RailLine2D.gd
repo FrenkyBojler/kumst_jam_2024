@@ -29,3 +29,6 @@ func _get_lowest_rail_coord() -> Vector2:
 func _on_RailTileMap_path_updated(tile) -> void:
 	clear_points()
 	_init_vole()
+
+func _on_RailTileMap_path_remove_last_tile() -> void:
+	remove_point(points.size() - 1)

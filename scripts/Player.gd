@@ -22,6 +22,7 @@ onready var light_up: Light2D = $LightUp
 onready var light_down: Light2D = $LightDown
 
 onready var drill_timer: Timer = $DrillTimer
+onready var remove_rail_timer: Timer = $RemoveRailTimer
 
 onready var sprite: Sprite = $Sprite
 onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -66,7 +67,6 @@ var is_left_touching := false
 var is_right_touching := false
 var is_down_touching := false
 var is_up_touching := false
-
 
 func _process(delta: float) -> void:
 	_movement_input()
@@ -119,7 +119,6 @@ func _check_wall_collision(collision: KinematicCollision2D) -> void:
 			_start_drill()
 
 func _start_drill() -> void:
-	#print_debug("start drilling " + str(currently_drilled_cell_pos))
 	animation_player.play("Drill")
 	_reset_drill_timer()
 	drill_timer.start()
@@ -131,7 +130,6 @@ func _check_stop_drill(pos) -> void:
 		_stop_drill()
 
 func _stop_drill() -> void:
-	#print_debug("stop drilling")
 	_reset_drill_timer()
 	_play_idle_anim()
 	currently_drilled_cell_pos = null
@@ -147,8 +145,7 @@ func _drill_progress() -> void:
 	if current_drill_time >= max_drill_timer:
 		tile_map.place_ground(currently_drilled_cell_pos)
 		_stop_drill()
-	#print_debug("drilling " + str(currently_drilled_cell_pos) + " for " + str(current_drill_time) + " seconds")
-	
+
 func _check_stop_drill_by_action_released() -> void:
 	if currently_drilling_pos == Vector2.LEFT and !is_left_pressed and !is_left_touching:
 		_stop_drill()
@@ -182,6 +179,10 @@ func _place_rail_input() -> void:
 
 	if Input.is_action_just_pressed("interact"):
 		_trigger_place_rail()
+		remove_rail_timer.start()
+		
+	if Input.is_action_just_released("interact"):
+		remove_rail_timer.stop()
 
 func _trigger_place_rail() -> void:
 	if not interaction_mode:
@@ -294,3 +295,7 @@ func _on_SwipeJoystick_touch_released() -> void:
 	current_velocity = Vector2.ZERO
 	_turn_off_touching()
 	is_touching = false
+
+
+func _on_RemoveRailTimer_timeout() -> void:
+	tile_map_rails.remove_rail(tile_map_rails.world_to_map(global_position))

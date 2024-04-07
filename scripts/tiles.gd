@@ -21,6 +21,7 @@ var last_last_placed_rail = null
 var path := PoolVector2Array()
 
 signal path_updated(tile)
+signal path_remove_last_tile
 
 func _ready() -> void:
 	if is_rail:
@@ -36,6 +37,15 @@ func place_ghost_rail(coords: Vector2) -> void:
 	if coords.distance_to(actual_rail_tile_map.last_placed_rail) > 1 or get_cellv(coords) != -1:
 		return
 	set_cellv(coords, rail_tile)
+
+func remove_rail(coords: Vector2) -> void:
+	print_debug("Coords: ", coords, " | ", get_cellv(coords))
+	if coords == path[path.size() - 1] and rails.has(get_cellv(coords)):
+		path.remove(path.size() -1)
+		last_placed_rail = path[path.size() - 1]
+		last_last_placed_rail = path[path.size() -2]
+		emit_signal("path_remove_last_tile")
+		set_cellv(coords, -1)
 
 func place_rails(coords: Vector2) -> void:
 	if coords.distance_to(last_placed_rail) > 1 or get_cellv(coords) != -1:
@@ -63,12 +73,15 @@ func _on_RealTileMap_map_size_increased(max_row) -> void:
 	if is_rail_placing_tile_set:
 		_place_finish_tile_at_row(max_row)
 		pass
+
 const top_right_corner := 0
 const horizontal := 1
 const top_left_corner := 2
 const vertical := 3
 const bottom_right_corner := 4
 const bottom_left_corner := 5
+
+const rails = [top_right_corner, horizontal, top_left_corner, vertical, bottom_right_corner, bottom_left_corner]
 
 func _get_rail_to_place(coords: Vector2, prev_tile_coords: Vector2) -> int:
 	if _is_on_left(coords, prev_tile_coords):
