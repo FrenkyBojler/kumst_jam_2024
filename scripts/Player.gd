@@ -16,18 +16,19 @@ onready var right_collision: Area2D = $RightCollision
 onready var top_collision: Area2D = $TopCollision
 onready var bottom_collision: Area2D = $BottomCollision
 
-onready var light_left: Light2D = $LightLeft
-onready var light_right: Light2D = $LightRight
-onready var light_up: Light2D = $LightUp
-onready var light_down: Light2D = $LightDown
+onready var light_left: Light2D = $SpriteContainer/LightLeft
+onready var light_right: Light2D = $SpriteContainer/LightRight
+onready var light_up: Light2D = $SpriteContainer/LightUp
+onready var light_down: Light2D = $SpriteContainer/LightDown
 
 onready var drill_timer: Timer = $DrillTimer
 onready var remove_rail_timer: Timer = $RemoveRailTimer
 
-onready var sprite: Sprite = $Sprite
+onready var sprite: Sprite = $SpriteContainer/Sprite
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var current_velocity := Vector2.ZERO
+var last_velocity := Vector2.UP
 var rotation_dir = 0
 var speed := 100.0
 var rotation_speed := 5.0
@@ -68,6 +69,9 @@ var is_right_touching := false
 var is_down_touching := false
 var is_up_touching := false
 
+func _ready() -> void:
+	_play_idle_anim()
+
 func _process(delta: float) -> void:
 	_movement_input()
 	_check_actions_released()
@@ -92,9 +96,13 @@ func _movement_input() -> void:
 			current_velocity = Vector2.UP
 		else:
 			current_velocity = Vector2.ZERO
+			
+		if current_velocity != Vector2.ZERO:
+			last_velocity = current_velocity
 
 	if not is_drilling:
 		_play_run_anim()
+		_play_idle_anim()
 
 func _check_actions_released() -> void:
 	if Input.is_action_just_released("ui_left"):
@@ -179,12 +187,12 @@ func _place_rail_input() -> void:
 
 	if Input.is_action_just_pressed("interact"):
 		_trigger_place_rail()
-		remove_rail_timer.start()
-		
+
 	if Input.is_action_just_released("interact"):
 		remove_rail_timer.stop()
 
 func _trigger_place_rail() -> void:
+	remove_rail_timer.start()
 	if not interaction_mode:
 		interaction_mode = true
 	else:
@@ -215,23 +223,25 @@ func _turn_off_lights() -> void:
 	light_down.visible = false
 
 func _play_idle_anim() -> void:
-	if current_velocity == Vector2.LEFT:
+	if current_velocity != Vector2.ZERO:
+		return
+	if last_velocity == Vector2.LEFT:
 		_turn_off_lights()
 		light_left.visible = true
 		animation_player.play("IdleLeft")
-	if current_velocity == Vector2.RIGHT:
+	if last_velocity == Vector2.RIGHT:
 		_turn_off_lights()
 		light_right.visible = true
 		animation_player.play("IdleRight")
-	if current_velocity == Vector2.DOWN:
+	if last_velocity == Vector2.DOWN:
 		_turn_off_lights()
 		light_down.visible = true
 		animation_player.play("IdleDown")
-	if current_velocity == Vector2.UP:
+	if last_velocity == Vector2.UP:
 		_turn_off_lights()
 		light_up.visible = true
 		animation_player.play("IdleUp")
-	if current_velocity == Vector2.ZERO:
+	if last_velocity == Vector2.ZERO:
 		_turn_off_lights()
 		light_up.visible = true
 		animation_player.play("IdleUp")
@@ -240,19 +250,19 @@ func _play_run_anim() -> void:
 	if current_velocity == Vector2.LEFT:
 		_turn_off_lights()
 		light_left.visible = true
-		animation_player.play("IdleLeft")
+		animation_player.play("RunLeft")
 	if current_velocity == Vector2.RIGHT:
 		_turn_off_lights()
 		light_right.visible = true
-		animation_player.play("IdleRight")
+		animation_player.play("RunRight")
 	if current_velocity == Vector2.DOWN:
 		_turn_off_lights()
 		light_down.visible = true
-		animation_player.play("IdleDown")
+		animation_player.play("RunDown")
 	if current_velocity == Vector2.UP:
 		_turn_off_lights()
 		light_up.visible = true
-		animation_player.play("IdleUp")
+		animation_player.play("RunUp")
 
 func _on_SwipeJoystick_swipe_down(speed) -> void:
 	if speed != Vector2.ZERO:
@@ -270,7 +280,7 @@ func _on_SwipeJoystick_swipe_left(speed) -> void:
 
 func _on_SwipeJoystick_swipe_right(speed) -> void:
 	if speed != Vector2.ZERO:
-		_turn_off_touching()	
+		_turn_off_touching()
 		is_touching = true
 		is_right_touching = true
 		current_velocity = Vector2.RIGHT
@@ -287,22 +297,33 @@ func _turn_off_touching() -> void:
 	is_left_touching = false
 	is_up_touching = false
 	is_down_touching = false
+	
+var was_touching_and_released := false
+var touched := false
 
 func _on_SwipeJoystick_touched() -> void:
-	_trigger_place_rail()
+	touched = true
 
 func _on_SwipeJoystick_touch_released() -> void:
+	if touched and not is_touching:
+		touched = false
+		_trigger_place_rail()
+
 	current_velocity = Vector2.ZERO
 	_turn_off_touching()
 	is_touching = false
+	remove_rail_timer.stop()
 	
-func _turn_off_all_lights() -> void:
-	for child in get_children():
+
+func _turn_off_all_lights(node: Node2D) -> void:
+	for child in node.get_children():
 		if child is Light2D:
 			child.enabled = false
+		elif child.get_child_count() > 0 :
+			_turn_off_all_lights(child)
 
 func _on_RemoveRailTimer_timeout() -> void:
 	tile_map_rails.remove_rail(tile_map_rails.world_to_map(global_position))
 	
 func _on_Train_train_finished() -> void:
-	_turn_off_all_lights()
+	_turn_off_all_lights(self)

@@ -177,7 +177,6 @@
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="SwipeJoystick" parent="CanvasLayer" instance=ExtResource( 10 )]
-visible = false
 position = Vector2( -171, 12 )
 scale = Vector2( 3, 3 )
 

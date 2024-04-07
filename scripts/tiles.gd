@@ -28,6 +28,7 @@ func _ready() -> void:
 		last_placed_rail = _find_start_rail()
 		if is_rail_placing_tile_set:
 			last_placed_rail = _get_start_last_trail_tile()
+			last_last_placed_rail = Vector2(last_placed_rail.x, last_placed_rail.y + 1)
 			path.push_back(last_placed_rail)
 			emit_signal("path_updated", last_placed_rail)
 

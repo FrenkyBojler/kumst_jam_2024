@@ -7,19 +7,6 @@ const CHANGE_DIRECTION_THRESHOLD = 5
 var initial_touch_position = Vector2.ZERO
 
 func _on_Area2D_input_event(_viewport, event, _shape_idx):
-	if event is InputEventScreenTouch:
-		if event.is_pressed():
-			initial_touch_position = event.position
-			print("Touched")
-			#_print_out_gesture("Touched")
-			_reset_swipes()
-			emit_signal("touched")
-		if !event.is_pressed():
-			initial_touch_position = Vector2.ZERO
-			print("Released")
-			#_print_out_gesture("Released")
-			_reset_swipes()
-			emit_signal("touch_released")
 	if event is InputEventScreenDrag:
 		if event.position.x < initial_touch_position.x and abs(event.position.x - initial_touch_position.x) > CHANGE_DIRECTION_THRESHOLD:
 			print("Swipe Left -  " + str(abs(event.position.x - initial_touch_position.x)))
@@ -38,6 +25,21 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		else:
 			_reset_swipes()
 		initial_touch_position = event.position
+		return
+	if event is InputEventScreenTouch:
+		if event.is_pressed():
+			initial_touch_position = event.position
+			print("Touched")
+			#_print_out_gesture("Touched")
+			_reset_swipes()
+			emit_signal("touched")
+		if !event.is_pressed():
+			initial_touch_position = Vector2.ZERO
+			print("Released")
+			#_print_out_gesture("Released")
+			_reset_swipes()
+			emit_signal("touch_released")
+	
 
 func _reset_swipes():
 	emit_signal("swipe_left", Vector2.ZERO)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
@@ -11,7 +11,7 @@ resource_name = "Drill"
 length = 0.1
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -25,8 +25,10 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=8]
 resource_name = "IdleDown"
+length = 0.1
+loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -38,7 +40,7 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -49,11 +51,35 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Rect2( 96, 32, 32, 32 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer/LightDown:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 8.47033e-22, 58 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "IdleLeft"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -65,7 +91,7 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -76,11 +102,23 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Rect2( 64, 32, 32, 32 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "IdleRight"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -92,7 +130,7 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -103,11 +141,23 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Rect2( 32, 32, 32, 32 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "IdleUp"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -119,7 +169,7 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -130,11 +180,35 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Rect2( 0, 32, 32, 32 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer/LightUp:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -75 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -146,7 +220,7 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -156,6 +230,350 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Rect2( 64, 32, 32, 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteContainer:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -11 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteContainer/Sprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 14 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("SpriteContainer/LightDown:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2.38419e-07, 30 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("SpriteContainer/LightUp:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -47 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "RunDown"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 96, 32, 32, 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 9.37581e-05 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -11 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteContainer/Sprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 14 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 10.0, 0.0, -10.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("SpriteContainer/LightDown:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.42109e-14, 58 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "RunLeft"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 64, 32, 32, 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 12 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteContainer/Sprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -14 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 10.0, 0.0, -10.0 ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "RunRight"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 32, 32, 32, 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 12 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteContainer/Sprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -14 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 10.0, 0.0, -10.0 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "RunUp"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteContainer/Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpriteContainer/Sprite:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 0, 32, 32, 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteContainer:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 10.0, 0.0, -10.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteContainer:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 12 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteContainer/Sprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -14 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("SpriteContainer/LightUp:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -74 ) ]
 }
 
 [sub_resource type="CircleShape2D" id=9]
@@ -179,18 +597,66 @@ anims/IdleLeft = SubResource( 6 )
 anims/IdleRight = SubResource( 7 )
 anims/IdleUp = SubResource( 5 )
 anims/RESET = SubResource( 4 )
+anims/RunDown = SubResource( 11 )
+anims/RunLeft = SubResource( 12 )
+anims/RunRight = SubResource( 13 )
+anims/RunUp = SubResource( 10 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, 2 )
+[node name="SpriteContainer" type="Node2D" parent="."]
+position = Vector2( 0, -11 )
+
+[node name="LightDown" type="Light2D" parent="SpriteContainer"]
+visible = false
+position = Vector2( 2.38419e-07, 30 )
+scale = Vector2( 0.126, 0.08 )
+texture = ExtResource( 4 )
+texture_scale = 1.6
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+
+[node name="LightUp" type="Light2D" parent="SpriteContainer"]
+visible = false
+position = Vector2( 0, -47 )
+rotation = 3.14159
+scale = Vector2( 0.126378, 0.0803815 )
+texture = ExtResource( 4 )
+texture_scale = 1.6
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+
+[node name="LightRight" type="Light2D" parent="SpriteContainer"]
+visible = false
+position = Vector2( 58, -21 )
+rotation = -1.5708
+scale = Vector2( 0.126, 0.08 )
+texture = ExtResource( 4 )
+texture_scale = 1.6
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+
+[node name="LightLeft" type="Light2D" parent="SpriteContainer"]
+visible = false
+position = Vector2( -58, -21 )
+rotation = 1.5708
+scale = Vector2( 0.126, 0.08 )
+texture = ExtResource( 4 )
+texture_scale = 1.6
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+
+[node name="Sprite" type="Sprite" parent="SpriteContainer"]
+position = Vector2( 0, 14 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 64, 32, 32, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 5 )
 shape = SubResource( 9 )
 
 [node name="LeftCollision" type="Area2D" parent="."]
+visible = false
 position = Vector2( -16, 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftCollision"]
@@ -198,6 +664,7 @@ modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
 shape = SubResource( 2 )
 
 [node name="RightCollision" type="Area2D" parent="."]
+visible = false
 position = Vector2( 17, 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightCollision"]
@@ -205,6 +672,7 @@ modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
 shape = SubResource( 2 )
 
 [node name="TopCollision" type="Area2D" parent="."]
+visible = false
 position = Vector2( 0, -12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopCollision"]
@@ -212,6 +680,7 @@ modulate = Color( 0.427451, 0.184314, 0.184314, 1 )
 shape = SubResource( 2 )
 
 [node name="BottomCollision" type="Area2D" parent="."]
+visible = false
 position = Vector2( 0, 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomCollision"]
@@ -224,45 +693,6 @@ wait_time = 0.3
 [node name="RemoveRailTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
-
-[node name="LightDown" type="Light2D" parent="."]
-visible = false
-position = Vector2( 0, 58 )
-scale = Vector2( 0.126, 0.08 )
-texture = ExtResource( 4 )
-texture_scale = 1.6
-color = Color( 0.6, 0.458824, 0.466667, 1 )
-energy = 2.27
-
-[node name="LightUp" type="Light2D" parent="."]
-visible = false
-position = Vector2( -0.168845, -56 )
-rotation = 3.14159
-scale = Vector2( 0.126378, 0.0803815 )
-texture = ExtResource( 4 )
-texture_scale = 1.6
-color = Color( 0.6, 0.458824, 0.466667, 1 )
-energy = 2.27
-
-[node name="LightRight" type="Light2D" parent="."]
-visible = false
-position = Vector2( 58, -5 )
-rotation = 4.71239
-scale = Vector2( 0.126, 0.08 )
-texture = ExtResource( 4 )
-texture_scale = 1.6
-color = Color( 0.6, 0.458824, 0.466667, 1 )
-energy = 2.27
-
-[node name="LightLeft" type="Light2D" parent="."]
-visible = false
-position = Vector2( -58, -6 )
-rotation = 1.5708
-scale = Vector2( 0.126, 0.08 )
-texture = ExtResource( 4 )
-texture_scale = 1.6
-color = Color( 0.6, 0.458824, 0.466667, 1 )
-energy = 2.27
 
 [node name="Ambient" type="Light2D" parent="."]
 position = Vector2( 1.90735e-06, 5 )
