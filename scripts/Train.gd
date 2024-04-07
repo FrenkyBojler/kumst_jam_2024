@@ -122,6 +122,7 @@ func _process(delta: float) -> void:
 func _train_crashed() -> void:
 	emit_signal("train_finished")
 	print_debug("train crashed")
+	_turn_off_all_lights(self)
 
 # Returns null or Vector2
 func _find_connected_rail_pos(current_rail_pos: Vector2):
@@ -135,6 +136,14 @@ func _on_Timer_timeout() -> void:
 
 func _on_RailTileMap_path_updated(tile) -> void:
 	path.push_back(tile)
+	
 
 func _on_RailTileMap_path_remove_last_tile() -> void:
 	path.remove(path.size() - 1)
+	
+func _turn_off_all_lights(node: Node2D) -> void:
+	for child in node.get_children():
+		if child is Light2D:
+			child.enabled = false
+		elif child.get_child_count() > 0 :
+			_turn_off_all_lights(child)

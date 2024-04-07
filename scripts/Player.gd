@@ -295,7 +295,14 @@ func _on_SwipeJoystick_touch_released() -> void:
 	current_velocity = Vector2.ZERO
 	_turn_off_touching()
 	is_touching = false
-
+	
+func _turn_off_all_lights() -> void:
+	for child in get_children():
+		if child is Light2D:
+			child.enabled = false
 
 func _on_RemoveRailTimer_timeout() -> void:
 	tile_map_rails.remove_rail(tile_map_rails.world_to_map(global_position))
+	
+func _on_Train_train_finished() -> void:
+	_turn_off_all_lights()
