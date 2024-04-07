@@ -26,7 +26,7 @@ var rotation_dir = 0
 var speed := 100.0
 var rotation_speed := 5.0
 
-var interaction_mode = false
+var interaction_mode = true
 
 var last_interaction_pos: Vector2
 var last_placed_rail_pos: Vector2
@@ -183,7 +183,6 @@ func _trigger_place_rail() -> void:
 		interaction_mode = true
 	else:
 		_place_rail()
-		interaction_mode = false
 
 func _place_rail() -> void:
 	tile_map_interaction.place_ground(last_interaction_pos)
