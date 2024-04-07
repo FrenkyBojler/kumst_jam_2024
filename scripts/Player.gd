@@ -25,7 +25,7 @@ onready var drill_timer: Timer = $DrillTimer
 onready var remove_rail_timer: Timer = $RemoveRailTimer
 
 onready var sprite: Sprite = $SpriteContainer/Sprite
-onready var animation_player: AnimationPlayer = $AnimationPlayer
+onready var animation_player: AnimationPlayer = $AnimationPlayer as AnimationPlayer
 
 var current_velocity := Vector2.ZERO
 var last_velocity := Vector2.UP

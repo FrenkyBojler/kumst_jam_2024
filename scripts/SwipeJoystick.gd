@@ -9,18 +9,18 @@ var initial_touch_position = Vector2.ZERO
 func _on_Area2D_input_event(_viewport, event, _shape_idx):
 	if event is InputEventScreenDrag:
 		if event.position.x < initial_touch_position.x and abs(event.position.x - initial_touch_position.x) > CHANGE_DIRECTION_THRESHOLD:
-			print("Swipe Left -  " + str(abs(event.position.x - initial_touch_position.x)))
+			#print("Swipe Left -  " + str(abs(event.position.x - initial_touch_position.x)))
 			#_print_out_gesture("Swipe Left -  " + str(abs(event.position.x - initial_touch_position.x)))
 			emit_signal("swipe_left", event.speed.floor())
 		elif event.position.x > initial_touch_position.x and abs(event.position.x - initial_touch_position.x) > CHANGE_DIRECTION_THRESHOLD:
-			print("Swipe Right - " + str(abs(event.position.x - initial_touch_position.x)))
+			#print("Swipe Right - " + str(abs(event.position.x - initial_touch_position.x)))
 			#_print_out_gesture("Swipe right -  " + str(abs(event.position.x - initial_touch_position.x)))
 			emit_signal("swipe_right", event.speed.floor())
 		elif event.position.y > initial_touch_position.y and abs(event.position.y -initial_touch_position.y) > CHANGE_DIRECTION_THRESHOLD:
-			print("Swipe Up - " + str(abs(event.position.y - initial_touch_position.y)))
+			#print("Swipe Up - " + str(abs(event.position.y - initial_touch_position.y)))
 			emit_signal("swipe_top", event.speed.floor())
 		elif event.position.y < initial_touch_position.y and abs(event.position.y -initial_touch_position.y) > CHANGE_DIRECTION_THRESHOLD:
-			print("Swipe Down - " + str(abs(event.position.y - initial_touch_position.y)))
+			#print("Swipe Down - " + str(abs(event.position.y - initial_touch_position.y)))
 			emit_signal("swipe_down", event.speed.floor())
 		else:
 			_reset_swipes()
@@ -29,13 +29,13 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 	if event is InputEventScreenTouch:
 		if event.is_pressed():
 			initial_touch_position = event.position
-			print("Touched")
+			#print("Touched")
 			#_print_out_gesture("Touched")
 			_reset_swipes()
 			emit_signal("touched")
 		if !event.is_pressed():
 			initial_touch_position = Vector2.ZERO
-			print("Released")
+			#print("Released")
 			#_print_out_gesture("Released")
 			_reset_swipes()
 			emit_signal("touch_released")
