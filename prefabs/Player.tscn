@@ -2,7 +2,7 @@
 
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
-[ext_resource path="res://textures/light_source.png" type="Texture" id=3]
+[ext_resource path="res://textures/light_source_2.png" type="Texture" id=3]
 [ext_resource path="res://textures/light_cone.png" type="Texture" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
 
@@ -269,7 +269,7 @@ position = Vector2( 1.90735e-06, 5 )
 scale = Vector2( 0.47, 0.47 )
 texture = ExtResource( 3 )
 color = Color( 0.6, 0.458824, 0.466667, 1 )
-energy = 6.0
+energy = 1.54
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false

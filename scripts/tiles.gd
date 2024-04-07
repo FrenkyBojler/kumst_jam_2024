@@ -26,6 +26,10 @@ signal path_remove_last_tile
 func _ready() -> void:
 	if is_rail:
 		last_placed_rail = _find_start_rail()
+		if is_rail_placing_tile_set:
+			last_placed_rail = _get_start_last_trail_tile()
+			path.push_back(last_placed_rail)
+			emit_signal("path_updated", last_placed_rail)
 
 func _find_start_rail() -> Vector2:
 	return actual_rail_tile_map.get_used_cells_by_id(6)[0]
@@ -37,6 +41,14 @@ func place_ghost_rail(coords: Vector2) -> void:
 	if coords.distance_to(actual_rail_tile_map.last_placed_rail) > 1 or get_cellv(coords) != -1:
 		return
 	set_cellv(coords, rail_tile)
+	
+func _get_start_last_trail_tile() -> Vector2:
+	var rails = get_used_cells_by_id(vertical)
+	var last_rail = rails[0]
+	for rail in rails:
+		if last_rail.y > rail.y:
+			last_rail = rail
+	return last_rail
 
 func remove_rail(coords: Vector2) -> void:
 	print_debug("Coords: ", coords, " | ", get_cellv(coords))
