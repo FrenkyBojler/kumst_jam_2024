@@ -52,13 +52,13 @@ func update_autotile_for_cel(coords: Vector2) -> void:
 	update_bitmask_area(coords)
 
 func _place_finish_tile_at_row(row: int) -> void:
-	var finish_row = get_used_cells_by_id(3)[0]
+	var finish_row = get_used_cells_by_id(7)[0]
 	set_cellv(finish_row, -1)
-	set_cell(finish_row.x, row, 3)
+	set_cell(finish_row.x, row, 7)
 
 func _on_RealTileMap_map_size_increased(max_row) -> void:
 	if is_rail_placing_tile_set:
-		#_place_finish_tile_at_row(max_row)
+		_place_finish_tile_at_row(max_row)
 		pass
 const top_right_corner := 0
 const horizontal := 1

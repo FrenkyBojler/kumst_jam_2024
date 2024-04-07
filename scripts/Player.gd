@@ -31,7 +31,7 @@ var interaction_mode = true
 var last_interaction_pos: Vector2
 var last_placed_rail_pos: Vector2
 
-var max_drill_timer = 0.5
+var max_drill_timer = 0.1
 var current_drill_time = 0
 
 #Vector2D

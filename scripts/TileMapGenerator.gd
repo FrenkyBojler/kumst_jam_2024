@@ -83,21 +83,17 @@ func _get_path_at_row(row_index: int) -> PoolVector2Array:
 func _generate_line(size: int) -> Array:
 	var result = Array()
 	var current_generated_value = 0
-
+	var wall_count = 0
 	for i in size:
-		result.push_back(generator_rock_id)
-		continue
 		var currently_generated_value: int = 0
 		random_tile_id_generator.randomize()
 		var random = random_tile_id_generator.randi_range(0, 1)
-		if random == 1:
+		if random == 1 and wall_count < 2:
 			currently_generated_value = generator_wall_id
+			wall_count += 1
 		else:
 			currently_generated_value = generator_rock_id
-		if current_generated_value + current_generated_value >= max_generated_value:
-			currently_generated_value = generator_wall_id
 		result.push_back(currently_generated_value)
-		current_generated_value += currently_generated_value
 	return result
 
 func _get_passable_wall_positions(current_row: int) -> PoolIntArray:
