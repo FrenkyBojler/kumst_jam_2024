@@ -173,6 +173,19 @@
 
 [node name="MainScene" type="Node2D"]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SwipeJoystick" parent="CanvasLayer" instance=ExtResource( 10 )]
+position = Vector2( -171, 12 )
+scale = Vector2( 3, 3 )
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+script = ExtResource( 9 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.0313726, 0.0784314, 0.117647, 1 )
+
 [node name="GroundTileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 5 )
 cell_size = Vector2( 32, 32 )
@@ -189,7 +202,7 @@ cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
 bake_navigation = true
 format = 1
-tile_data = PoolIntArray( -327684, 2, 0, -327683, 1, 0, -393214, 3, 0, -262148, 2, 0, -262147, 1, 0, -327678, 3, 0, -327677, 2, 0, -196612, 2, 0, -196611, 1, 0, -262142, 3, 0, -262141, 2, 0, -131076, 2, 0, -131075, 1, 0, -196606, 3, 0, -196605, 2, 0, -65540, 2, 0, -65539, 1, 0, -131070, 3, 0, -131069, 2, 0, -4, 2, 0, -3, 1, 0, -65534, 3, 0, -65533, 2, 0, 65532, 2, 0, 65533, 1, 0, 2, 3, 0, 3, 2, 0, 131068, 2, 0, 131069, 1, 0, 65538, 3, 0, 65539, 2, 0, 196604, 2, 0, 196605, 1, 0, 131074, 3, 0, 131075, 2, 0, 262140, 2, 0, 262141, 1, 0, 196610, 3, 0, 196611, 2, 0, 327676, 2, 0, 327677, 1, 0, 327678, 2, 0, 262144, 2, 0, 262145, 2, 0, 262146, 3, 0, 262147, 2, 0, 393212, 2, 0, 393213, 1, 0, 393214, 2, 0, 327680, 2, 0, 327681, 2, 0, 327682, 3, 0, 327683, 2, 0, 458748, 2, 0, 458749, 1, 0, 458750, 2, 0, 393216, 2, 0, 393217, 2, 0, 393218, 3, 0, 393219, 2, 0 )
+tile_data = PoolIntArray( -655364, 2, 0, -655363, 1, 0, -720894, 3, 0, -720893, 2, 0, -589828, 2, 0, -589827, 1, 0, -655358, 3, 0, -655357, 2, 0, -524292, 2, 0, -524291, 1, 0, -589822, 3, 0, -589821, 2, 0, -458756, 2, 0, -458755, 1, 0, -524286, 3, 0, -524285, 2, 0, -393220, 2, 0, -393219, 1, 0, -458750, 3, 0, -458749, 2, 0, -327684, 2, 0, -327683, 1, 0, -393214, 3, 0, -393213, 2, 0, -262148, 2, 0, -262147, 1, 0, -327678, 3, 0, -327677, 2, 0, -196612, 2, 0, -196611, 1, 0, -262142, 3, 0, -262141, 2, 0, -131076, 2, 0, -131075, 1, 0, -196606, 3, 0, -196605, 2, 0, -65540, 2, 0, -65539, 1, 0, -131070, 3, 0, -131069, 2, 0, -4, 2, 0, -3, 1, 0, -65534, 3, 0, -65533, 2, 0, 65532, 2, 0, 65533, 1, 0, 2, 3, 0, 3, 2, 0, 131068, 2, 0, 131069, 1, 0, 65538, 3, 0, 65539, 2, 0, 196604, 2, 0, 196605, 1, 0, 131074, 3, 0, 131075, 2, 0, 262140, 2, 0, 262141, 1, 0, 196610, 3, 0, 196611, 2, 0, 327676, 2, 0, 327677, 1, 0, 327678, 2, 0, 262144, 2, 0, 262145, 2, 0, 262146, 3, 0, 262147, 2, 0, 393212, 2, 0, 393213, 1, 0, 393214, 2, 0, 327680, 2, 0, 327681, 2, 0, 327682, 3, 0, 327683, 2, 0, 458748, 2, 0, 458749, 1, 0, 458750, 2, 0, 393216, 2, 0, 393217, 2, 0, 393218, 3, 0, 393219, 2, 0 )
 script = ExtResource( 8 )
 actual_rail_tile_map_path = NodePath(".")
 
@@ -209,7 +222,7 @@ tile_set = SubResource( 6 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
 format = 1
-tile_data = PoolIntArray( -393218, 7, 0, 327679, 6, 0 )
+tile_data = PoolIntArray( -655364, 7, 0, 327679, 6, 0 )
 script = ExtResource( 2 )
 is_rail = true
 is_rail_placing_tile_set = true
@@ -226,7 +239,7 @@ player_node_path = NodePath("../Player")
 rail_tile_map_path = NodePath("../RailTileMap")
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, 66 )
+position = Vector2( 0, 20 )
 tile_map_path = NodePath("../RealTileMap")
 tile_map_interaction_path = NodePath("../TileMapInteraction")
 tile_map_rails_path = NodePath("../RailTileMap")
@@ -244,33 +257,33 @@ position = Vector2( -16, 173 )
 
 [node name="Train" parent="LongTrain" index="0"]
 rail_tile_map_path = NodePath("../../RailTileMap")
+real_tile_map_path = NodePath("../../RealTileMap")
+is_leading_train = true
 
 [node name="Train2" parent="LongTrain" index="1"]
 rail_tile_map_path = NodePath("../../RailTileMap")
+real_tile_map_path = NodePath("../../RealTileMap")
 
 [node name="Train3" parent="LongTrain" index="2"]
 rail_tile_map_path = NodePath("../../RailTileMap")
+real_tile_map_path = NodePath("../../RealTileMap")
 
 [node name="Train4" parent="LongTrain" index="3"]
 rail_tile_map_path = NodePath("../../RailTileMap")
+real_tile_map_path = NodePath("../../RealTileMap")
 
-[node name="Line2D" type="Line2D" parent="."]
-visible = false
-script = ExtResource( 9 )
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="SwipeJoystick" parent="CanvasLayer" instance=ExtResource( 10 )]
-position = Vector2( -171, 12 )
-scale = Vector2( 3, 3 )
-
-[connection signal="map_size_increased" from="RealTileMap" to="RailTileMap" method="_on_RealTileMap_map_size_increased"]
 [connection signal="swipe_down" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_down"]
 [connection signal="swipe_left" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_left"]
 [connection signal="swipe_right" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_right"]
 [connection signal="swipe_top" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_swipe_top"]
 [connection signal="touch_released" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_touch_released"]
 [connection signal="touched" from="CanvasLayer/SwipeJoystick" to="Player" method="_on_SwipeJoystick_touched"]
+[connection signal="map_size_increased" from="RealTileMap" to="RailTileMap" method="_on_RealTileMap_map_size_increased"]
+[connection signal="path_updated" from="RailTileMap" to="Line2D" method="_on_RailTileMap_path_updated"]
+[connection signal="path_updated" from="RailTileMap" to="LongTrain/Train" method="_on_RailTileMap_path_updated"]
+[connection signal="path_updated" from="RailTileMap" to="LongTrain/Train2" method="_on_RailTileMap_path_updated"]
+[connection signal="path_updated" from="RailTileMap" to="LongTrain/Train3" method="_on_RailTileMap_path_updated"]
+[connection signal="path_updated" from="RailTileMap" to="LongTrain/Train4" method="_on_RailTileMap_path_updated"]
 
 [editable path="LongTrain"]
 [editable path="LongTrain/Train"]

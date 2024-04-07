@@ -16,6 +16,11 @@ onready var right_collision: Area2D = $RightCollision
 onready var top_collision: Area2D = $TopCollision
 onready var bottom_collision: Area2D = $BottomCollision
 
+onready var light_left: Light2D = $LightLeft
+onready var light_right: Light2D = $LightRight
+onready var light_up: Light2D = $LightUp
+onready var light_down: Light2D = $LightDown
+
 onready var drill_timer: Timer = $DrillTimer
 
 onready var sprite: Sprite = $Sprite
@@ -201,27 +206,51 @@ func _place_ghost_rail() -> void:
 
 func _on_DrillTimer_timeout() -> void:
 	_drill_progress()
+	
+func _turn_off_lights() -> void:
+	light_left.visible = false
+	light_right.visible = false
+	light_up.visible = false
+	light_down.visible = false
 
 func _play_idle_anim() -> void:
 	if current_velocity == Vector2.LEFT:
+		_turn_off_lights()
+		light_left.visible = true
 		animation_player.play("IdleLeft")
 	if current_velocity == Vector2.RIGHT:
+		_turn_off_lights()
+		light_right.visible = true
 		animation_player.play("IdleRight")
 	if current_velocity == Vector2.DOWN:
+		_turn_off_lights()
+		light_down.visible = true
 		animation_player.play("IdleDown")
 	if current_velocity == Vector2.UP:
+		_turn_off_lights()
+		light_up.visible = true
 		animation_player.play("IdleUp")
 	if current_velocity == Vector2.ZERO:
+		_turn_off_lights()
+		light_up.visible = true
 		animation_player.play("IdleUp")
 		
 func _play_run_anim() -> void:
 	if current_velocity == Vector2.LEFT:
+		_turn_off_lights()
+		light_left.visible = true
 		animation_player.play("IdleLeft")
 	if current_velocity == Vector2.RIGHT:
+		_turn_off_lights()
+		light_right.visible = true
 		animation_player.play("IdleRight")
 	if current_velocity == Vector2.DOWN:
+		_turn_off_lights()
+		light_down.visible = true
 		animation_player.play("IdleDown")
 	if current_velocity == Vector2.UP:
+		_turn_off_lights()
+		light_up.visible = true
 		animation_player.play("IdleUp")
 
 func _on_SwipeJoystick_swipe_down(speed) -> void:

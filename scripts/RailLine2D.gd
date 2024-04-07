@@ -9,10 +9,6 @@ const vertical := 3
 const bottom_right_corner := 4
 const bottom_left_corner := 5
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("start_train"):
-		_init_vole()
-
 func _init_vole() -> void:
 	var path = rail_tile_map.path
 	var used_coords = PoolVector2Array()
@@ -29,3 +25,7 @@ func _get_lowest_rail_coord() -> Vector2:
 		if rail.y > lowest.y:
 			lowest = rail
 	return lowest
+
+func _on_RailTileMap_path_updated(tile) -> void:
+	clear_points()
+	_init_vole()

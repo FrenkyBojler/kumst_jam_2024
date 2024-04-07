@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Train.gd" type="Script" id=1]
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=2]
 [ext_resource path="res://scripts/Cabin.gd" type="Script" id=3]
+[ext_resource path="res://textures/light_source.png" type="Texture" id=4]
+[ext_resource path="res://textures/light_cone_train.png" type="Texture" id=5]
+[ext_resource path="res://icon.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 13.5 )
@@ -10,19 +13,117 @@ extents = Vector2( 10, 13.5 )
 [node name="Train" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 3, 3 )
+texture = ExtResource( 6 )
+
 [node name="FirstCabin" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
-[node name="SpriteVertical" type="Sprite" parent="FirstCabin"]
+[node name="SpriteVerticalTop" type="Sprite" parent="FirstCabin"]
 visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 128, 96, 32, 32 )
 
-[node name="SpriteHorizontal" type="Sprite" parent="FirstCabin"]
+[node name="LeftLightTop" type="Light2D" parent="FirstCabin/SpriteVerticalTop"]
+position = Vector2( -6.78917, -77.7609 )
+rotation = 3.14159
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="RightLightTop" type="Light2D" parent="FirstCabin/SpriteVerticalTop"]
+position = Vector2( 7.21082, -77.7609 )
+rotation = 3.14159
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="SpriteVerticalBottom" type="Sprite" parent="FirstCabin"]
+visible = false
+texture = ExtResource( 2 )
+flip_v = true
+region_enabled = true
+region_rect = Rect2( 128, 96, 32, 32 )
+
+[node name="LeftLightBottom" type="Light2D" parent="FirstCabin/SpriteVerticalBottom"]
+position = Vector2( 6.21082, 79.2391 )
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="RightLightBottom" type="Light2D" parent="FirstCabin/SpriteVerticalBottom"]
+position = Vector2( -6.78918, 79.2391 )
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="SpriteHorizontalRight" type="Sprite" parent="FirstCabin"]
+visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 96, 96, 32, 32 )
+
+[node name="LeftLightRight" type="Light2D" parent="FirstCabin/SpriteHorizontalRight"]
+position = Vector2( 79.2391, -4.78918 )
+rotation = 4.71239
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="RightLightRight" type="Light2D" parent="FirstCabin/SpriteHorizontalRight"]
+position = Vector2( 79.2391, 7.21082 )
+rotation = 4.71239
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="SpriteHorizontalLeft" type="Sprite" parent="FirstCabin"]
+visible = false
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 96, 96, 32, 32 )
+
+[node name="RightLightLeft" type="Light2D" parent="FirstCabin/SpriteHorizontalLeft"]
+position = Vector2( -79, -6 )
+rotation = 1.5708
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="LeftLightLeft" type="Light2D" parent="FirstCabin/SpriteHorizontalLeft"]
+position = Vector2( -79, 5 )
+rotation = 1.5708
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
 
 [node name="SpriteCornerTopLeft" type="Sprite" parent="FirstCabin"]
 visible = false
@@ -31,11 +132,51 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2( 192, 96, 32, 32 )
 
+[node name="LeftLightTop" type="Light2D" parent="FirstCabin/SpriteCornerTopLeft"]
+position = Vector2( -62.5744, -42.9755 )
+rotation = 2.26893
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="RightLightTop" type="Light2D" parent="FirstCabin/SpriteCornerTopLeft"]
+position = Vector2( -52.5744, -52.9755 )
+rotation = 2.26893
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
 [node name="SpriteCornerTopRight" type="Sprite" parent="FirstCabin"]
 visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 192, 96, 32, 32 )
+
+[node name="LeftLightTop" type="Light2D" parent="FirstCabin/SpriteCornerTopRight"]
+position = Vector2( 44.0245, -59.5744 )
+rotation = 3.83972
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="LeftLightTop2" type="Light2D" parent="FirstCabin/SpriteCornerTopRight"]
+position = Vector2( 54.0245, -48.5744 )
+rotation = 3.83972
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
 
 [node name="SpriteCornerBottomLeft" type="Sprite" parent="FirstCabin"]
 visible = false
@@ -44,23 +185,75 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2( 160, 96, 32, 32 )
 
+[node name="LeftLightTop" type="Light2D" parent="FirstCabin/SpriteCornerBottomLeft"]
+position = Vector2( -54.9755, 55.4256 )
+rotation = 0.698132
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="LeftLightTop2" type="Light2D" parent="FirstCabin/SpriteCornerBottomLeft"]
+position = Vector2( -45.9755, 62.4256 )
+rotation = 0.698132
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
 [node name="SpriteCornerBottomRight" type="Sprite" parent="FirstCabin"]
 visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 160, 96, 32, 32 )
 
+[node name="LeftLightTop" type="Light2D" parent="FirstCabin/SpriteCornerBottomRight"]
+position = Vector2( 52.4256, 54.0245 )
+rotation = -0.872665
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
+[node name="LeftLightTop2" type="Light2D" parent="FirstCabin/SpriteCornerBottomRight"]
+position = Vector2( 60.4256, 45.0245 )
+rotation = -0.872665
+scale = Vector2( 1.30948, 1.70478 )
+texture = ExtResource( 5 )
+texture_scale = 0.1
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+mode = 2
+
 [node name="SecondCabin" type="Node2D" parent="."]
 visible = false
 script = ExtResource( 3 )
 
-[node name="SpriteVertical" type="Sprite" parent="SecondCabin"]
+[node name="SpriteVerticalTop" type="Sprite" parent="SecondCabin"]
 visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 128, 128, 32, 32 )
 
-[node name="SpriteHorizontal" type="Sprite" parent="SecondCabin"]
+[node name="SpriteVerticalBottom" type="Sprite" parent="SecondCabin"]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 128, 128, 32, 32 )
+
+[node name="SpriteHorizontalRight" type="Sprite" parent="SecondCabin"]
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 96, 128, 32, 32 )
+
+[node name="SpriteHorizontalLeft" type="Sprite" parent="SecondCabin"]
 visible = false
 texture = ExtResource( 2 )
 region_enabled = true
@@ -100,6 +293,15 @@ disabled = true
 [node name="Timer" type="Timer" parent="."]
 wait_time = 15.0
 one_shot = true
+
+[node name="Ambient" type="Light2D" parent="."]
+texture = ExtResource( 4 )
+color = Color( 0.6, 0.458824, 0.466667, 1 )
+energy = 2.27
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color( 0, 0, 0, 1 )
 
 [connection signal="tile_changed" from="." to="FirstCabin" method="_on_Train_tile_changed"]
 [connection signal="tile_changed" from="." to="SecondCabin" method="_on_Train_tile_changed"]

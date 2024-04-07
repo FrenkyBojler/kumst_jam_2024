@@ -2,8 +2,10 @@ extends Node2D
 
 onready var train := get_parent() as Train
 
-onready var sprite_vertical = $SpriteVertical
-onready var sprite_horizontal = $SpriteHorizontal
+onready var sprite_vertical_top = $SpriteVerticalTop
+onready var sprite_vertical_bottom = $SpriteVerticalBottom
+onready var sprite_horizontal_right = $SpriteHorizontalRight
+onready var sprite_horizontal_left = $SpriteHorizontalLeft
 onready var sprite_corner_top_left = $SpriteCornerTopLeft
 onready var sprite_corner_top_right = $SpriteCornerTopRight
 onready var sprite_corner_bottom_left = $SpriteCornerBottomLeft
@@ -20,57 +22,49 @@ const bottom_left_corner := 5
 export(bool) var print_velocity = false
 
 func _ready() -> void:
-	_turn_vertical(false)
-
-func _turn_vertical(flip_v: bool) -> void:
-	sprite_vertical.visible = true
-	sprite_vertical.flip_v = flip_v
-	sprite_horizontal.visible = false
+	_turn_vertical_top()
+	
+func _turn_off_all() -> void:
+	sprite_vertical_top.visible = false
+	sprite_vertical_bottom.visible = false
+	sprite_horizontal_right.visible = false
+	sprite_horizontal_left.visible = false
 	sprite_corner_top_left.visible = false
 	sprite_corner_top_right.visible = false
-	sprite_corner_bottom_right.visible = false
+	sprite_corner_bottom_left.visible = false
 	sprite_corner_bottom_left.visible = false
 
-func _turn_horizontal(flip_h: bool) -> void:
-	sprite_horizontal.visible = true
-	sprite_horizontal.flip_h = flip_h
-	sprite_vertical.visible = false
-	sprite_corner_top_left.visible = false
-	sprite_corner_top_right.visible = false
-	sprite_corner_bottom_right.visible = false
-	sprite_corner_bottom_left.visible = false
+func _turn_vertical_top() -> void:
+	_turn_off_all()
+	sprite_vertical_top.visible = true
+	
+func _turn_vertical_bottom() -> void:
+	_turn_off_all()
+	sprite_vertical_bottom.visible = true
+
+func _turn_horizontal_right() -> void:
+	_turn_off_all()
+	sprite_horizontal_right.visible = true
+	
+func _turn_horizontal_left() -> void:
+	_turn_off_all()
+	sprite_horizontal_left.visible = true
 	
 func _turn_corner_top_right() -> void:
-	sprite_vertical.visible = false
-	sprite_horizontal.visible = false
-	sprite_corner_top_left.visible = false
+	_turn_off_all()
 	sprite_corner_top_right.visible = true
-	sprite_corner_bottom_right.visible = false
-	sprite_corner_bottom_left.visible = false
 
 func _turn_corner_top_left() -> void:
-	sprite_vertical.visible = false
-	sprite_horizontal.visible = false
+	_turn_off_all()
 	sprite_corner_top_left.visible = true
-	sprite_corner_top_right.visible = false
-	sprite_corner_bottom_right.visible = false
-	sprite_corner_bottom_left.visible = false
 	
 func _turn_corner_bottom_left() -> void:
-	sprite_vertical.visible = false
-	sprite_horizontal.visible = false
-	sprite_corner_top_left.visible = false
-	sprite_corner_top_right.visible = false
-	sprite_corner_bottom_right.visible = false
+	_turn_off_all()
 	sprite_corner_bottom_left.visible = true
 	
 func _turn_corner_bottom_right() -> void:
-	sprite_vertical.visible = false
-	sprite_horizontal.visible = false
-	sprite_corner_top_left.visible = false
-	sprite_corner_top_right.visible = false
+	_turn_off_all()
 	sprite_corner_bottom_right.visible = true
-	sprite_corner_bottom_left.visible = false
 	
 var prev_velocity_y: int = 0
 
@@ -103,11 +97,11 @@ func _on_Train_tile_changed(tile) -> void:
 				_turn_corner_top_right()
 		horizontal:
 			if vel.x < 0:
-				_turn_horizontal(true)
+				_turn_horizontal_left()
 			else:
-				_turn_horizontal(false)
+				_turn_horizontal_right()
 		vertical:
 			if vel.y > 0:
-				_turn_vertical(true)
+				_turn_vertical_bottom()
 			else:
-				_turn_vertical(false)
+				_turn_vertical_top()

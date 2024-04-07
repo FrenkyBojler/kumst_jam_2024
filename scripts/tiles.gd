@@ -20,6 +20,8 @@ var last_last_placed_rail = null
 
 var path := PoolVector2Array()
 
+signal path_updated(tile)
+
 func _ready() -> void:
 	if is_rail:
 		last_placed_rail = _find_start_rail()
@@ -39,6 +41,7 @@ func place_rails(coords: Vector2) -> void:
 	if coords.distance_to(last_placed_rail) > 1 or get_cellv(coords) != -1:
 		return
 	path.push_back(coords)
+	emit_signal("path_updated", coords)
 	set_cellv(coords, _get_rail_to_place(coords, last_placed_rail))
 	if last_last_placed_rail != null:
 		set_cellv(last_placed_rail, _get_rail_to_place_between(last_placed_rail, last_last_placed_rail, coords))

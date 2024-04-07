@@ -5,10 +5,13 @@ class_name Train
 export(NodePath) var rail_tile_map_path
 onready var rail_tile_map = get_node(rail_tile_map_path) as TileMap
 
+export(NodePath) var real_tile_map_path
+onready var real_tile_map = get_node(real_tile_map_path) as TileMap
+
 var nav_path: PoolVector2Array
 
 var current_velocity: Vector2 = Vector2.ZERO
-var speed := 40.0
+var speed := 60.0
 
 var rai_cell_id = 0
 var finish_cell_id = 3
@@ -26,6 +29,7 @@ var target_pos
 var path: PoolVector2Array
 
 signal tile_changed(tile)
+signal train_finished
 
 const top_right_corner := 0
 const horizontal := 1
@@ -36,10 +40,15 @@ const bottom_left_corner := 5
 
 onready var default_position := global_position
 
+export(bool) var is_leading_train = false
+
 func _start_train() -> void:
 	global_position = default_position
-	path = rail_tile_map.path
-	#global_position = path[0]
+	#path = rail_tile_map.path
+	if path.size() == 0:
+		_train_crashed()
+		return
+	
 	target_pos = _get_correct_world_coord(path[0])
 
 func _get_path() -> PoolVector2Array:
@@ -52,7 +61,6 @@ func _get_path() -> PoolVector2Array:
 	rails.append_array(rail_tile_map.get_used_cells_by_id(bottom_right_corner))
 	rails.append_array(rail_tile_map.get_used_cells_by_id(bottom_left_corner))
 	
-	#rails.remove(rails.find(start_coord))
 	var path = PoolVector2Array()
 	path.push_back(start_coord)
 	var used_coords = PoolVector2Array()
@@ -94,17 +102,26 @@ func _process(delta: float) -> void:
 	if last_cell_coords != current_cell_coord:
 		last_cell_coords = current_cell_coord
 		emit_signal("tile_changed", last_cell_coords)
+		
+		if is_leading_train and real_tile_map.get_cellv(current_cell_coord) != -1:
+			 _train_crashed()
 
 	if target_pos != null:
 		if global_position.distance_to(target_pos) <= 1:
 			path.remove(0)
 			if path.size() == 0:
 				target_pos = null
+				if is_leading_train:
+					_train_crashed()
 			else:
 				target_pos = _get_correct_world_coord(path[0])
 		else:
 			current_velocity = global_position.direction_to(target_pos)
 		move_and_collide(current_velocity * speed * delta)
+
+func _train_crashed() -> void:
+	emit_signal("train_finished")
+	print_debug("train crashed")
 
 # Returns null or Vector2
 func _find_connected_rail_pos(current_rail_pos: Vector2):
@@ -115,3 +132,6 @@ func _find_connected_rail_pos(current_rail_pos: Vector2):
 
 func _on_Timer_timeout() -> void:
 	_start_train()
+
+func _on_RailTileMap_path_updated(tile) -> void:
+	path.push_back(tile)
