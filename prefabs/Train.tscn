@@ -295,10 +295,14 @@ position = Vector2( 0, -0.5 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="StartTrainTimer" type="Timer" parent="."]
 wait_time = 20.0
 one_shot = true
 autostart = true
+
+[node name="RestTrainTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
@@ -306,4 +310,5 @@ color = Color( 0, 0, 0, 1 )
 
 [connection signal="tile_changed" from="." to="FirstCabin" method="_on_Train_tile_changed"]
 [connection signal="tile_changed" from="." to="SecondCabin" method="_on_Train_tile_changed"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="StartTrainTimer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="RestTrainTimer" to="." method="_on_RestTrainTimer_timeout"]

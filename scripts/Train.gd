@@ -42,6 +42,15 @@ onready var default_position := global_position
 
 export(bool) var is_leading_train = false
 
+var tiles_traveled := 0
+var stop_after_tiles_traveled := 80
+
+var is_paused := false
+
+func _pause_train() -> void:
+	$RestTrainTimer.start()
+	is_paused = true
+	
 func _start_train() -> void:
 	global_position = default_position
 	#path = rail_tile_map.path
@@ -95,12 +104,22 @@ func _get_lowest_rail_coord() -> Vector2:
 	return lowest
 
 func _process(delta: float) -> void:
+	if is_paused:
+		return
+
 	if Input.is_action_just_pressed("start_train") and target_pos == null:
 		_start_train()
 
 	var current_cell_coord = rail_tile_map.world_to_map(global_position)
 	if last_cell_coords != current_cell_coord:
 		last_cell_coords = current_cell_coord
+		tiles_traveled += 1
+		
+		if tiles_traveled >= stop_after_tiles_traveled:
+			_pause_train()
+			return
+
+		print("tiles traveled: ", tiles_traveled)
 		emit_signal("tile_changed", last_cell_coords)
 		
 		if is_leading_train and real_tile_map.get_cellv(current_cell_coord) != -1:
@@ -136,7 +155,6 @@ func _on_Timer_timeout() -> void:
 
 func _on_RailTileMap_path_updated(tile) -> void:
 	path.push_back(tile)
-	
 
 func _on_RailTileMap_path_remove_last_tile() -> void:
 	path.remove(path.size() - 1)
@@ -147,3 +165,8 @@ func _turn_off_all_lights(node: Node2D) -> void:
 			child.enabled = false
 		elif child.get_child_count() > 0 :
 			_turn_off_all_lights(child)
+			
+func _on_RestTrainTimer_timeout() -> void:
+	is_paused = false
+	tiles_traveled = 0
+	speed += 5
