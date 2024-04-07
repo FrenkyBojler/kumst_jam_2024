@@ -78,11 +78,7 @@ const tolerance = 0.005
 
 func _on_Train_tile_changed(tile) -> void:
 	var auto_tile_coord = train.rail_tile_map.get_cell(tile.x, tile.y)
-
 	var vel = train.current_velocity
-	
-	if print_velocity:
-		print_debug(tile.y, " | ", vel.y)
 
 	match(auto_tile_coord):
 		top_right_corner:

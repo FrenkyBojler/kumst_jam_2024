@@ -31,7 +31,7 @@
 0/name = "top_right_corner"
 0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 0, 0, 1 )
+0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 64, 32, 32 )
 0/tile_mode = 0
 0/occluder_offset = Vector2( 0, 0 )
