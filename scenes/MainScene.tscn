@@ -263,19 +263,23 @@ script = ExtResource( 7 )
 position = Vector2( -16, 173 )
 
 [node name="Train" parent="LongTrain" index="0"]
+player_path = NodePath("../../Player")
 rail_tile_map_path = NodePath("../../RailTileMap")
 real_tile_map_path = NodePath("../../RealTileMap")
 is_leading_train = true
 
 [node name="Train2" parent="LongTrain" index="1"]
+player_path = NodePath("../../Player")
 rail_tile_map_path = NodePath("../../RailTileMap")
 real_tile_map_path = NodePath("../../RealTileMap")
 
 [node name="Train3" parent="LongTrain" index="2"]
+player_path = NodePath("../../Player")
 rail_tile_map_path = NodePath("../../RailTileMap")
 real_tile_map_path = NodePath("../../RealTileMap")
 
 [node name="Train4" parent="LongTrain" index="3"]
+player_path = NodePath("../../Player")
 rail_tile_map_path = NodePath("../../RailTileMap")
 real_tile_map_path = NodePath("../../RealTileMap")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://textures/ui_dialog_window.png" type="Texture" id=1]
 [ext_resource path="res://scripts/SpeechContainer.gd" type="Script" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://textures/ui_mayor_photo.png" type="Texture" id=4]
 [ext_resource path="res://textures/ui_miner_photo.png" type="Texture" id=5]
 [ext_resource path="res://textures/ui_dialog_arrow.png" type="Texture" id=6]
+[ext_resource path="res://scenes/change_dialogue_option.wav" type="AudioStream" id=7]
+[ext_resource path="res://scenes/confirm_dialogue_option.wav" type="AudioStream" id=8]
+[ext_resource path="res://scenes/mayor_talk.wav" type="AudioStream" id=9]
 
 [node name="SpeechContainer" type="Sprite"]
 texture = ExtResource( 1 )
@@ -214,6 +217,15 @@ text = "Neh."
 
 [node name="ChangeSpeechTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="ChangeDialogOption" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Confirm" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+
+[node name="MajorTalk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
 
 [connection signal="mayor_intro_text_finished" from="." to="." method="_on_SpeechContainer_mayor_intro_text_finished"]
 [connection signal="mayor_tut_1_finished" from="." to="." method="_on_SpeechContainer_mayor_tut_1_finished"]

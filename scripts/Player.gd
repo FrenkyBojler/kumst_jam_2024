@@ -156,6 +156,7 @@ func _reset_drill_timer() -> void:
 func _drill_progress() -> void:
 	current_drill_time += 1
 	if current_drill_time >= max_drill_timer:
+		$StoneBreak.play()
 		tile_map.place_ground(currently_drilled_cell_pos)
 		_stop_drill()
 
@@ -208,6 +209,7 @@ func _place_rail() -> void:
 	var last_placed_rail_pos_backup = last_placed_rail_pos
 	last_placed_rail_pos = tile_map_rails.world_to_map(global_position)
 	tile_map_rails.place_rails(last_placed_rail_pos)
+	$RailLay.play()
 	if last_placed_rail_pos_backup != null:
 		tile_map_rails.update_autotile_for_cel(last_placed_rail_pos_backup)
 	
@@ -226,10 +228,17 @@ func _turn_off_lights() -> void:
 	light_right.visible = false
 	light_up.visible = false
 	light_down.visible = false
+	
+func _play_step_1():
+	$Step1.play()
+
+func _play_step_2():
+	$Step2.play()
 
 func _play_idle_anim() -> void:
 	if current_velocity != Vector2.ZERO:
 		return
+	is_running = false
 	if last_velocity == Vector2.LEFT:
 		_turn_off_lights()
 		light_left.visible = true
@@ -250,8 +259,11 @@ func _play_idle_anim() -> void:
 		_turn_off_lights()
 		light_up.visible = true
 		animation_player.play("IdleUp")
-		
+
+var is_running = false
+
 func _play_run_anim() -> void:
+	is_running = true
 	if current_velocity == Vector2.LEFT:
 		_turn_off_lights()
 		light_left.visible = true
@@ -329,6 +341,7 @@ func _turn_off_all_lights(node: Node2D) -> void:
 
 func _on_RemoveRailTimer_timeout() -> void:
 	tile_map_rails.remove_rail(tile_map_rails.world_to_map(global_position))
+	$RailBreak.play()
 	
 func _on_Train_train_finished(score) -> void:
 	is_paused = true

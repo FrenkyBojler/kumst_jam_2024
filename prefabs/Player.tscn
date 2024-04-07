@@ -1,10 +1,15 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 [ext_resource path="res://textures/light_source_2.png" type="Texture" id=3]
 [ext_resource path="res://textures/light_cone.png" type="Texture" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://scenes/break_stone.wav" type="AudioStream" id=6]
+[ext_resource path="res://scenes/break_rail.wav" type="AudioStream" id=7]
+[ext_resource path="res://scenes/lay_rails.wav" type="AudioStream" id=8]
+[ext_resource path="res://scenes/step_1.mp3" type="AudioStream" id=9]
+[ext_resource path="res://scenes/step_2.mp3" type="AudioStream" id=10]
 
 [sub_resource type="Animation" id=3]
 resource_name = "Drill"
@@ -332,6 +337,23 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Vector2( 1.42109e-14, 58 ) ]
 }
+tracks/6/type = "method"
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "_play_step_1"
+}, {
+"args": [  ],
+"method": "_play_step_2"
+} ]
+}
 
 [sub_resource type="Animation" id=12]
 resource_name = "RunLeft"
@@ -397,6 +419,23 @@ tracks/4/keys = {
 "update": 0,
 "values": [ 0.0, 10.0, 0.0, -10.0 ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "_play_step_1"
+}, {
+"args": [  ],
+"method": "_play_step_2"
+} ]
+}
 
 [sub_resource type="Animation" id=13]
 resource_name = "RunRight"
@@ -461,6 +500,23 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 0.0, 10.0, 0.0, -10.0 ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "_play_step_1"
+}, {
+"args": [  ],
+"method": "_play_step_2"
+} ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -539,6 +595,23 @@ tracks/5/keys = {
 "update": 0,
 "values": [ Vector2( 0, -74 ) ]
 }
+tracks/6/type = "method"
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "_play_step_1"
+}, {
+"args": [  ],
+"method": "_play_step_2"
+} ]
+}
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 13.0
@@ -567,11 +640,12 @@ anims/RunRight = SubResource( 13 )
 anims/RunUp = SubResource( 10 )
 
 [node name="SpriteContainer" type="Node2D" parent="."]
-position = Vector2( 0, -11 )
+position = Vector2( 0, 12 )
+rotation = 0.174533
 
 [node name="LightDown" type="Light2D" parent="SpriteContainer"]
 visible = false
-position = Vector2( 8.47033e-22, 58 )
+position = Vector2( 1.42109e-14, 58 )
 scale = Vector2( 0.126, 0.08 )
 texture = ExtResource( 4 )
 texture_scale = 1.6
@@ -612,7 +686,7 @@ energy = 2.27
 position = Vector2( 0, -14 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 96, 32, 32, 32 )
+region_rect = Rect2( 64, 32, 32, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -668,6 +742,24 @@ energy = 1.54
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 color = Color( 0, 0, 0, 1 )
+
+[node name="StoneBreak" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[node name="RailBreak" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="RailLay" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+
+[node name="Step1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+
+[node name="Step2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+
+[node name="Listener2D" type="Listener2D" parent="."]
+current = true
 
 [connection signal="timeout" from="DrillTimer" to="." method="_on_DrillTimer_timeout"]
 [connection signal="timeout" from="RemoveRailTimer" to="." method="_on_RemoveRailTimer_timeout"]

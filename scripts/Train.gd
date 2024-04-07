@@ -2,6 +2,9 @@ extends KinematicBody2D
 
 class_name Train
 
+export(NodePath) var player_path
+onready var player = get_node(player_path)
+
 export(NodePath) var rail_tile_map_path
 onready var rail_tile_map = get_node(rail_tile_map_path) as TileMap
 
@@ -47,6 +50,10 @@ var stop_after_tiles_traveled := 80
 var score := 0
 
 var is_paused := true
+
+func _ready() -> void:
+	if is_leading_train:
+		$Humming.play()
 
 func _pause_train() -> void:
 	$RestTrainTimer.start()
@@ -103,14 +110,33 @@ func _get_lowest_rail_coord() -> Vector2:
 		if rail.y > lowest.y:
 			lowest = rail
 	return lowest
+	
+func calculateVolume(distance: float) -> float:
+	print(distance)
+	# Apply the inverse square law
+	var maxVolume = 0.5
+	var maxDistance = 400
+	var volume = maxVolume / (distance * distance)
+	
+	# Ensure volume doesn't exceed maxVolume
+	volume = clamp(volume, 0.0, maxVolume)
+	
+	# Apply maxDistance threshold
+	if distance > maxDistance:
+		volume = 0.0
+		
+	print(volume)
+	
+	return volume
 
 func _process(delta: float) -> void:
 	if is_paused:
 		return
 
-	if Input.is_action_just_pressed("start_train") and target_pos == null:
-		_start_train()
 
+	if Input.is_action_just_pressed("start_train") and target_pos == null:
+		#_start_train()
+		pass
 	var current_cell_coord = rail_tile_map.world_to_map(global_position)
 	if last_cell_coords != current_cell_coord:
 		last_cell_coords = current_cell_coord
@@ -144,6 +170,8 @@ func _train_crashed() -> void:
 	emit_signal("train_finished", score)
 	print_debug("train crashed")
 	_turn_off_all_lights(self)
+	$Humming.stop()
+	$Finish.play()
 
 # Returns null or Vector2
 func _find_connected_rail_pos(current_rail_pos: Vector2):

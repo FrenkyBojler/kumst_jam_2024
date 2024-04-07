@@ -48,7 +48,8 @@ onready var y_distance_to_player = global_position.y - player.global_position.y
 func _ready() -> void:
 	mayor_text_label.visible_characters = 0
 	mayor_text_label.text = mayor_intro_text
-	select_button_on_index()
+	$MajorTalk.play()
+	select_button_on_index(true)
 	
 var prev_visible = false
 	
@@ -67,10 +68,12 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("ui_right"):
 		select_next_button()
 	elif Input.is_action_just_pressed("interact"):
+		$Confirm.play()
 		if not $MayorControl/MayorText/MayorTextTimer.is_stopped():
 			$MayorControl/MayorText/MayorTextTimer.stop()
 			mayor_text_label.visible_characters = -1
 			$MayorControl/ArrowNext.visible = true
+			$MajorTalk.stop()
 		elif $MayorControl/MayorText/MayorTextTimer.is_stopped() and mayor_text_label.get_parent().visible:
 			_next_speech()
 		elif miner_image.get_parent().visible:
@@ -94,18 +97,21 @@ func select_next_button() -> void:
 	selected_button_index += 1
 	if selected_button_index > buttons.size() - 1:
 		selected_button_index = 0
-	select_button_on_index()
+	select_button_on_index(false)
 	
 func select_prev_button() -> void:
 	selected_button_index -= 1
 	if selected_button_index < 0:
 		selected_button_index = buttons.size() - 1
-	select_button_on_index()
+	select_button_on_index(false)
 
-func select_button_on_index() -> void:
+func select_button_on_index(start: bool) -> void:
 	for button in buttons:
 		button.get_child(0).visible = false
 	buttons[selected_button_index].get_child(0).visible = true
+	
+	if not start:
+		$ChangeDialogOption.play()
 	
 func _resume_game():
 	is_game_paused = false
@@ -155,6 +161,7 @@ func _set_miner_speech() -> void:
 	miner_text_label.text = miner_text
 	
 func _set_mayor_tut_1_speech() -> void:
+	$MajorTalk.play()
 	mayor_text_label.visible_characters = 0
 	mayor_text_label.text = mayor_tut_1
 	mayor_active_text = mayor_tut_1
@@ -163,6 +170,7 @@ func _set_mayor_tut_1_speech() -> void:
 	miner_image.get_parent().visible = false
 	
 func _set_mayor_tut_2_speech() -> void:
+	$MajorTalk.play()
 	mayor_text_label.visible_characters = 0
 	mayor_text_label.text = mayor_tut_2
 	mayor_active_text = mayor_tut_2
@@ -170,18 +178,21 @@ func _set_mayor_tut_2_speech() -> void:
 	print("here")
 	
 func _set_mayor_tut_3_speech() -> void:
+	$MajorTalk.play()	
 	mayor_text_label.visible_characters = 0	
 	mayor_text_label.text = mayor_tut_3
 	mayor_active_text = mayor_tut_3
 	$MayorControl/MayorText/MayorTextTimer.start()
 	
 func _set_mayor_tut_4_speech() -> void:
+	$MajorTalk.play()	
 	mayor_text_label.visible_characters = 0	
 	mayor_text_label.text = mayor_tut_4
 	mayor_active_text = mayor_tut_4
 	$MayorControl/MayorText/MayorTextTimer.start()
 	
 func _set_mayor_train_crash_speech(score) -> void:
+	$MajorTalk.play()	
 	mayor_text_label.visible_characters = 0
 	mayor_text_label.text = mayor_train_crashed_start + str(score) + mayor_train_crashed_finish
 	mayor_active_text = mayor_text_label.text
@@ -190,6 +201,7 @@ func _set_mayor_train_crash_speech(score) -> void:
 	miner_image.get_parent().visible = false
 	
 func _set_mayor_pause_speech() -> void:
+	$MajorTalk.play()
 	self.visible = true
 	mayor_text_label.visible_characters = 0
 	mayor_text_label.text = mayor_pause_speech
