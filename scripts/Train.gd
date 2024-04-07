@@ -34,7 +34,10 @@ const vertical := 3
 const bottom_right_corner := 4
 const bottom_left_corner := 5
 
+onready var default_position := global_position
+
 func _start_train() -> void:
+	global_position = default_position
 	path = rail_tile_map.path
 	#global_position = path[0]
 	target_pos = _get_correct_world_coord(path[0])

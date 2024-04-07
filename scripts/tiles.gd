@@ -7,6 +7,9 @@ onready var player = $"../Player"
 export(bool) var is_rail = false
 export(bool) var is_rail_placing_tile_set = false
 
+export(NodePath) var actual_rail_tile_map_path
+onready var actual_rail_tile_map = get_node(actual_rail_tile_map_path) as Tiles
+
 export var rail_tile = 4
 const ground_tile = -1
 const wall_tile = 2
@@ -22,13 +25,18 @@ func _ready() -> void:
 		last_placed_rail = _find_start_rail()
 
 func _find_start_rail() -> Vector2:
-	return get_used_cells_by_id(6)[0]
+	return actual_rail_tile_map.get_used_cells_by_id(6)[0]
 
 func is_wall_tile(coords: Vector2) -> bool:
 	return get_cellv(coords) == wall_tile
+	
+func place_ghost_rail(coords: Vector2) -> void:
+	if coords.distance_to(actual_rail_tile_map.last_placed_rail) > 1 or get_cellv(coords) != -1:
+		return
+	set_cellv(coords, rail_tile)
 
 func place_rails(coords: Vector2) -> void:
-	if coords.distance_to(last_placed_rail) > 1:
+	if coords.distance_to(last_placed_rail) > 1 or get_cellv(coords) != -1:
 		return
 	path.push_back(coords)
 	set_cellv(coords, _get_rail_to_place(coords, last_placed_rail))

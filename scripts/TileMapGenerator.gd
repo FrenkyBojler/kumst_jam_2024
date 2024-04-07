@@ -136,10 +136,8 @@ func _generate_path(start_row: int, first_column: int, last_column: int, rows: i
 	for i in rows:
 		if result.size() != 0:
 			var last_wall_x_index = _get_last_wall_index(result, start_row - (i - 1), prev_dir)
-			#print("last wall index: ", last_wall_x_index)
 			var random_dir = _get_random_dir()
 			var random_walls_on_same_row = _get_random_walls_on_same_row(first_column, last_column, last_wall_x_index, random_dir)
-			#print("how many walls: ", random_walls_on_same_row)
 			var index = last_wall_x_index
 			for col in random_walls_on_same_row + 1:
 				if random_dir == -1:
@@ -180,8 +178,6 @@ func _get_last_wall_index(walls: PoolVector2Array, index: int, last_dir: int) ->
 		if wall.y == index:
 			walls_on_index.push_back(wall)
 			
-	#print_debug("walls on row: ", walls_on_index, " | last dir: ", last_dir)
-	
 	var last_wall = walls_on_index[0]
 	for wall in walls_on_index:
 		if last_dir == -1:

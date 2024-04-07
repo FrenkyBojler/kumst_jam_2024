@@ -20,10 +20,11 @@ const bottom_left_corner := 5
 export(bool) var print_velocity = false
 
 func _ready() -> void:
-	_turn_vertical()
+	_turn_vertical(false)
 
-func _turn_vertical() -> void:
+func _turn_vertical(flip_v: bool) -> void:
 	sprite_vertical.visible = true
+	sprite_vertical.flip_v = flip_v
 	sprite_horizontal.visible = false
 	sprite_corner_top_left.visible = false
 	sprite_corner_top_right.visible = false
@@ -31,11 +32,11 @@ func _turn_vertical() -> void:
 	sprite_corner_bottom_left.visible = false
 
 func _turn_horizontal(flip_h: bool) -> void:
-	sprite_vertical.visible = false
 	sprite_horizontal.visible = true
+	sprite_horizontal.flip_h = flip_h
+	sprite_vertical.visible = false
 	sprite_corner_top_left.visible = false
 	sprite_corner_top_right.visible = false
-	sprite_horizontal.flip_h = flip_h
 	sprite_corner_bottom_right.visible = false
 	sprite_corner_bottom_left.visible = false
 	
@@ -77,17 +78,15 @@ const tolerance = 0.005
 
 func _on_Train_tile_changed(tile) -> void:
 	var auto_tile_coord = train.rail_tile_map.get_cell(tile.x, tile.y)
-	
-	if print_velocity:
-		print_debug(auto_tile_coord, "|", train.current_velocity.y)
-		
+
 	var vel = train.current_velocity
 	
+	if print_velocity:
+		print_debug(tile.y, " | ", vel.y)
+
 	match(auto_tile_coord):
 		top_right_corner:
 			if vel.y > 0:
-				if print_velocity:
-					print_debug("tady")
 				_turn_corner_bottom_left()
 			else:
 				_turn_corner_top_right()
@@ -112,4 +111,7 @@ func _on_Train_tile_changed(tile) -> void:
 			else:
 				_turn_horizontal(false)
 		vertical:
-			_turn_vertical()
+			if vel.y > 0:
+				_turn_vertical(true)
+			else:
+				_turn_vertical(false)

@@ -186,6 +186,7 @@ func _trigger_place_rail() -> void:
 		interaction_mode = false
 
 func _place_rail() -> void:
+	tile_map_interaction.place_ground(last_interaction_pos)
 	var last_placed_rail_pos_backup = last_placed_rail_pos
 	last_placed_rail_pos = tile_map_rails.world_to_map(global_position)
 	tile_map_rails.place_rails(last_placed_rail_pos)
@@ -193,12 +194,11 @@ func _place_rail() -> void:
 		tile_map_rails.update_autotile_for_cel(last_placed_rail_pos_backup)
 	
 func _place_ghost_rail() -> void:
-	return
 	if last_interaction_pos != null:
 		tile_map_interaction.place_ground(last_interaction_pos)
 	
 	last_interaction_pos = tile_map_interaction.world_to_map(global_position)
-	tile_map_interaction.place_rails(last_interaction_pos)
+	tile_map_interaction.place_ghost_rail(last_interaction_pos)
 
 func _on_DrillTimer_timeout() -> void:
 	_drill_progress()

@@ -20,7 +20,6 @@ region_enabled = true
 region_rect = Rect2( 128, 96, 32, 32 )
 
 [node name="SpriteHorizontal" type="Sprite" parent="FirstCabin"]
-visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 96, 96, 32, 32 )
