@@ -11,6 +11,7 @@ const generator_wall_id = 2
 const generator_rock_id = 6
 const generator_left_barrier_id = 1
 const generator_right_barrier_id = 3
+const generator_side = 9
 
 const max_generated_value = 20
 var random_tile_id_generator = RandomNumberGenerator.new()
@@ -44,9 +45,9 @@ func _place_new_tile_at_row(row: int) -> void:
 	
 	generated_tiles.shuffle()
 	generated_tiles.push_front(generator_left_barrier_id)
-	generated_tiles.push_front(generator_wall_id)
+	generated_tiles.push_front(generator_side)
 	generated_tiles.push_back(generator_right_barrier_id)
-	generated_tiles.push_back(generator_wall_id)
+	generated_tiles.push_back(generator_side)
 	
 	var wall_from_prev_x_index = null
 	
