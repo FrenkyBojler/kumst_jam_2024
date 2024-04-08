@@ -262,7 +262,6 @@ tile_map_rails_path = NodePath("../RailTileMap")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 rotation = -0.00377699
-scale = Vector2( 1, 1 )
 current = true
 zoom = Vector2( 0.45, 0.45 )
 limit_bottom = 220

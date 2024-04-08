@@ -31,7 +31,7 @@ func _ready() -> void:
 	random_tile_id_generator.randomize()
 	player_last_y_pos = world_to_map(player.global_position).y
 	player_max_y_pos = player_last_y_pos
-	path_of_walls = _generate_path(max_y_pos, -2, -1, 500)
+	path_of_walls = _generate_path(max_y_pos, -2, 1, 500)
 
 func _process(_delta: float) -> void:
 	var player_current_y_pos = world_to_map(player.global_position).y
@@ -41,6 +41,7 @@ func _process(_delta: float) -> void:
 			player_last_y_pos = player_current_y_pos
 			player_max_y_pos = player_current_y_pos
 			max_y_pos -= 1
+var wall_from_prev_x_indexes := PoolIntArray()
 
 func _place_new_tile_at_row(row: int) -> void:
 	emit_signal("map_size_increased", row)
@@ -60,20 +61,35 @@ func _place_new_tile_at_row(row: int) -> void:
 	generated_tiles.push_back(generator_right_barrier_id)
 	generated_tiles.push_back(generator_side)
 	
-	var wall_from_prev_x_index = null
-	
 	if not generate_only_ground:
 		if path_row.size() != 0:
 			generated_tiles = _fix_row_by_path(generated_tiles, path_row)
 	for tile in generated_tiles:
 		if not generate_only_ground:
 			_place_ground_or_hole(start_index_x, row)
-			if start_index_x == wall_from_prev_x_index:
-				set_cell(start_index_x, row, generator_wall_id)
+			if wall_from_prev_x_indexes.has(start_index_x - 4) and not _get_real_x_indexes_from_path(path_row).has(start_index_x):
+				print_debug("Place a rock instead of a wall: ", start_index_x)
+				set_cell(start_index_x, row, generator_rock_id)
 			else:
 				set_cell(start_index_x, row, generated_tiles[index])
 		start_index_x += 1
 		index += 1
+		
+	wall_from_prev_x_indexes = _get_wall_x_indexes_from_row(generated_tiles)
+func _get_wall_x_indexes_from_row(row: PoolIntArray) -> PoolIntArray:
+	var result := PoolIntArray()
+	var index := 0
+	for r in row:
+		if r == generator_wall_id and index >= 2 and index <= 5:
+			result.push_back(index)
+		index += 1
+	return result
+
+func _get_real_x_indexes_from_path(path: PoolVector2Array) -> PoolIntArray:
+	var result = PoolIntArray()
+	for p in path:
+		result.push_back(4 - p.x)
+	return result
 
 func _place_ground_or_hole(x: int, y: int) -> void:
 		ground_tile_map.set_cell(x, y, generator_ground_id)
@@ -158,7 +174,6 @@ func _generate_path(start_row: int, first_column: int, last_column: int, rows: i
 	var result = PoolVector2Array()
 	
 	var prev_dir := 0
-	
 	for i in rows:
 		if result.size() != 0:
 			var last_wall_x_index = _get_last_wall_index(result, start_row - (i - 1), prev_dir)
@@ -203,7 +218,7 @@ func _get_last_wall_index(walls: PoolVector2Array, index: int, last_dir: int) ->
 	for wall in walls:
 		if wall.y == index:
 			walls_on_index.push_back(wall)
-			
+
 	var last_wall = walls_on_index[0]
 	for wall in walls_on_index:
 		if last_dir == -1:

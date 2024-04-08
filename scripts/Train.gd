@@ -67,7 +67,7 @@ func _start_train() -> void:
 	global_position = default_position
 	#path = rail_tile_map.path
 	if path.size() == 0:
-		_train_crashed()
+		_train_crashed("start_train")
 		return
 	
 	target_pos = _get_correct_world_coord(path[0])
@@ -154,7 +154,7 @@ func _process(delta: float) -> void:
 		emit_signal("tile_changed", last_cell_coords)
 		
 		if is_leading_train and real_tile_map.get_cellv(current_cell_coord) != -1:
-			 _train_crashed()
+			 _train_crashed("real tile map is not empty")
 
 	if target_pos != null:
 		if global_position.distance_to(target_pos) <= 1:
@@ -162,16 +162,16 @@ func _process(delta: float) -> void:
 			if path.size() == 0:
 				target_pos = null
 				if is_leading_train:
-					_train_crashed()
+					_train_crashed("end of path")
 			else:
 				target_pos = _get_correct_world_coord(path[0])
 		else:
 			current_velocity = global_position.direction_to(target_pos)
 		move_and_collide(current_velocity * speed * delta)
 
-func _train_crashed() -> void:
+func _train_crashed(from_where: String) -> void:
 	emit_signal("train_finished", score)
-	print_debug("train crashed")
+	print_debug("train crashed from: ", from_where)
 	_turn_off_all_lights(self)
 	$Humming.stop()
 	$Finish.play()
