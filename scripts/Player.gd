@@ -2,6 +2,13 @@ extends KinematicBody2D
 
 class_name Player
 
+var stone_break = preload("res://scenes/break_stone.wav")
+var rail_break = preload("res://scenes/break_rail.wav")
+var rail_lay = preload("res://scenes/lay_rails.wav")
+var step_1 = preload("res://scenes/step_1.mp3")
+var step_2 = preload("res://scenes/step_2.mp3")
+
+
 export(NodePath) var tile_map_path
 onready var tile_map = get_node(tile_map_path) as TileMapGenerator
 
@@ -348,10 +355,13 @@ func _on_Train_train_finished(score) -> void:
 	_turn_off_all_lights(self)
 
 func _on_SpeechContainer_game_started() -> void:
+	$Song.play()
 	is_paused = false
 
 func _on_SpeechContainer_game_paused() -> void:
+	$Song.stop()
 	is_paused = true
 
 func _on_SpeechContainer_game_resumed() -> void:
+	$Song.play()	
 	is_paused = false

@@ -33,6 +33,7 @@ var path: PoolVector2Array
 
 signal tile_changed(tile)
 signal train_finished(score)
+signal train_started
 
 const top_right_corner := 0
 const horizontal := 1
@@ -51,6 +52,8 @@ var score := 0
 
 var is_paused := true
 
+var is_start := true
+
 func _ready() -> void:
 	if is_leading_train:
 		$Humming.play()
@@ -60,6 +63,7 @@ func _pause_train() -> void:
 	is_paused = true
 	
 func _start_train() -> void:
+	emit_signal("train_started")
 	global_position = default_position
 	#path = rail_tile_map.path
 	if path.size() == 0:
@@ -133,10 +137,10 @@ func _process(delta: float) -> void:
 	if is_paused:
 		return
 
-
 	if Input.is_action_just_pressed("start_train") and target_pos == null:
 		#_start_train()
 		pass
+
 	var current_cell_coord = rail_tile_map.world_to_map(global_position)
 	if last_cell_coords != current_cell_coord:
 		last_cell_coords = current_cell_coord
@@ -147,7 +151,6 @@ func _process(delta: float) -> void:
 			_pause_train()
 			return
 
-		print("tiles traveled: ", tiles_traveled)
 		emit_signal("tile_changed", last_cell_coords)
 		
 		if is_leading_train and real_tile_map.get_cellv(current_cell_coord) != -1:
@@ -185,6 +188,10 @@ func _on_Timer_timeout() -> void:
 
 func _on_RailTileMap_path_updated(tile) -> void:
 	path.push_back(tile)
+	
+	if is_start and path.size() >= 10:
+		is_start = false
+		$StartTrainTimer.start()
 
 func _on_RailTileMap_path_remove_last_tile() -> void:
 	path.remove(path.size() - 1)
@@ -203,7 +210,6 @@ func _on_RestTrainTimer_timeout() -> void:
 
 func _on_SpeechContainer_game_started() -> void:
 	is_paused = false
-	$StartTrainTimer.start()
 
 func _on_SpeechContainer_game_paused() -> void:
 	is_paused = true

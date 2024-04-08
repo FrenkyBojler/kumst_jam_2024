@@ -74,6 +74,7 @@ func _process(delta: float) -> void:
 			mayor_text_label.visible_characters = -1
 			$MayorControl/ArrowNext.visible = true
 			$MajorTalk.stop()
+			print("TAdy")
 		elif $MayorControl/MayorText/MayorTextTimer.is_stopped() and mayor_text_label.get_parent().visible:
 			_next_speech()
 		elif miner_image.get_parent().visible:
@@ -136,6 +137,7 @@ func _on_Timer_timeout() -> void:
 	if mayor_text_label.visible_characters == mayor_active_text.length():
 		$MayorControl/MayorText/MayorTextTimer.stop()
 		$MayorControl/ArrowNext.visible = true
+		$MajorTalk.stop()			
 
 func _next_speech() -> void:
 	$MayorControl/ArrowNext.visible = false

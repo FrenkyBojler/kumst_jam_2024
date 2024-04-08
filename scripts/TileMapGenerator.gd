@@ -27,10 +27,12 @@ const tiles_row = [generator_left_barrier_id, generator_wall_id, generator_rock_
 
 signal map_size_increased(max_row)
 
+
 func _ready() -> void:
+	random_tile_id_generator.randomize()
 	player_last_y_pos = world_to_map(player.global_position).y
 	player_max_y_pos = player_last_y_pos
-	path_of_walls = _generate_path(max_y_pos, -2, -1, 100)
+	path_of_walls = _generate_path(max_y_pos, -2, -1, 500)
 
 func _process(_delta: float) -> void:
 	var player_current_y_pos = world_to_map(player.global_position).y
