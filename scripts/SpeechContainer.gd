@@ -1,5 +1,7 @@
 extends Sprite
 
+var button_icon = preload("res://textures/ui_dialog_arrow.png")
+
 onready var mayor_image = $MayorControl/MayorImage
 onready var mayor_label = $MayorControl/MayerLabel
 onready var mayor_text_label = $MayorControl/MayorText
@@ -11,6 +13,7 @@ onready var miner_text_label = $MinerControl/MinerText
 onready var how_button = $MinerControl/HowButton
 onready var k_button = $MinerControl/KButton
 onready var neh_button = $MinerControl/NehButton
+
 
 const mayor_intro_text = "Dear miner, you have been assigned the utmost\nurgent task. We need you to go and prepare\na way for our brand new SUBWAY."
 const mayor_tut_1 = "It’s quite simple, really. All you have to do is\nto go underground and place as  many rails as\nyou can before the subway arrives."
@@ -42,57 +45,62 @@ var is_game_paused := false
 
 var mayor_active_text = mayor_intro_text
 
-onready var player = $"../Player"
-onready var y_distance_to_player = global_position.y - player.global_position.y
-
 func _ready() -> void:
 	mayor_text_label.visible_characters = 0
 	mayor_text_label.text = mayor_intro_text
 	$MajorTalk.play()
 	select_button_on_index(true)
-	
+
 var prev_visible = false
 	
 func _process(delta: float) -> void:
 	if not self.visible and Input.is_action_just_pressed("escape"):
-		emit_signal("game_paused")
 		_pause_game()
 	
 	if not self.visible:
 		return
 
-	global_position = Vector2(global_position.x, player.global_position.y + y_distance_to_player + 15)
-	
 	if Input.is_action_just_pressed("ui_left"):
 		select_prev_button()
 	elif Input.is_action_just_pressed("ui_right"):
 		select_next_button()
 	elif Input.is_action_just_pressed("interact"):
-		$Confirm.play()
-		if not $MayorControl/MayorText/MayorTextTimer.is_stopped():
-			$MayorControl/MayorText/MayorTextTimer.stop()
-			mayor_text_label.visible_characters = -1
-			$MayorControl/ArrowNext.visible = true
-			$MajorTalk.stop()
-			print("TAdy")
-		elif $MayorControl/MayorText/MayorTextTimer.is_stopped() and mayor_text_label.get_parent().visible:
-			_next_speech()
-		elif miner_image.get_parent().visible:
-			_push_selected_button()
+		_interact()
+
+func _interact() -> void:
+	$Confirm.play()
+	if not $MayorControl/MayorText/MayorTextTimer.is_stopped():
+		$MayorControl/MayorText/MayorTextTimer.stop()
+		mayor_text_label.visible_characters = -1
+		$MayorControl/ArrowNext.visible = true
+		$MajorTalk.stop()
+	elif $MayorControl/MayorText/MayorTextTimer.is_stopped() and mayor_text_label.get_parent().visible:
+		_next_speech()
+	elif miner_image.get_parent().visible:
+		_push_selected_button()
+
+func _how_button_pressed() -> void:
+	_set_mayor_tut_1_speech()
+	
+func _k_button_pressed() -> void:
+	if game_finished:
+		_restart_game()
+	elif is_game_paused:
+		_resume_game()
+	else:
+		_start_game()
+		
+func _nah_button_pressed() -> void:
+	_exit_game()	
 
 func _push_selected_button() -> void:
 	print(selected_button_index)
 	if selected_button_index == 0:
-		_set_mayor_tut_1_speech()
+		_how_button_pressed()
 	if selected_button_index == 1:
-		if game_finished:
-			_restart_game()
-		elif is_game_paused:
-			_resume_game()
-		else:
-			_start_game()
+		_k_button_pressed()
 	if selected_button_index == 2:
-		_exit_game()
+		_nah_button_pressed()
 
 func select_next_button() -> void:
 	selected_button_index += 1
@@ -108,8 +116,8 @@ func select_prev_button() -> void:
 
 func select_button_on_index(start: bool) -> void:
 	for button in buttons:
-		button.get_child(0).visible = false
-	buttons[selected_button_index].get_child(0).visible = true
+		(button as ToolButton).icon = null
+	(buttons[selected_button_index] as ToolButton).icon = button_icon
 	
 	if not start:
 		$ChangeDialogOption.play()
@@ -120,6 +128,7 @@ func _resume_game():
 	self.hide()
 
 func _pause_game() -> void:
+	emit_signal("game_paused")
 	_set_mayor_pause_speech()
 	
 func _start_game() -> void:
@@ -137,7 +146,7 @@ func _on_Timer_timeout() -> void:
 	if mayor_text_label.visible_characters == mayor_active_text.length():
 		$MayorControl/MayorText/MayorTextTimer.stop()
 		$MayorControl/ArrowNext.visible = true
-		$MajorTalk.stop()			
+		$MajorTalk.stop()
 
 func _next_speech() -> void:
 	$MayorControl/ArrowNext.visible = false
@@ -177,10 +186,9 @@ func _set_mayor_tut_2_speech() -> void:
 	mayor_text_label.text = mayor_tut_2
 	mayor_active_text = mayor_tut_2
 	$MayorControl/MayorText/MayorTextTimer.start()
-	print("here")
 	
 func _set_mayor_tut_3_speech() -> void:
-	$MajorTalk.play()	
+	$MajorTalk.play()
 	mayor_text_label.visible_characters = 0	
 	mayor_text_label.text = mayor_tut_3
 	mayor_active_text = mayor_tut_3
@@ -232,3 +240,22 @@ func _on_Train_train_finished(score) -> void:
 	game_finished = true
 	self.visible = true
 	_set_mayor_train_crash_speech(score)
+
+func _on_HowButton_button_down() -> void:
+	$Confirm.play()
+	_how_button_pressed()
+
+func _on_KButton_button_down() -> void:
+	$Confirm.play()
+	_k_button_pressed()
+
+func _on_NehButton_button_down() -> void:
+	$Confirm.play()
+	_nah_button_pressed()
+
+func _on_SwipeJoystick_touched() -> void:
+	if self.visible:
+		_interact()
+
+func _on_MenuButton_game_paused_from_menu_button() -> void:
+	_pause_game()

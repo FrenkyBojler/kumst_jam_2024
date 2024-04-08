@@ -60,9 +60,9 @@ func remove_rail(coords: Vector2) -> void:
 		emit_signal("path_remove_last_tile")
 		set_cellv(coords, -1)
 
-func place_rails(coords: Vector2) -> void:
+func place_rails(coords: Vector2) -> bool:
 	if coords.distance_to(last_placed_rail) > 1 or get_cellv(coords) != -1:
-		return
+		return false
 	path.push_back(coords)
 	emit_signal("path_updated", coords)
 	set_cellv(coords, _get_rail_to_place(coords, last_placed_rail))
@@ -70,6 +70,8 @@ func place_rails(coords: Vector2) -> void:
 		set_cellv(last_placed_rail, _get_rail_to_place_between(last_placed_rail, last_last_placed_rail, coords))
 	last_last_placed_rail = last_placed_rail
 	last_placed_rail = coords
+	
+	return true
 
 func place_ground(coords: Vector2) -> void:
 	set_cellv(coords, ground_tile)

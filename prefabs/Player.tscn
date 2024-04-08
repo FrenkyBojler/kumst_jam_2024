@@ -747,12 +747,15 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="StoneBreak" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
+volume_db = -5.0
 
 [node name="RailBreak" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 7 )
+volume_db = -5.0
 
 [node name="RailLay" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
+volume_db = -5.0
 
 [node name="Step1" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )

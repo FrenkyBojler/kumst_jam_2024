@@ -215,8 +215,8 @@ func _place_rail() -> void:
 	tile_map_interaction.place_ground(last_interaction_pos)
 	var last_placed_rail_pos_backup = last_placed_rail_pos
 	last_placed_rail_pos = tile_map_rails.world_to_map(global_position)
-	tile_map_rails.place_rails(last_placed_rail_pos)
-	$RailLay.play()
+	if tile_map_rails.place_rails(last_placed_rail_pos):
+		$RailLay.play()
 	if last_placed_rail_pos_backup != null:
 		tile_map_rails.update_autotile_for_cel(last_placed_rail_pos_backup)
 	

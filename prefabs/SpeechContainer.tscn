@@ -111,121 +111,53 @@ custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = ". . ."
 
-[node name="HowButton" type="Control" parent="MinerControl"]
-anchor_left = 0.366
-anchor_top = 0.787
-anchor_right = 0.366
-anchor_bottom = 0.787
-margin_left = -36.696
-margin_top = -17.368
-margin_right = 1.30399
-margin_bottom = 22.632
-
-[node name="HowImage" type="TextureRect" parent="MinerControl/HowButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -4.0
-margin_top = -1.0
-margin_right = 2.30399
-margin_bottom = 4.0
-texture = ExtResource( 6 )
-
-[node name="How" type="Label" parent="MinerControl/HowButton"]
-anchor_left = 0.875
-anchor_top = 0.525
-anchor_right = 0.875
-anchor_bottom = 0.525
-margin_left = -11.0
-margin_top = -5.0
-margin_right = 11.0
-margin_bottom = 5.0
+[node name="HowButton" type="ToolButton" parent="MinerControl"]
+margin_left = 72.0
+margin_top = 43.0
+margin_right = 114.0
+margin_bottom = 65.0
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "How?"
+icon = ExtResource( 6 )
+expand_icon = true
 
-[node name="KButton" type="Control" parent="MinerControl"]
-anchor_left = 0.366
-anchor_top = 0.787
-anchor_right = 0.366
-anchor_bottom = 0.787
-margin_left = 32.304
-margin_top = -17.368
-margin_right = 70.304
-margin_bottom = 22.632
-
-[node name="KImage" type="TextureRect" parent="MinerControl/KButton"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -4.0
-margin_top = -1.0
-margin_right = 2.30399
-margin_bottom = 4.0
-texture = ExtResource( 6 )
-
-[node name="K" type="Label" parent="MinerControl/KButton"]
-anchor_left = 0.875
-anchor_top = 0.525
-anchor_right = 0.875
-anchor_bottom = 0.525
-margin_left = -11.0
-margin_top = -5.0
-margin_right = 11.0
-margin_bottom = 5.0
+[node name="KButton" type="ToolButton" parent="MinerControl"]
+margin_left = 131.0
+margin_top = 43.0
+margin_right = 173.0
+margin_bottom = 65.0
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
 custom_fonts/font = ExtResource( 3 )
-text = "K."
+text = "K.    "
+icon = ExtResource( 6 )
+expand_icon = true
 
-[node name="NehButton" type="Control" parent="MinerControl"]
-anchor_left = 0.366
-anchor_top = 0.787
-anchor_right = 0.366
-anchor_bottom = 0.787
-margin_left = 100.304
-margin_top = -18.368
-margin_right = 138.304
-margin_bottom = 21.632
-
-[node name="NehImage" type="TextureRect" parent="MinerControl/NehButton"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -4.0
-margin_top = -1.0
-margin_right = 2.30399
-margin_bottom = 4.0
-texture = ExtResource( 6 )
-
-[node name="NEh" type="Label" parent="MinerControl/NehButton"]
-anchor_left = 0.875
-anchor_top = 0.525
-anchor_right = 0.875
-anchor_bottom = 0.525
-margin_left = -11.0
-margin_top = -5.0
-margin_right = 11.0
-margin_bottom = 5.0
+[node name="NehButton" type="ToolButton" parent="MinerControl"]
+margin_left = 194.0
+margin_top = 43.0
+margin_right = 236.0
+margin_bottom = 65.0
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
 custom_fonts/font = ExtResource( 3 )
-text = "Neh."
+text = "Neh.  "
+icon = ExtResource( 6 )
+expand_icon = true
 
 [node name="ChangeSpeechTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="ChangeDialogOption" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 7 )
+volume_db = -10.0
 
 [node name="Confirm" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
+volume_db = -10.0
 
 [node name="MajorTalk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
+volume_db = -5.0
 
 [connection signal="mayor_intro_text_finished" from="." to="." method="_on_SpeechContainer_mayor_intro_text_finished"]
 [connection signal="mayor_tut_1_finished" from="." to="." method="_on_SpeechContainer_mayor_tut_1_finished"]
@@ -233,4 +165,7 @@ stream = ExtResource( 9 )
 [connection signal="mayor_tut_3_finished" from="." to="." method="_on_SpeechContainer_mayor_tut_3_finished"]
 [connection signal="mayor_tut_4_finished" from="." to="." method="_on_SpeechContainer_mayor_tut_4_finished"]
 [connection signal="timeout" from="MayorControl/MayorText/MayorTextTimer" to="." method="_on_Timer_timeout"]
+[connection signal="button_down" from="MinerControl/HowButton" to="." method="_on_HowButton_button_down"]
+[connection signal="button_down" from="MinerControl/KButton" to="." method="_on_KButton_button_down"]
+[connection signal="button_down" from="MinerControl/NehButton" to="." method="_on_NehButton_button_down"]
 [connection signal="timeout" from="ChangeSpeechTimer" to="." method="_on_ChangeSpeechTimer_timeout"]
