@@ -327,11 +327,14 @@ var touched := false
 
 func _on_SwipeJoystick_touched() -> void:
 	touched = true
+	remove_rail_timer.start()
 
 func _on_SwipeJoystick_touch_released() -> void:
-	if touched and not is_touching:
+	if touched and not is_touching and not has_removed_rail:
 		touched = false
 		_trigger_place_rail()
+	elif has_removed_rail:
+		has_removed_rail = false
 
 	current_velocity = Vector2.ZERO
 	_turn_off_touching()
@@ -345,8 +348,13 @@ func _turn_off_all_lights(node: Node2D) -> void:
 			child.enabled = false
 		elif child.get_child_count() > 0 :
 			_turn_off_all_lights(child)
+			
+var has_removed_rail = false
 
 func _on_RemoveRailTimer_timeout() -> void:
+	if is_touching:
+		return
+	has_removed_rail = true
 	tile_map_rails.remove_rail(tile_map_rails.world_to_map(global_position))
 	$RailBreak.play()
 	
