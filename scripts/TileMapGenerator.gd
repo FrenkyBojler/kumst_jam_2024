@@ -27,7 +27,6 @@ const tiles_row = [generator_left_barrier_id, generator_wall_id, generator_rock_
 
 signal map_size_increased(max_row)
 
-
 func _ready() -> void:
 	random_tile_id_generator.randomize()
 	player_last_y_pos = world_to_map(player.global_position).y
@@ -48,8 +47,14 @@ func _place_new_tile_at_row(row: int) -> void:
 	var start_index_x := -4
 	var index = 0
 	var generated_tiles = _generate_line(tiles_row.size() - 2)
-	
 	generated_tiles.shuffle()
+	
+	var path_row
+	var holes_indexes
+	if not generate_only_ground:
+		path_row = _get_path_at_row(row)
+		holes_indexes = _get_holes_indexes(generated_tiles, path_row)
+
 	generated_tiles.push_front(generator_left_barrier_id)
 	generated_tiles.push_front(generator_side)
 	generated_tiles.push_back(generator_right_barrier_id)
@@ -57,17 +62,12 @@ func _place_new_tile_at_row(row: int) -> void:
 	
 	var wall_from_prev_x_index = null
 	
-	var path_row
 	if not generate_only_ground:
-		path_row = _get_path_at_row(row)
 		if path_row.size() != 0:
 			generated_tiles = _fix_row_by_path(generated_tiles, path_row)
-			_place_hole_under_wall(generated_tiles, path_row, row)
 	for tile in generated_tiles:
-		if generate_only_ground:
-			set_cell(start_index_x, row, generator_ground_id)
-			pass
-		else:
+		if not generate_only_ground:
+			_place_ground_or_hole(start_index_x, row)
 			if start_index_x == wall_from_prev_x_index:
 				set_cell(start_index_x, row, generator_wall_id)
 			else:
@@ -75,42 +75,32 @@ func _place_new_tile_at_row(row: int) -> void:
 		start_index_x += 1
 		index += 1
 
-func _place_hole_under_wall(row: PoolIntArray, row_path: PoolVector2Array, row_index: int) -> void:
-	var index = 0
-	var was_hole_set = false
-	var actual_row = PoolIntArray()
-	var i = 0
+func _place_ground_or_hole(x: int, y: int) -> void:
+		ground_tile_map.set_cell(x, y, generator_ground_id)
+
+func _get_holes_indexes(row: PoolIntArray, row_path: PoolVector2Array) -> PoolIntArray:
+	var result = PoolIntArray()
+	var index = -1
 	for r in row:
-		if i <= 1:
-			i += 1
-			continue
-		if actual_row.size() == 4:
-			break
-		actual_row.push_back(r)
-		
-		
-		
-	for tile in actual_row:
-		if tile != generator_wall_id:
-			index +=1
-			continue
-		for r in row_path:
-			var path_index = abs(-4) + r.x
-			if path_index == index:
-				continue
-			else:
-				ground_tile_map.set_cellv(Vector2(-4 + index, row_index), generator_hole)
-				was_hole_set = true
-				break
-		if was_hole_set:
-			break
+		var can_add = true
 		index += 1
+		if r != generator_wall_id:
+			continue
+		for path in row_path:
+			var path_index = 4 + path.x
+			if index == path_index:
+				can_add = false
+				break
+		if can_add:
+			result.push_back(index)
+	return result
 
 func _fix_row_by_path(row: PoolIntArray, row_path: PoolVector2Array) -> PoolIntArray:
 	var result = row
 	for r in row_path:
 		var path_index = abs(-4) + r.x
 		result[path_index] = generator_wall_id
+		
 	return result
 
 func _get_path_at_row(row_index: int) -> PoolVector2Array:

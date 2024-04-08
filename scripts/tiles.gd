@@ -52,7 +52,6 @@ func _get_start_last_trail_tile() -> Vector2:
 	return last_rail
 
 func remove_rail(coords: Vector2) -> void:
-	print_debug("Coords: ", coords, " | ", get_cellv(coords))
 	if coords == path[path.size() - 1] and rails.has(get_cellv(coords)):
 		path.remove(path.size() -1)
 		last_placed_rail = path[path.size() - 1]

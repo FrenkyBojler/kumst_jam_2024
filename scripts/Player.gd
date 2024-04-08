@@ -159,6 +159,10 @@ func _stop_drill() -> void:
 func _reset_drill_timer() -> void:
 	drill_timer.stop()
 	current_drill_time = 0.0
+	
+	
+signal rocks_drilled_count_changed(count)
+var rocks_drilled_count := 0
 
 func _drill_progress() -> void:
 	current_drill_time += 1
@@ -166,6 +170,8 @@ func _drill_progress() -> void:
 		$StoneBreak.play()
 		tile_map.place_ground(currently_drilled_cell_pos)
 		_stop_drill()
+		rocks_drilled_count += 1
+		emit_signal("rocks_drilled_count_changed", rocks_drilled_count)
 
 func _check_stop_drill_by_action_released() -> void:
 	if currently_drilling_pos == Vector2.LEFT and !is_left_pressed and !is_left_touching:

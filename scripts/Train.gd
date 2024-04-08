@@ -188,10 +188,6 @@ func _on_Timer_timeout() -> void:
 
 func _on_RailTileMap_path_updated(tile) -> void:
 	path.push_back(tile)
-	
-	if is_start and path.size() >= 10:
-		is_start = false
-		$StartTrainTimer.start()
 
 func _on_RailTileMap_path_remove_last_tile() -> void:
 	path.remove(path.size() - 1)
@@ -216,3 +212,8 @@ func _on_SpeechContainer_game_paused() -> void:
 	
 func _on_SpeechContainer_game_resumed() -> void:
 	is_paused = false
+
+func _on_Player_rocks_drilled_count_changed(count) -> void:
+	if count >= 10 and is_start:
+		$StartTrainTimer.start()
+		is_start = false
