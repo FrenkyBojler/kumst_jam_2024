@@ -2,13 +2,13 @@
 
 [ext_resource path="res://textures/ui_dialog_window.png" type="Texture" id=1]
 [ext_resource path="res://scripts/SpeechContainer.gd" type="Script" id=2]
-[ext_resource path="res://font.tres" type="DynamicFont" id=3]
 [ext_resource path="res://textures/ui_mayor_photo.png" type="Texture" id=4]
 [ext_resource path="res://textures/ui_miner_photo.png" type="Texture" id=5]
 [ext_resource path="res://textures/ui_dialog_arrow.png" type="Texture" id=6]
 [ext_resource path="res://scenes/change_dialogue_option.wav" type="AudioStream" id=7]
 [ext_resource path="res://scenes/confirm_dialogue_option.wav" type="AudioStream" id=8]
 [ext_resource path="res://scenes/mayor_talk.wav" type="AudioStream" id=9]
+[ext_resource path="res://fonts/pixel-font.tres" type="DynamicFont" id=10]
 
 [node name="SpeechContainer" type="Sprite"]
 texture = ExtResource( 1 )
@@ -36,11 +36,13 @@ texture = ExtResource( 4 )
 [node name="MayerLabel" type="Label" parent="MayorControl"]
 margin_left = 71.0
 margin_top = 5.0
-margin_right = 251.0
-margin_bottom = 19.0
+margin_right = 331.0
+margin_bottom = 50.0
+rect_scale = Vector2( 0.4, 0.4 )
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
-custom_fonts/font = ExtResource( 3 )
-text = "MAYOR OF BRNO"
+custom_fonts/font = ExtResource( 10 )
+text = "MAYOR OF BRNO
+"
 
 [node name="MayorText" type="Label" parent="MayorControl"]
 anchor_left = 0.287
@@ -48,11 +50,13 @@ anchor_top = 0.25
 anchor_right = 0.973
 anchor_bottom = 0.875
 margin_left = -2.472
-margin_right = -0.0880127
-margin_bottom = 0.999996
+margin_right = 418.912
+margin_bottom = 103.0
+rect_scale = Vector2( 0.3, 0.3 )
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 10 )
 text = "It's quite simple, really. Shut the fuck up"
+autowrap = true
 
 [node name="MayorTextTimer" type="Timer" parent="MayorControl/MayorText"]
 wait_time = 0.05
@@ -95,8 +99,9 @@ margin_left = 0.0879974
 margin_top = 0.0079999
 margin_right = 0.119995
 margin_bottom = -0.00800133
+rect_scale = Vector2( 0.4, 0.4 )
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 10 )
 text = "YOU"
 
 [node name="MinerText" type="Label" parent="MinerControl"]
@@ -104,45 +109,58 @@ anchor_left = 0.287
 anchor_top = 0.25
 anchor_right = 0.973
 anchor_bottom = 0.875
-margin_left = -2.472
-margin_right = -0.0880127
-margin_bottom = 0.999996
+margin_left = -1.472
+margin_right = 419.912
+margin_bottom = 63.0
+rect_scale = Vector2( 0.3, 0.3 )
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 10 )
 text = ". . ."
 
 [node name="HowButton" type="ToolButton" parent="MinerControl"]
-margin_left = 72.0
-margin_top = 43.0
-margin_right = 114.0
-margin_bottom = 65.0
+anchor_left = 0.326
+anchor_top = 0.843
+anchor_right = 0.326
+anchor_bottom = 0.843
+margin_left = -11.456
+margin_top = -4.95201
+margin_right = 64.544
+margin_bottom = 28.048
+rect_scale = Vector2( 0.3, 0.3 )
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 10 )
 text = "How?"
 icon = ExtResource( 6 )
-expand_icon = true
 
 [node name="KButton" type="ToolButton" parent="MinerControl"]
-margin_left = 131.0
-margin_top = 43.0
-margin_right = 173.0
-margin_bottom = 65.0
+anchor_left = 0.569
+anchor_top = 0.843
+anchor_right = 0.569
+anchor_bottom = 0.843
+margin_left = -14.664
+margin_top = -4.95201
+margin_right = 82.336
+margin_bottom = 28.048
+rect_scale = Vector2( 0.3, 0.3 )
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 10 )
 text = "K.    "
 icon = ExtResource( 6 )
-expand_icon = true
 
 [node name="NehButton" type="ToolButton" parent="MinerControl"]
-margin_left = 194.0
-margin_top = 43.0
-margin_right = 236.0
-margin_bottom = 65.0
+anchor_left = 0.815
+anchor_top = 0.843
+anchor_right = 0.815
+anchor_bottom = 0.843
+margin_left = -14.64
+margin_top = -4.95201
+margin_right = 82.36
+margin_bottom = 28.048
+rect_scale = Vector2( 0.3, 0.3 )
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 10 )
 text = "Neh.  "
 icon = ExtResource( 6 )
-expand_icon = true
 
 [node name="ChangeSpeechTimer" type="Timer" parent="."]
 one_shot = true
