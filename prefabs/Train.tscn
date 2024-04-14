@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Train.gd" type="Script" id=1]
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=2]
@@ -10,7 +10,10 @@
 [ext_resource path="res://scenes/subway_finish.wav" type="AudioStream" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 13.5 )
+extents = Vector2( 14, 13.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5, 2.5 )
 
 [node name="Train" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -24,7 +27,6 @@ texture = ExtResource( 6 )
 script = ExtResource( 3 )
 
 [node name="SpriteVerticalTop" type="Sprite" parent="FirstCabin"]
-visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 128, 96, 32, 32 )
@@ -293,9 +295,8 @@ region_enabled = true
 region_rect = Rect2( 192, 128, 32, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -0.5 )
+position = Vector2( 0, 2.5 )
 shape = SubResource( 1 )
-disabled = true
 
 [node name="StartTrainTimer" type="Timer" parent="."]
 wait_time = 20.0
@@ -318,7 +319,14 @@ attenuation = 2.82843
 [node name="Finish" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
 
+[node name="PlayerDetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
+position = Vector2( 0, -13.5 )
+shape = SubResource( 2 )
+
 [connection signal="tile_changed" from="." to="FirstCabin" method="_on_Train_tile_changed"]
 [connection signal="tile_changed" from="." to="SecondCabin" method="_on_Train_tile_changed"]
 [connection signal="timeout" from="StartTrainTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="RestTrainTimer" to="." method="_on_RestTrainTimer_timeout"]
+[connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_PlayerDetectionArea_body_entered"]

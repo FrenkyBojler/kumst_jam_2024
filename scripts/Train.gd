@@ -57,6 +57,8 @@ var is_start := true
 func _ready() -> void:
 	if is_leading_train:
 		$Humming.play()
+	else:
+		$PlayerDetectionArea/CollisionShape2D.disabled = true
 
 func _pause_train() -> void:
 	$RestTrainTimer.start()
@@ -82,22 +84,22 @@ func _get_path() -> PoolVector2Array:
 	rails.append_array(rail_tile_map.get_used_cells_by_id(bottom_right_corner))
 	rails.append_array(rail_tile_map.get_used_cells_by_id(bottom_left_corner))
 	
-	var path = PoolVector2Array()
-	path.push_back(start_coord)
+	var current_path = PoolVector2Array()
+	current_path.push_back(start_coord)
 	var used_coords = PoolVector2Array()
 	
 	var current_rail_pos = start_coord
 	for i in rails.size():
 		for coord in rails:
 			if coord.distance_to(current_rail_pos) <= 1 and not used_coords.has(coord):
-				path.push_back(coord)
+				current_path.push_back(coord)
 				used_coords.push_back(coord)
-		current_rail_pos = path[path.size() - 1]
-	path.push_back(finish_coord)
+		current_rail_pos = current_path[current_path.size() - 1]
+	current_path.push_back(finish_coord)
 	
 	var result = PoolVector2Array()
 	
-	for coord in path:
+	for coord in current_path:
 		var world_coord = rail_tile_map.map_to_world(coord)
 		result.push_back(Vector2(world_coord.x + 16, world_coord.y + 16))
 		
@@ -153,7 +155,7 @@ func _process(delta: float) -> void:
 
 		emit_signal("tile_changed", last_cell_coords)
 		
-		if is_leading_train and real_tile_map.get_cellv(current_cell_coord) != -1:
+		if is_leading_train and real_tile_map.get_cellv(current_cell_coord) != - 1:
 			 _train_crashed("real tile map is not empty")
 
 	if target_pos != null:
@@ -167,7 +169,7 @@ func _process(delta: float) -> void:
 				target_pos = _get_correct_world_coord(path[0])
 		else:
 			current_velocity = global_position.direction_to(target_pos)
-		move_and_collide(current_velocity * speed * delta)
+		var _collisions = move_and_collide(current_velocity * speed * delta)
 
 func _train_crashed(from_where: String) -> void:
 	emit_signal("train_finished", score)
@@ -196,7 +198,7 @@ func _turn_off_all_lights(node: Node2D) -> void:
 	for child in node.get_children():
 		if child is Light2D:
 			child.enabled = false
-		elif child.get_child_count() > 0 :
+		elif child.get_child_count() > 0:
 			_turn_off_all_lights(child)
 			
 func _on_RestTrainTimer_timeout() -> void:
@@ -217,3 +219,7 @@ func _on_Player_rocks_drilled_count_changed(count) -> void:
 	if count >= 10 and is_start:
 		$StartTrainTimer.start()
 		is_start = false
+
+func _on_PlayerDetectionArea_body_entered(body: Node) -> void:
+	if body is Player:
+		_train_crashed("player entered")

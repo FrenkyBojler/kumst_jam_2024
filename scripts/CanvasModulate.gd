@@ -3,7 +3,7 @@ extends CanvasModulate
 func _ready() -> void:
 	hide()
 
-func _on_Train_train_finished(score) -> void:
+func _on_Train_train_finished(_score) -> void:
 	hide()
 
 func _on_SpeechContainer_game_started() -> void:

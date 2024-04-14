@@ -2,12 +2,11 @@ extends KinematicBody2D
 
 class_name Player
 
-var stone_break = preload("res://scenes/break_stone.wav")
-var rail_break = preload("res://scenes/break_rail.wav")
-var rail_lay = preload("res://scenes/lay_rails.wav")
-var step_1 = preload("res://scenes/step_1.mp3")
-var step_2 = preload("res://scenes/step_2.mp3")
-
+var stone_break = preload ("res://scenes/break_stone.wav")
+var rail_break = preload ("res://scenes/break_rail.wav")
+var rail_lay = preload ("res://scenes/lay_rails.wav")
+var step_1 = preload ("res://scenes/step_1.mp3")
+var step_2 = preload ("res://scenes/step_2.mp3")
 
 export(NodePath) var tile_map_path
 onready var tile_map = get_node(tile_map_path) as TileMapGenerator
@@ -63,7 +62,7 @@ var is_right_pressed: bool
 var is_up_pressed: bool
 var is_down_pressed: bool
 
-const max_rotation_left= 270
+const max_rotation_left = 270
 const max_rotation_right = 90
 const max_rotation_top = 0
 const max_rotation_bottom = 180
@@ -160,7 +159,6 @@ func _reset_drill_timer() -> void:
 	drill_timer.stop()
 	current_drill_time = 0.0
 	
-	
 signal rocks_drilled_count_changed(count)
 var rocks_drilled_count := 0
 
@@ -184,7 +182,7 @@ func _check_stop_drill_by_action_released() -> void:
 		_stop_drill()
 		
 func _get_collision_position_of_drilling() -> Vector2:
-	return _get_interaction_cell_by_direction(currently_drilled_cell_pos)	
+	return _get_interaction_cell_by_direction(currently_drilled_cell_pos)
 
 func _get_interaction_cell_by_direction(direction: Vector2):
 	var col_pos: Vector2
@@ -346,13 +344,12 @@ func _on_SwipeJoystick_touch_released() -> void:
 	_turn_off_touching()
 	is_touching = false
 	remove_rail_timer.stop()
-	
 
 func _turn_off_all_lights(node: Node2D) -> void:
 	for child in node.get_children():
 		if child is Light2D:
 			child.enabled = false
-		elif child.get_child_count() > 0 :
+		elif child.get_child_count() > 0:
 			_turn_off_all_lights(child)
 			
 var has_removed_rail = false
@@ -377,5 +374,5 @@ func _on_SpeechContainer_game_paused() -> void:
 	is_paused = true
 
 func _on_SpeechContainer_game_resumed() -> void:
-	$Song.play()	
+	$Song.play()
 	is_paused = false
