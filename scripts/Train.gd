@@ -51,8 +51,10 @@ var stop_after_tiles_traveled := 80
 var score := 0
 
 var is_paused := true
+#indicates if the train is at the start of the game
+var is_start_of_game := true
 
-var is_start := true
+var is_train_in_motion := false
 
 func _ready() -> void:
 	if is_leading_train:
@@ -118,24 +120,20 @@ func _get_lowest_rail_coord() -> Vector2:
 	return lowest
 	
 func calculateVolume(distance: float) -> float:
-	print(distance)
-	# Apply the inverse square law
 	var maxVolume = 0.5
 	var maxDistance = 400
 	var volume = maxVolume / (distance * distance)
 	
-	# Ensure volume doesn't exceed maxVolume
 	volume = clamp(volume, 0.0, maxVolume)
 	
-	# Apply maxDistance threshold
 	if distance > maxDistance:
 		volume = 0.0
-		
-	print(volume)
 	
 	return volume
 
 func _process(delta: float) -> void:
+	is_train_in_motion = is_paused == false and is_start_of_game == false and target_pos != null
+
 	if is_paused:
 		return
 
@@ -216,10 +214,10 @@ func _on_SpeechContainer_game_resumed() -> void:
 	is_paused = false
 
 func _on_Player_rocks_drilled_count_changed(count) -> void:
-	if count >= 10 and is_start:
+	if count >= 10 and is_start_of_game:
 		$StartTrainTimer.start()
-		is_start = false
+		is_start_of_game = false
 
 func _on_PlayerDetectionArea_body_entered(body: Node) -> void:
-	if body is Player:
+	if body is Player and is_train_in_motion:
 		_train_crashed("player entered")
