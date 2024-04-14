@@ -34,6 +34,8 @@ var path: PoolVector2Array
 signal tile_changed(tile)
 signal train_finished(score)
 signal train_started
+signal train_start_resting
+signal train_stop_resting
 
 const top_right_corner := 0
 const horizontal := 1
@@ -62,9 +64,10 @@ func _ready() -> void:
 	else:
 		$PlayerDetectionArea/CollisionShape2D.disabled = true
 
-func _pause_train() -> void:
-	$RestTrainTimer.start()
+func _start_resting() -> void:
 	is_paused = true
+	$RestTrainTimer.start()
+	emit_signal("train_start_resting")
 	
 func _start_train() -> void:
 	emit_signal("train_started")
@@ -148,7 +151,7 @@ func _process(delta: float) -> void:
 		score += 1
 		
 		if tiles_traveled >= stop_after_tiles_traveled:
-			_pause_train()
+			_start_resting()
 			return
 
 		emit_signal("tile_changed", last_cell_coords)
@@ -203,6 +206,7 @@ func _on_RestTrainTimer_timeout() -> void:
 	is_paused = false
 	tiles_traveled = 0
 	speed += 5
+	emit_signal("train_stop_resting")
 
 func _on_SpeechContainer_game_started() -> void:
 	is_paused = false

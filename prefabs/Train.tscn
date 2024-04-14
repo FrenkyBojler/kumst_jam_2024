@@ -16,6 +16,7 @@ extents = Vector2( 14, 13.5 )
 extents = Vector2( 5, 2.5 )
 
 [node name="Train" type="KinematicBody2D"]
+collision_mask = 2
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -245,7 +246,6 @@ visible = false
 script = ExtResource( 3 )
 
 [node name="SpriteVerticalTop" type="Sprite" parent="SecondCabin"]
-visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 128, 128, 32, 32 )
