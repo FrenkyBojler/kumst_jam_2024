@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/Train.gd" type="Script" id=1]
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://icon.png" type="Texture" id=6]
 [ext_resource path="res://scenes/subway_humming.wav" type="AudioStream" id=7]
 [ext_resource path="res://scenes/subway_finish.wav" type="AudioStream" id=8]
+[ext_resource path="res://textures/portrait_frame.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 14, 13.5 )
@@ -298,10 +299,6 @@ region_rect = Rect2( 192, 128, 32, 32 )
 position = Vector2( 0, 2.5 )
 shape = SubResource( 1 )
 
-[node name="StartTrainTimer" type="Timer" parent="."]
-wait_time = 20.0
-one_shot = true
-
 [node name="RestTrainTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
@@ -325,8 +322,12 @@ stream = ExtResource( 8 )
 position = Vector2( 0, -13.5 )
 shape = SubResource( 2 )
 
+[node name="Sprite" type="Sprite" parent="PlayerDetectionArea"]
+position = Vector2( -0.25, -13.5 )
+scale = Vector2( 0.164063, 0.078125 )
+texture = ExtResource( 9 )
+
 [connection signal="tile_changed" from="." to="FirstCabin" method="_on_Train_tile_changed"]
 [connection signal="tile_changed" from="." to="SecondCabin" method="_on_Train_tile_changed"]
-[connection signal="timeout" from="StartTrainTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="RestTrainTimer" to="." method="_on_RestTrainTimer_timeout"]
 [connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_PlayerDetectionArea_body_entered"]

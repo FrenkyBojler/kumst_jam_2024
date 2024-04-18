@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/tiles.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://prefabs/SpeechContainer.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/song.mp3" type="AudioStream" id=13]
 [ext_resource path="res://prefabs/MenuButton.tscn" type="PackedScene" id=14]
+[ext_resource path="res://prefabs/GameInfo.tscn" type="PackedScene" id=15]
 
 [sub_resource type="TileSet" id=4]
 0/name = "rail"
@@ -192,6 +193,8 @@ margin_top = 14.0
 margin_right = 16.0
 margin_bottom = 14.0
 
+[node name="GameInfo" parent="CanvasLayer" instance=ExtResource( 15 )]
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.219608, 0.247059, 0.270588, 1 )
 script = ExtResource( 11 )
@@ -319,6 +322,7 @@ volume_db = -2.0
 [connection signal="game_resumed" from="CanvasLayer/SpeechContainer" to="LongTrain/Train3" method="_on_SpeechContainer_game_resumed"]
 [connection signal="game_resumed" from="CanvasLayer/SpeechContainer" to="LongTrain/Train4" method="_on_SpeechContainer_game_resumed"]
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="CanvasLayer/MenuButton" method="_on_SpeechContainer_game_started"]
+[connection signal="game_started" from="CanvasLayer/SpeechContainer" to="CanvasLayer/GameInfo" method="_on_SpeechContainer_game_started"]
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="CanvasModulate" method="_on_SpeechContainer_game_started"]
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="Player" method="_on_SpeechContainer_game_started"]
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="LongTrain/Train" method="_on_SpeechContainer_game_started"]
@@ -326,6 +330,7 @@ volume_db = -2.0
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="LongTrain/Train3" method="_on_SpeechContainer_game_started"]
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="LongTrain/Train4" method="_on_SpeechContainer_game_started"]
 [connection signal="game_paused_from_menu_button" from="CanvasLayer/MenuButton" to="CanvasLayer/SpeechContainer" method="_on_MenuButton_game_paused_from_menu_button"]
+[connection signal="train_start" from="CanvasLayer/GameInfo" to="LongTrain" method="_on_GameInfo_train_start"]
 [connection signal="map_size_increased" from="RealTileMap" to="RailTileMap" method="_on_RealTileMap_map_size_increased"]
 [connection signal="path_remove_last_tile" from="RailTileMap" to="Line2D" method="_on_RailTileMap_path_remove_last_tile"]
 [connection signal="path_remove_last_tile" from="RailTileMap" to="LongTrain/Train" method="_on_RailTileMap_path_remove_last_tile"]
@@ -348,12 +353,17 @@ volume_db = -2.0
 [connection signal="touch_released" from="Player/SwipeJoystick" to="Player" method="_on_SwipeJoystick_touch_released"]
 [connection signal="touched" from="Player/SwipeJoystick" to="CanvasLayer/SpeechContainer" method="_on_SwipeJoystick_touched"]
 [connection signal="touched" from="Player/SwipeJoystick" to="Player" method="_on_SwipeJoystick_touched"]
+[connection signal="tile_changed" from="LongTrain/Train" to="CanvasLayer/GameInfo" method="_on_Train_tile_changed"]
 [connection signal="train_finished" from="LongTrain/Train" to="CanvasLayer/SpeechContainer" method="_on_Train_train_finished"]
+[connection signal="train_finished" from="LongTrain/Train" to="CanvasLayer/GameInfo" method="_on_Train_train_finished"]
 [connection signal="train_finished" from="LongTrain/Train" to="CanvasModulate" method="_on_Train_train_finished"]
 [connection signal="train_finished" from="LongTrain/Train" to="Player" method="_on_Train_train_finished"]
 [connection signal="train_finished" from="LongTrain/Train" to="Player/Camera2D" method="_on_Train_train_finished"]
+[connection signal="train_start_resting" from="LongTrain/Train" to="CanvasLayer/GameInfo" method="_on_Train_train_start_resting"]
 [connection signal="train_start_resting" from="LongTrain/Train" to="Player/Camera2D" method="_on_Train_train_start_resting"]
+[connection signal="train_started" from="LongTrain/Train" to="CanvasLayer/GameInfo" method="_on_Train_train_started"]
 [connection signal="train_started" from="LongTrain/Train" to="Player/Camera2D" method="_on_Train_train_started"]
+[connection signal="train_stop_resting" from="LongTrain/Train" to="CanvasLayer/GameInfo" method="_on_Train_train_stop_resting"]
 [connection signal="train_stop_resting" from="LongTrain/Train" to="Player/Camera2D" method="_on_Train_train_stop_resting"]
 
 [editable path="LongTrain"]

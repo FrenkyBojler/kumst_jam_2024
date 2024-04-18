@@ -11,7 +11,6 @@ onready var sprite_corner_top_right = $SpriteCornerTopRight
 onready var sprite_corner_bottom_left = $SpriteCornerBottomLeft
 onready var sprite_corner_bottom_right = $SpriteCornerBottomRight
 
-
 const top_right_corner := 0
 const horizontal := 1
 const top_left_corner := 2
@@ -70,11 +69,11 @@ var prev_velocity_y: int = 0
 
 const tolerance = 0.005
 
-func _on_Train_tile_changed(tile) -> void:
+func _on_Train_tile_changed(tile, _tiles_to_rest) -> void:
 	var auto_tile_coord = train.rail_tile_map.get_cell(tile.x, tile.y)
 	var vel = train.current_velocity
 
-	match(auto_tile_coord):
+	match (auto_tile_coord):
 		top_right_corner:
 			if vel.y > 0:
 				_turn_corner_bottom_left()

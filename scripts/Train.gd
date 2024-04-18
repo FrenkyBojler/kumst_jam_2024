@@ -31,10 +31,10 @@ var target_pos
 
 var path: PoolVector2Array
 
-signal tile_changed(tile)
+signal tile_changed(tile, tiles_to_rest)
 signal train_finished(score)
 signal train_started
-signal train_start_resting
+signal train_start_resting(time)
 signal train_stop_resting
 
 const top_right_corner := 0
@@ -49,8 +49,10 @@ onready var default_position := global_position
 export(bool) var is_leading_train = false
 
 var tiles_traveled := 0
-var stop_after_tiles_traveled := 80
+var stop_after_tiles_traveled := 50
 var score := 0
+
+var train_resting_time := 10
 
 var is_paused := true
 #indicates if the train is at the start of the game
@@ -66,8 +68,8 @@ func _ready() -> void:
 
 func _start_resting() -> void:
 	is_paused = true
-	$RestTrainTimer.start()
-	emit_signal("train_start_resting")
+	$RestTrainTimer.start(train_resting_time)
+	emit_signal("train_start_resting", train_resting_time)
 	
 func _start_train() -> void:
 	emit_signal("train_started")
@@ -135,7 +137,7 @@ func calculateVolume(distance: float) -> float:
 	return volume
 
 func _process(delta: float) -> void:
-	is_train_in_motion = is_paused == false and is_start_of_game == false and target_pos != null
+	is_train_in_motion = is_paused == false and target_pos != null
 
 	if is_paused:
 		return
@@ -154,7 +156,7 @@ func _process(delta: float) -> void:
 			_start_resting()
 			return
 
-		emit_signal("tile_changed", last_cell_coords)
+		emit_signal("tile_changed", last_cell_coords, stop_after_tiles_traveled - tiles_traveled)
 		
 		if is_leading_train and real_tile_map.get_cellv(current_cell_coord) != - 1:
 			 _train_crashed("real tile map is not empty")
@@ -186,9 +188,6 @@ func _find_connected_rail_pos(current_rail_pos: Vector2):
 			return rail_pos
 	return null
 
-func _on_Timer_timeout() -> void:
-	_start_train()
-
 func _on_RailTileMap_path_updated(tile) -> void:
 	path.push_back(tile)
 
@@ -219,9 +218,13 @@ func _on_SpeechContainer_game_resumed() -> void:
 
 func _on_Player_rocks_drilled_count_changed(count) -> void:
 	if count >= 10 and is_start_of_game:
-		$StartTrainTimer.start()
+		#$StartTrainTimer.start()
 		is_start_of_game = false
 
 func _on_PlayerDetectionArea_body_entered(body: Node) -> void:
+	print_debug("body entered", body.name, is_train_in_motion)
 	if body is Player and is_train_in_motion:
 		_train_crashed("player entered")
+
+func _on_StartTrainTimer_timeout() -> void:
+	_start_train()
