@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://fonts/visitor1.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/GameInfo.gd" type="Script" id=2]
@@ -8,6 +8,65 @@ size = 26
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "Hide"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 742 ), Vector2( 0, 772 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_wipe_lable"
+} ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 772 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Show"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 772 ), Vector2( 0, 742 ) ]
+}
 
 [node name="GameInfo" type="Control"]
 anchor_right = 1.0
@@ -19,11 +78,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -287.0
-margin_top = -25.0
-margin_right = 291.0
+margin_left = -288.0
+margin_top = 4.0
+margin_right = 290.0
+margin_bottom = 29.0
 custom_colors/font_color = Color( 0.6, 0.458824, 0.466667, 1 )
 custom_fonts/font = SubResource( 1 )
+text = "Test"
 align = 1
 
 [node name="TrainStartTimer" type="Timer" parent="."]
@@ -33,6 +94,11 @@ align = 1
 [node name="ShowTilesToRest" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Hide = SubResource( 4 )
+anims/RESET = SubResource( 2 )
+anims/Show = SubResource( 3 )
 
 [connection signal="timeout" from="TrainStartTimer" to="." method="_on_TrainStartTimer_timeout"]
 [connection signal="timeout" from="TrainRestingTimer" to="." method="_on_TrainRestingTimer_timeout"]

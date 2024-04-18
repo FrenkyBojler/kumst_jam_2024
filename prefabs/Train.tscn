@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Train.gd" type="Script" id=1]
 [ext_resource path="res://textures/tilemap.png" type="Texture" id=2]
@@ -8,13 +8,12 @@
 [ext_resource path="res://icon.png" type="Texture" id=6]
 [ext_resource path="res://scenes/subway_humming.wav" type="AudioStream" id=7]
 [ext_resource path="res://scenes/subway_finish.wav" type="AudioStream" id=8]
-[ext_resource path="res://textures/portrait_frame.png" type="Texture" id=9]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 14, 13.5 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5, 2.5 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 13.5 )
 
 [node name="Train" type="KinematicBody2D"]
 collision_mask = 2
@@ -29,9 +28,16 @@ texture = ExtResource( 6 )
 script = ExtResource( 3 )
 
 [node name="SpriteVerticalTop" type="Sprite" parent="FirstCabin"]
+visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 128, 96, 32, 32 )
+
+[node name="PlayerDetectionAreaTop" type="Area2D" parent="FirstCabin/SpriteVerticalTop"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstCabin/SpriteVerticalTop/PlayerDetectionAreaTop"]
+position = Vector2( 0, -13.5 )
+shape = SubResource( 2 )
 
 [node name="LeftLightTop" type="Light2D" parent="FirstCabin/SpriteVerticalTop"]
 position = Vector2( -6.78917, -77.7609 )
@@ -60,6 +66,12 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2( 128, 96, 32, 32 )
 
+[node name="PlayerDetectionAreaBottom" type="Area2D" parent="FirstCabin/SpriteVerticalBottom"]
+position = Vector2( 0, 14 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstCabin/SpriteVerticalBottom/PlayerDetectionAreaBottom"]
+shape = SubResource( 2 )
+
 [node name="LeftLightBottom" type="Light2D" parent="FirstCabin/SpriteVerticalBottom"]
 position = Vector2( 6.21082, 79.2391 )
 scale = Vector2( 1.30948, 1.70478 )
@@ -83,6 +95,13 @@ visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 96, 96, 32, 32 )
+
+[node name="PlayerDetectionAreaRight" type="Area2D" parent="FirstCabin/SpriteHorizontalRight"]
+position = Vector2( 15, 1 )
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstCabin/SpriteHorizontalRight/PlayerDetectionAreaRight"]
+shape = SubResource( 2 )
 
 [node name="LeftLightRight" type="Light2D" parent="FirstCabin/SpriteHorizontalRight"]
 position = Vector2( 79.2391, -4.78918 )
@@ -110,6 +129,13 @@ texture = ExtResource( 2 )
 flip_h = true
 region_enabled = true
 region_rect = Rect2( 96, 96, 32, 32 )
+
+[node name="PlayerDetectionAreaLeft" type="Area2D" parent="FirstCabin/SpriteHorizontalLeft"]
+position = Vector2( -14, 0 )
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstCabin/SpriteHorizontalLeft/PlayerDetectionAreaLeft"]
+shape = SubResource( 2 )
 
 [node name="RightLightLeft" type="Light2D" parent="FirstCabin/SpriteHorizontalLeft"]
 position = Vector2( -79, -6 )
@@ -158,6 +184,13 @@ color = Color( 0.6, 0.458824, 0.466667, 1 )
 energy = 2.27
 mode = 2
 
+[node name="PlayerDetectionAreaTopLeft" type="Area2D" parent="FirstCabin/SpriteCornerTopLeft"]
+position = Vector2( -12, -10 )
+rotation = 2.35619
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstCabin/SpriteCornerTopLeft/PlayerDetectionAreaTopLeft"]
+shape = SubResource( 2 )
+
 [node name="SpriteCornerTopRight" type="Sprite" parent="FirstCabin"]
 visible = false
 texture = ExtResource( 2 )
@@ -183,6 +216,13 @@ texture_scale = 0.1
 color = Color( 0.6, 0.458824, 0.466667, 1 )
 energy = 2.27
 mode = 2
+
+[node name="PlayerDetectionAreaTopRight" type="Area2D" parent="FirstCabin/SpriteCornerTopRight"]
+position = Vector2( 12, -11 )
+rotation = 3.92699
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstCabin/SpriteCornerTopRight/PlayerDetectionAreaTopRight"]
+shape = SubResource( 2 )
 
 [node name="SpriteCornerBottomLeft" type="Sprite" parent="FirstCabin"]
 visible = false
@@ -211,8 +251,14 @@ color = Color( 0.6, 0.458824, 0.466667, 1 )
 energy = 2.27
 mode = 2
 
+[node name="PlayerDetectionAreaBottomLeft" type="Area2D" parent="FirstCabin/SpriteCornerBottomLeft"]
+position = Vector2( -12, 11 )
+rotation = 3.92699
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstCabin/SpriteCornerBottomLeft/PlayerDetectionAreaBottomLeft"]
+shape = SubResource( 2 )
+
 [node name="SpriteCornerBottomRight" type="Sprite" parent="FirstCabin"]
-visible = false
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 160, 96, 32, 32 )
@@ -241,6 +287,13 @@ mode = 2
 texture = ExtResource( 4 )
 color = Color( 0.6, 0.458824, 0.466667, 1 )
 energy = 2.27
+
+[node name="PlayerDetectionAreaBottomRight" type="Area2D" parent="FirstCabin/SpriteCornerBottomRight"]
+position = Vector2( 12, 12 )
+rotation = 2.35619
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstCabin/SpriteCornerBottomRight/PlayerDetectionAreaBottomRight"]
+shape = SubResource( 2 )
 
 [node name="SecondCabin" type="Node2D" parent="."]
 visible = false
@@ -316,18 +369,14 @@ attenuation = 2.82843
 [node name="Finish" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
 
-[node name="PlayerDetectionArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
-position = Vector2( 0, -13.5 )
-shape = SubResource( 2 )
-
-[node name="Sprite" type="Sprite" parent="PlayerDetectionArea"]
-position = Vector2( -0.25, -13.5 )
-scale = Vector2( 0.164063, 0.078125 )
-texture = ExtResource( 9 )
-
 [connection signal="tile_changed" from="." to="FirstCabin" method="_on_Train_tile_changed"]
 [connection signal="tile_changed" from="." to="SecondCabin" method="_on_Train_tile_changed"]
+[connection signal="body_entered" from="FirstCabin/SpriteVerticalTop/PlayerDetectionAreaTop" to="." method="_on_PlayerDetectionArea_body_entered"]
+[connection signal="body_entered" from="FirstCabin/SpriteVerticalBottom/PlayerDetectionAreaBottom" to="." method="_on_PlayerDetectionArea_body_entered"]
+[connection signal="body_entered" from="FirstCabin/SpriteHorizontalRight/PlayerDetectionAreaRight" to="." method="_on_PlayerDetectionArea_body_entered"]
+[connection signal="body_entered" from="FirstCabin/SpriteHorizontalLeft/PlayerDetectionAreaLeft" to="." method="_on_PlayerDetectionArea_body_entered"]
+[connection signal="body_entered" from="FirstCabin/SpriteCornerTopLeft/PlayerDetectionAreaTopLeft" to="." method="_on_PlayerDetectionArea_body_entered"]
+[connection signal="body_entered" from="FirstCabin/SpriteCornerTopRight/PlayerDetectionAreaTopRight" to="." method="_on_PlayerDetectionArea_body_entered"]
+[connection signal="body_entered" from="FirstCabin/SpriteCornerBottomLeft/PlayerDetectionAreaBottomLeft" to="." method="_on_PlayerDetectionArea_body_entered"]
+[connection signal="body_entered" from="FirstCabin/SpriteCornerBottomRight/PlayerDetectionAreaBottomRight" to="." method="_on_PlayerDetectionArea_body_entered"]
 [connection signal="timeout" from="RestTrainTimer" to="." method="_on_RestTrainTimer_timeout"]
-[connection signal="body_entered" from="PlayerDetectionArea" to="." method="_on_PlayerDetectionArea_body_entered"]

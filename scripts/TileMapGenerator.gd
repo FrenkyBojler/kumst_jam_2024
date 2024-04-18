@@ -51,10 +51,8 @@ func _place_new_tile_at_row(row: int) -> void:
 	generated_tiles.shuffle()
 	
 	var path_row
-	var holes_indexes
 	if not generate_only_ground:
 		path_row = _get_path_at_row(row)
-		holes_indexes = _get_holes_indexes(generated_tiles, path_row)
 
 	generated_tiles.push_front(generator_left_barrier_id)
 	generated_tiles.push_front(generator_side)
@@ -68,7 +66,6 @@ func _place_new_tile_at_row(row: int) -> void:
 		if not generate_only_ground:
 			_place_ground_or_hole(start_index_x, row)
 			if wall_from_prev_x_indexes.has(start_index_x - 4) and not _get_real_x_indexes_from_path(path_row).has(start_index_x):
-				print_debug("Place a rock instead of a wall: ", start_index_x)
 				set_cell(start_index_x, row, generator_rock_id)
 			else:
 				set_cell(start_index_x, row, generated_tiles[index])

@@ -177,9 +177,12 @@
 1/z_index = 0
 
 [node name="MainScene" type="Node2D"]
+position = Vector2( 1, 0 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
+
+[node name="GameInfo" parent="CanvasLayer" instance=ExtResource( 15 )]
 
 [node name="SpeechContainer" parent="CanvasLayer" instance=ExtResource( 12 )]
 position = Vector2( 288, 77 )
@@ -192,8 +195,6 @@ margin_left = 16.0
 margin_top = 14.0
 margin_right = 16.0
 margin_bottom = 14.0
-
-[node name="GameInfo" parent="CanvasLayer" instance=ExtResource( 15 )]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.219608, 0.247059, 0.270588, 1 )
@@ -307,6 +308,7 @@ real_tile_map_path = NodePath("../../RealTileMap")
 stream = ExtResource( 13 )
 volume_db = -2.0
 
+[connection signal="train_start" from="CanvasLayer/GameInfo" to="LongTrain" method="_on_GameInfo_train_start"]
 [connection signal="game_paused" from="CanvasLayer/SpeechContainer" to="CanvasLayer/MenuButton" method="_on_SpeechContainer_game_paused"]
 [connection signal="game_paused" from="CanvasLayer/SpeechContainer" to="CanvasModulate" method="_on_SpeechContainer_game_paused"]
 [connection signal="game_paused" from="CanvasLayer/SpeechContainer" to="Player" method="_on_SpeechContainer_game_paused"]
@@ -329,8 +331,8 @@ volume_db = -2.0
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="LongTrain/Train2" method="_on_SpeechContainer_game_started"]
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="LongTrain/Train3" method="_on_SpeechContainer_game_started"]
 [connection signal="game_started" from="CanvasLayer/SpeechContainer" to="LongTrain/Train4" method="_on_SpeechContainer_game_started"]
+[connection signal="mayor_initial_speech_shown" from="CanvasLayer/SpeechContainer" to="CanvasLayer/GameInfo" method="_on_SpeechContainer_mayor_initial_speech_shown"]
 [connection signal="game_paused_from_menu_button" from="CanvasLayer/MenuButton" to="CanvasLayer/SpeechContainer" method="_on_MenuButton_game_paused_from_menu_button"]
-[connection signal="train_start" from="CanvasLayer/GameInfo" to="LongTrain" method="_on_GameInfo_train_start"]
 [connection signal="map_size_increased" from="RealTileMap" to="RailTileMap" method="_on_RealTileMap_map_size_increased"]
 [connection signal="path_remove_last_tile" from="RailTileMap" to="Line2D" method="_on_RailTileMap_path_remove_last_tile"]
 [connection signal="path_remove_last_tile" from="RailTileMap" to="LongTrain/Train" method="_on_RailTileMap_path_remove_last_tile"]

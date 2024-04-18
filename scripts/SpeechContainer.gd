@@ -39,6 +39,9 @@ signal game_started
 signal game_paused
 signal game_resumed
 
+signal miner_speech_shown
+signal mayor_initial_speech_shown
+
 var game_finished := false
 var is_game_paused := false
 
@@ -47,12 +50,13 @@ var mayor_active_text = mayor_intro_text
 func _ready() -> void:
 	mayor_text_label.visible_characters = 0
 	mayor_text_label.text = mayor_intro_text
+	emit_signal("mayor_initial_speech_shown")
 	$MajorTalk.play()
 	select_button_on_index(true)
 
 var prev_visible = false
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not self.visible and Input.is_action_just_pressed("escape"):
 		_pause_game()
 	
@@ -135,7 +139,7 @@ func _start_game() -> void:
 	self.hide()
 
 func _restart_game() -> void:
-	get_tree().reload_current_scene()
+	var _result = get_tree().reload_current_scene()
 
 func _exit_game() -> void:
 	get_tree().quit()
@@ -166,6 +170,7 @@ func _on_SpeechContainer_mayor_intro_text_finished() -> void:
 	_set_miner_speech()
 	
 func _set_miner_speech() -> void:
+	emit_signal("miner_speech_shown")
 	mayor_image.get_parent().visible = false
 	miner_image.get_parent().visible = true
 	miner_text_label.text = miner_text

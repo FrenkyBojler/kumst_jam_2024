@@ -63,8 +63,6 @@ var is_train_in_motion := false
 func _ready() -> void:
 	if is_leading_train:
 		$Humming.play()
-	else:
-		$PlayerDetectionArea/CollisionShape2D.disabled = true
 
 func _start_resting() -> void:
 	is_paused = true
@@ -222,7 +220,6 @@ func _on_Player_rocks_drilled_count_changed(count) -> void:
 		is_start_of_game = false
 
 func _on_PlayerDetectionArea_body_entered(body: Node) -> void:
-	print_debug("body entered", body.name, is_train_in_motion)
 	if body is Player and is_train_in_motion:
 		_train_crashed("player entered")
 
