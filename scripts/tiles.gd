@@ -23,10 +23,13 @@ var path := PoolVector2Array()
 signal path_updated(tile)
 signal path_remove_last_tile
 
+var initial_rails = PoolVector2Array()
+
 func _ready() -> void:
 	if is_rail:
 		last_placed_rail = _find_start_rail()
 		if is_rail_placing_tile_set:
+			initial_rails = get_used_cells_by_id(6)
 			last_placed_rail = _get_start_last_trail_tile()
 			last_last_placed_rail = Vector2(last_placed_rail.x, last_placed_rail.y + 1)
 			path.push_back(last_placed_rail)
@@ -52,7 +55,7 @@ func _get_start_last_trail_tile() -> Vector2:
 	return last_rail
 
 func remove_rail(coords: Vector2) -> void:
-	if coords == path[path.size() - 1] and rails.has(get_cellv(coords)):
+	if coords == path[path.size() - 1] and rails.has(get_cellv(coords)) and not initial_rails.has(coords) and path.size() > 1:
 		path.remove(path.size() -1)
 		last_placed_rail = path[path.size() - 1]
 		last_last_placed_rail = path[path.size() -2]
@@ -65,7 +68,7 @@ func place_rails(coords: Vector2) -> bool:
 	path.push_back(coords)
 	emit_signal("path_updated", coords)
 	set_cellv(coords, _get_rail_to_place(coords, last_placed_rail))
-	if last_last_placed_rail != null:
+	if last_last_placed_rail != null and path.size() > 2:
 		set_cellv(last_placed_rail, _get_rail_to_place_between(last_placed_rail, last_last_placed_rail, coords))
 	last_last_placed_rail = last_placed_rail
 	last_placed_rail = coords

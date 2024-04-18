@@ -205,8 +205,9 @@ func _place_rail_input() -> void:
 	if Input.is_action_just_pressed("interact"):
 		_trigger_place_rail()
 
-	if Input.is_action_just_released("interact"):
-		remove_rail_timer.stop()
+	if Input.is_action_just_pressed("destroy_trail"):
+		tile_map_rails.remove_rail(tile_map_rails.world_to_map(global_position))
+		$RailBreak.play()
 
 func _trigger_place_rail() -> void:
 	remove_rail_timer.start()
@@ -353,13 +354,6 @@ func _turn_off_all_lights(node: Node2D) -> void:
 			_turn_off_all_lights(child)
 			
 var has_removed_rail = false
-
-func _on_RemoveRailTimer_timeout() -> void:
-	if is_touching:
-		return
-	has_removed_rail = true
-	tile_map_rails.remove_rail(tile_map_rails.world_to_map(global_position))
-	$RailBreak.play()
 	
 func _on_Train_train_finished(score) -> void:
 	is_paused = true

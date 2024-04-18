@@ -25,6 +25,7 @@ var path_of_walls: PoolVector2Array
 export(bool) var generate_only_ground = false
 const tiles_row = [generator_left_barrier_id, generator_wall_id, generator_rock_id, generator_rock_id, generator_wall_id, generator_right_barrier_id]
 
+
 signal map_size_increased(max_row)
 
 func _ready() -> void:

@@ -776,4 +776,3 @@ stream = ExtResource( 12 )
 volume_db = -9.298
 
 [connection signal="timeout" from="DrillTimer" to="." method="_on_DrillTimer_timeout"]
-[connection signal="timeout" from="RemoveRailTimer" to="." method="_on_RemoveRailTimer_timeout"]

@@ -277,7 +277,7 @@ max_offset = Vector2( 10, 10 )
 target = NodePath("..")
 
 [node name="SwipeJoystick" parent="Player" instance=ExtResource( 10 )]
-position = Vector2( -692, -335 )
+position = Vector2( -692, -336 )
 scale = Vector2( 3, 3 )
 
 [node name="LongTrain" parent="." instance=ExtResource( 4 )]
