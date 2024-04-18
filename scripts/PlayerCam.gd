@@ -44,7 +44,6 @@ func _on_Train_train_finished(_score) -> void:
 	train_is_going = false
 
 func _on_Train_train_start_resting(_resting_time: int) -> void:
-	print("resting")
 	train_is_going = false
 
 func _on_Train_train_stop_resting() -> void:

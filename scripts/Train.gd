@@ -53,6 +53,7 @@ var stop_after_tiles_traveled := 50
 var score := 0
 
 var train_resting_time := 10
+var train_resting_time_remaining := 0
 
 var is_paused := true
 #indicates if the train is at the start of the game
@@ -60,11 +61,14 @@ var is_start_of_game := true
 
 var is_train_in_motion := false
 
+var is_train_resting := false
+
 func _ready() -> void:
 	if is_leading_train:
 		$Humming.play()
 
 func _start_resting() -> void:
+	is_train_resting = true
 	is_paused = true
 	$RestTrainTimer.start(train_resting_time)
 	emit_signal("train_start_resting", train_resting_time)
@@ -200,6 +204,7 @@ func _turn_off_all_lights(node: Node2D) -> void:
 			_turn_off_all_lights(child)
 			
 func _on_RestTrainTimer_timeout() -> void:
+	is_train_resting = false
 	is_paused = false
 	tiles_traveled = 0
 	speed += 5
@@ -210,9 +215,15 @@ func _on_SpeechContainer_game_started() -> void:
 
 func _on_SpeechContainer_game_paused() -> void:
 	is_paused = true
+
+	if is_train_resting:
+		$RestTrainTimer.paused = true
 	
 func _on_SpeechContainer_game_resumed() -> void:
-	is_paused = false
+	if is_train_resting:
+		$RestTrainTimer.paused = false
+	else:
+		is_paused = false
 
 func _on_Player_rocks_drilled_count_changed(count) -> void:
 	if count >= 10 and is_start_of_game:

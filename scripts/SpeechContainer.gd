@@ -97,7 +97,6 @@ func _nah_button_pressed() -> void:
 	_exit_game()
 
 func _push_selected_button() -> void:
-	print(selected_button_index)
 	if selected_button_index == 0:
 		_how_button_pressed()
 	if selected_button_index == 1:
@@ -131,6 +130,7 @@ func _resume_game():
 	self.hide()
 
 func _pause_game() -> void:
+	is_game_paused = true
 	emit_signal("game_paused")
 	_set_mayor_pause_speech()
 	
