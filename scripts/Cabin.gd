@@ -84,9 +84,16 @@ var prev_velocity_y: int = 0
 
 const tolerance = 0.005
 
-func _on_Train_tile_changed(tile, _tiles_to_rest) -> void:
+func _print(tile: Vector2, next_tile: Vector2) -> void:
+	if print_velocity:
+		print_debug("tile", tile, "next_tile", next_tile, "vel", tile.direction_to(next_tile))
+
+func _on_Train_tile_changed(tile: Vector2, _tiles_to_rest: int, next_tile: Vector2) -> void:
 	var auto_tile_coord = train.rail_tile_map.get_cell(tile.x, tile.y)
-	var vel = train.current_velocity
+	var vel = tile.direction_to(next_tile)
+
+	if vel.y == 0:
+		vel.y = prev_velocity_y
 
 	match (auto_tile_coord):
 		top_right_corner:
@@ -119,7 +126,7 @@ func _on_Train_tile_changed(tile, _tiles_to_rest) -> void:
 				_turn_vertical_bottom()
 			else:
 				_turn_vertical_top()
-
+	prev_velocity_y = vel.y
 
 func _turn_off_player_detection(cabin: Node2D) -> void:
 	for child in cabin.get_children():

@@ -31,7 +31,7 @@ var target_pos
 
 var path: PoolVector2Array
 
-signal tile_changed(tile, tiles_to_rest)
+signal tile_changed(tile, tiles_to_rest, next_tile)
 signal train_finished(score)
 signal train_started
 signal train_start_resting(time)
@@ -158,7 +158,8 @@ func _process(delta: float) -> void:
 			_start_resting()
 			return
 
-		emit_signal("tile_changed", last_cell_coords, stop_after_tiles_traveled - tiles_traveled)
+		var next_tile = path[1] if path.size() > 1 else path[0]
+		emit_signal("tile_changed", last_cell_coords, stop_after_tiles_traveled - tiles_traveled, next_tile)
 		
 		if is_leading_train and real_tile_map.get_cellv(current_cell_coord) != - 1:
 			 _train_crashed("real tile map is not empty")

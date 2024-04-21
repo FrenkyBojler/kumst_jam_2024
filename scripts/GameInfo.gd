@@ -66,7 +66,7 @@ func _on_Train_train_start_resting(rest_time: int) -> void:
 	if is_paused:
 		wait_to_show_resting_time_seconds = 0
 		return
-	yield(get_tree().create_timer(wait_to_show_resting_time_seconds), "timeout")
+	yield (get_tree().create_timer(wait_to_show_resting_time_seconds), "timeout")
 	if is_paused:
 		return
 	$TrainRestingTimer.start()
@@ -87,7 +87,7 @@ func _on_TrainRestingTimer_timeout() -> void:
 	train_current_resting_time += 1
 	label.text = GAME_INFO_DEPARTS_LABEL_PREFIX + str(train_resting_time - wait_to_show_resting_time_seconds - train_current_resting_time) + " seconds"
 
-func _on_Train_tile_changed(_tile: Vector2, tiles_to_rest: int) -> void:
+func _on_Train_tile_changed(_tile: Vector2, tiles_to_rest: int, _next_tile: Vector2) -> void:
 	if tiles_to_rest <= 15 and train_started:
 		_show_label()
 		label.text = "Train will stop in " + str(tiles_to_rest) + " tiles"
@@ -98,7 +98,7 @@ func _on_ShowTilesToRest_timeout() -> void:
 func _show_train_is_moving() -> void:
 	_show_label()
 	label.text = GAME_INFO_TRAIN_GOING_TO_LABEL_PREFIX
-	yield(get_tree().create_timer(5), "timeout")
+	yield (get_tree().create_timer(5), "timeout")
 	_hide_label()
 
 func _show_label() -> void:
@@ -116,17 +116,16 @@ func _hide_label() -> void:
 func _wipe_lable() -> void:
 	label.text = ""
 
-
 func _show_press_f_to_interact() -> void:
 	if has_game_started:
 		return
 	label.text = GAME_INFO_PRESS_F_TO_INTERACT
 	_show_label()
-	yield(get_tree().create_timer(5), "timeout")
+	yield (get_tree().create_timer(5), "timeout")
 	if has_game_started:
 		return
 	_hide_label()
-	yield(get_tree().create_timer(1), "timeout")
+	yield (get_tree().create_timer(1), "timeout")
 	_show_use_arrows_to_choose()
 
 func _show_use_arrows_to_choose() -> void:
@@ -134,7 +133,7 @@ func _show_use_arrows_to_choose() -> void:
 		return
 	label.text = GAME_INFO_USE_ARROWS_TO_CHOOSE
 	_show_label()
-	yield(get_tree().create_timer(5), "timeout")
+	yield (get_tree().create_timer(5), "timeout")
 	if has_game_started:
 		return
 	_hide_label()
@@ -153,7 +152,6 @@ func _on_SpeechContainer_game_resumed():
 		_set_train_starts_in_info_label()
 		_show_label()
 
-
 func _on_SpeechContainer_game_paused():
 	is_paused = true
 	if is_resting:
@@ -162,4 +160,3 @@ func _on_SpeechContainer_game_paused():
 	if $TrainStartTimer.time_left != TRAIN_START_TIME:
 		_hide_label()
 		$TrainStartTimer.paused = true
-
